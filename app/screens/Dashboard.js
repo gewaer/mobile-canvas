@@ -16,7 +16,9 @@ import {
     Right,
     Container,
     Spinner,
-    Thumbnail
+    Thumbnail,
+    Toast,
+    Root
 } from 'native-base';
 
 import { colors, paddingHelpers } from "../config/styles";
@@ -38,7 +40,8 @@ class Dashboard extends PureComponent {
         this.state = { 
             isLoading: true,
             data: [],
-            page: 1
+            page: 1,
+            itemWasCreated: false
         };
     }
 
@@ -53,6 +56,34 @@ class Dashboard extends PureComponent {
                 tabBarHidden: true,
             }
         });
+    }
+
+    onItemCreated = () => {
+        this.setState({ 
+            isLoading: true,
+            data: [],
+            page: 1,
+            itemWasCreated: true
+        }, () => {
+            this.getItems();
+        });
+    }
+
+    openAddItemModal() {
+        this.props.navigator.showLightBox({
+            screen: 'dac.AddItem',
+            passProps: {
+                itemCreatedAction: this.onItemCreated
+            },
+            style: {
+                backgroundBlur: 'none',
+                backgroundColor: 'rgba(34, 34, 34, 0.8)',
+                width: 320,
+                justifyContent: 'center',
+                alignItems: 'center',
+                tapBackgroundToDismiss: true
+            }
+        })
     }
 
     componentWillMount() {
@@ -86,6 +117,20 @@ class Dashboard extends PureComponent {
         );
     }
 
+    titleBarRight() {
+        return (
+            {
+                content: (
+                    <View style={styles.titleBarContent}>
+                        <Button transparent onPress={() => this.openAddItemModal()}>
+                            <Icon type={'MaterialIcons'} name={'add'} style={{ color: '#fff', fontSize: platform === "ios" ? 22 : 24 }} />
+                        </Button>
+                    </View>
+                )
+            }
+        );
+    }
+
     titleBarBody() {
         return (
             {
@@ -106,10 +151,24 @@ class Dashboard extends PureComponent {
         axios.get(`https://apidev.gewaer.io/v1/leads?format=true&limit=20&page=${this.state.page}&q=(is_deleted:0,is_duplicated:0)`)
         .then((response) => {
             console.log("Updated");
-            this.setState({ data: [...this.state.data, ...response.data.data], isLoading: false });
+            if (this.state.itemWasCreated) {
+                Toast.show({
+                    text: 'Item successfully created!',
+                    buttonText: 'Ok',
+                    duration: 3000,
+                    type: 'success'
+                });
+            }
+            this.setState({ data: [...this.state.data, ...response.data.data], isLoading: false, itemWasCreated: false });
         })
         .catch((error) => {
             console.log(error.response);
+            Toast.show({
+                text: error.response.data.status.message ? error.response.data.status.message : 'Error',
+                buttonText: 'Ok',
+                duration: 3000,
+                type: 'danger'
+            });
         });
     }
 
@@ -174,22 +233,24 @@ class Dashboard extends PureComponent {
 
     render() {
         return (
-            <Container>
-                <TitleBar left={this.titleBarLeft()} body={this.titleBarBody()}></TitleBar>
-                    <FlatList
-                        data={this.state.data}
-                        renderItem={({ item }) => (
-                            this.rowContent(item)
-                        )}
-                        onEndReachedThreshold={0.5}
-                        keyExtractor={item => item.id}
-                        ListFooterComponent={() => this.renderFooter()}
-                        onEndReached={() => this.handleLoadMore()}
-                        getItemLayout={(data, index) => (
-                            { length: 80.5, offset: 80.5 * index, index }
-                        )}
-                    />
-            </Container>
+            <Root>
+                <Container>
+                    <TitleBar left={this.titleBarLeft()} body={this.titleBarBody()} right={this.titleBarRight()}></TitleBar>
+                        <FlatList
+                            data={this.state.data}
+                            renderItem={({ item }) => (
+                                this.rowContent(item)
+                            )}
+                            onEndReachedThreshold={0.5}
+                            keyExtractor={item => item.id}
+                            ListFooterComponent={() => this.renderFooter()}
+                            onEndReached={() => this.handleLoadMore()}
+                            getItemLayout={(data, index) => (
+                                { length: 80.5, offset: 80.5 * index, index }
+                            )}
+                        />
+                </Container>
+            </Root>
         );
     }
 }

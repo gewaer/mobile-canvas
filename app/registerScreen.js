@@ -14,6 +14,7 @@ import Settings from "./screens/Settings";
 import Register from "./screens/Register";
 import ItemInfo from "./screens/ItemInfo";
 import EditItem from "./screens/EditItem";
+import AddItem from "./screens/AddItem";
 
 export function registerScreen(store, Provider) {
     Navigation.registerComponent('dac.Welcome', () => Welcome, store, Provider);
@@ -28,6 +29,7 @@ export function registerScreen(store, Provider) {
     Navigation.registerComponent('dac.EditProfile', () => EditProfile, store, Provider);
     Navigation.registerComponent('dac.ItemInfo', () => ItemInfo, store, Provider);
     Navigation.registerComponent('dac.EditItem', () => EditItem, store, Provider);
+    Navigation.registerComponent('dac.AddItem', () => AddItem, store, Provider);
     Navigation.registerComponent('dac.Settings', () => Settings, store, Provider);
     Navigation.registerComponent('dac.Companies', () => Companies, store, Provider);
     Navigation.registerComponent('dac.TitleBar', () => TitleBar);

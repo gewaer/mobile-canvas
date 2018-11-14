@@ -1,6 +1,6 @@
 const initialState = {
     activeScreen: 'login',
-    token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzU2Njc4OTEsImlzcyI6InBoYWxjb24tand0LWF1dGgiLCJlbWFpbCI6Im1heEBtY3Rla2suY29tIiwiaWF0IjoxNTM1NTgxNDkxfQ.YHK3BzDu59GxaoDk07Cr0yMa_ZoESPb6GSEOppmZgdQ',
+    token: '',
     user: {},
     company: {}
 };
