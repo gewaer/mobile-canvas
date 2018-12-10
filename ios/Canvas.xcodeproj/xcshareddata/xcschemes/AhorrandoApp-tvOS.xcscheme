@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "AhorrandoApp-tvOS.app"
-               BlueprintName = "AhorrandoApp-tvOS"
-               ReferencedContainer = "container:AhorrandoApp.xcodeproj">
+               BuildableName = "Canvas-tvOS.app"
+               BlueprintName = "Canvas-tvOS"
+               ReferencedContainer = "container:Canvas.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "AhorrandoApp-tvOSTests.xctest"
-               BlueprintName = "AhorrandoApp-tvOSTests"
-               ReferencedContainer = "container:AhorrandoApp.xcodeproj">
+               BuildableName = "Canvas-tvOSTests.xctest"
+               BlueprintName = "Canvas-tvOSTests"
+               ReferencedContainer = "container:Canvas.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -61,9 +61,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "AhorrandoApp-tvOSTests.xctest"
-               BlueprintName = "AhorrandoApp-tvOSTests"
-               ReferencedContainer = "container:AhorrandoApp.xcodeproj">
+               BuildableName = "Canvas-tvOSTests.xctest"
+               BlueprintName = "Canvas-tvOSTests"
+               ReferencedContainer = "container:Canvas.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "AhorrandoApp-tvOS.app"
-            BlueprintName = "AhorrandoApp-tvOS"
-            ReferencedContainer = "container:AhorrandoApp.xcodeproj">
+            BuildableName = "Canvas-tvOS.app"
+            BlueprintName = "Canvas-tvOS"
+            ReferencedContainer = "container:Canvas.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "AhorrandoApp-tvOS.app"
-            BlueprintName = "AhorrandoApp-tvOS"
-            ReferencedContainer = "container:AhorrandoApp.xcodeproj">
+            BuildableName = "Canvas-tvOS.app"
+            BlueprintName = "Canvas-tvOS"
+            ReferencedContainer = "container:Canvas.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -113,9 +113,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "AhorrandoApp-tvOS.app"
-            BlueprintName = "AhorrandoApp-tvOS"
-            ReferencedContainer = "container:AhorrandoApp.xcodeproj">
+            BuildableName = "Canvas-tvOS.app"
+            BlueprintName = "Canvas-tvOS"
+            ReferencedContainer = "container:Canvas.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
