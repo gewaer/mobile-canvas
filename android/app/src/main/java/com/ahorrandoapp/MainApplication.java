@@ -1,6 +1,7 @@
 package com.ahorrandoapp;
 
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -17,7 +18,7 @@ public class MainApplication extends NavigationApplication {
 
   protected List<ReactPackage> getPackages() {
     return Arrays.<ReactPackage>asList(
-
+      new PickerPackage() 
     );
   }
 

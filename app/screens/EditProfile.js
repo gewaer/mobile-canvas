@@ -9,7 +9,6 @@ import {
     StyleSheet,
     View,
     Platform,
-    Dimensions,
     TouchableOpacity, 
     BackHandler
 } from "react-native";
@@ -30,12 +29,12 @@ import {
     Thumbnail
 } from 'native-base';
 
-import { colors, paddingHelpers } from "../config/styles";
-import { changeActiveScreen, changeActiveCompany } from '../actions/SessionActions';
+import { colors } from "../config/styles";
+import { changeActiveCompany } from '../actions/SessionActions';
 import { connect } from 'react-redux';
 import * as axios from 'axios'
-import moment from 'moment';
-const deviceHeight = Dimensions.get("window").height;
+import ImagePicker from 'react-native-image-crop-picker';
+
 
 import TitleBar from "../components/TitleBar"
 var _ = require('lodash');
@@ -56,7 +55,10 @@ class EditProfile extends Component {
             userDefaultFamily: '',
             userFamilies: [],
             initialPassword: '',
-            passwordVisible: false
+            passwordVisible: false,
+            profilePicture: {
+                path: 'https://banner2.kisspng.com/20180406/sve/kisspng-computer-icons-user-material-design-business-login-dizzy-5ac7f1c61041c2.5160856515230529980666.jpg'
+            }
         };
     }
 
@@ -88,6 +90,14 @@ class EditProfile extends Component {
                 isLoading: false 
             }
         );
+    }
+
+    openImagePicker() {
+        ImagePicker.openPicker({
+            multiple: false,
+        }).then(images => {
+            this.setState({ profilePicture: images });
+        });
     }
 
     changeActiveFamily(family) {
@@ -228,7 +238,7 @@ class EditProfile extends Component {
                 content: (
                     <View style={[styles.titleBarContent, { minHeight: 45 }]}>
                         <TouchableOpacity onPress={() => this.updateUserInfo()}>
-                            <Text style={{ color: '#fff', paddingLeft: 0, fontSize: 16 }}>Guardar</Text>
+                            <Text style={{ color: '#fff', paddingLeft: 0, fontSize: 16 }}>Save</Text>
                         </TouchableOpacity>
                     </View>
                 )
@@ -259,11 +269,13 @@ class EditProfile extends Component {
                         <Content padder>
                             <View style={styles.positionR}>  
                                 <View style={styles.container}>
+                                    <TouchableOpacity onPress={() => this.openImagePicker()}>
                                     <Thumbnail
-                                        source={{ uri: 'https://banner2.kisspng.com/20180406/sve/kisspng-computer-icons-user-material-design-business-login-dizzy-5ac7f1c61041c2.5160856515230529980666.jpg' }}
+                                        source={{ uri: this.state.profilePicture.sourceURL ? this.state.profilePicture.sourceURL : this.state.profilePicture.path }}
                                         style={{ width: 120, height: 120 }}
                                         resizeMode='cover'
                                     />
+                                    </TouchableOpacity>
                                 </View>              
                                 <Item stackedLabel style={styles.formItem} error={!this.state.userName}>
                                     <Label style={[styles.formLabel, { fontSize: 12, color: this.state.userName ? colors.brandBlack : 'red' }]}>
@@ -358,44 +370,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-    },
-    addButton: {
-        backgroundColor: colors.brandGreen, 
-        borderRadius: 100, 
-        width: 50, 
-        height: 50, 
-        alignItems: 'center', 
-        position: 'absolute', 
-        bottom: 10, 
-        right: 10, 
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-    },
-    
-    main: {
-        fontSize: 20,
-        textAlign: "center",
-        color: colors.headerText,
-        fontWeight: "400",
-        fontStyle: "italic"
-    },
+    },    
     titleBarContent: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center"
-    },
-    viewBar: {
-        backgroundColor: colors.brandGreen,
-        alignItems: "center",
-        padding: paddingHelpers.N
-    },
-    textHeading: {
-        color: colors.brandWhite,
-        fontWeight: "900",
-        fontSize: 22,
-        letterSpacing: 4,
     },
     button: {
         paddingVertical: 10,
@@ -408,58 +387,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "500"
     },
-    listItem: {
-        marginLeft: 0,
-        padding: paddingHelpers.S
-    },
-    dataTextTitle: {
-        fontSize: 25,
-        fontWeight: "900",
-        color: colors.brandBlack,
-    },
-    dataTextSubTitle: {
-        fontSize: 13,
-        textAlign: 'center',
-        fontWeight: "900",
-        color: colors.brandGold,
-        maxWidth: 160,
-    },
-    dataTextLabel: {
-        fontSize: 15,
-        fontWeight: "900",
-        color: colors.brandDarkGrey,
-        position: "absolute",
-        right: 0,
-        alignSelf: "flex-end"
-    },
-    dataTextInfo: {
-        fontSize: 15,
-        fontWeight: "900",
-        color: colors.brandBlueDisabled
-    },
-    marginFix: {
-        marginLeft: paddingHelpers.N
-    },
-    textContainer: {
-        flexDirection: "row"
-    },
-    progressStyle: {
-        borderRadius: 3,
-        borderWidth: 0
-    },
     formItem: {
         marginTop: 10,
-    },
-    buttonContainer: {
-        borderTopWidth: 0.7,
-        borderTopColor: '#D9D5DC',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: paddingHelpers.S, shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.8,
-        shadowRadius: 5,
-    },
+    }
 });
 
 const titleBarbody = {
@@ -478,11 +408,10 @@ const mapStateToProps = state => {
     return {
         token: state.session.token,
         user: state.session.user,
-        selectedCompanyId: state.session.selectedCompanyId,
         company: state.session.company
     };
 };
 
 export default connect(mapStateToProps, {
-    changeActiveScreen, changeActiveCompany
+    changeActiveCompany
 })(EditProfile);
