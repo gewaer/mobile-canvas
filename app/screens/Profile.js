@@ -1,15 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
     Platform,
-    Dimensions,
     TouchableOpacity,
     BackHandler
 } from "react-native";
@@ -25,7 +18,8 @@ import {
     Container,
     Spinner,
     Root,
-    Toast
+    Toast,
+    Thumbnail
 } from 'native-base';
 
 import { colors, paddingHelpers } from "../config/styles";
@@ -33,8 +27,6 @@ import { changeActiveScreen } from '../actions/SessionActions';
 import { connect } from 'react-redux';
 import * as axios from 'axios'
 import { VUE_APP_BASE_API_URL } from '../config/env'
-import moment from 'moment';
-const deviceHeight = Dimensions.get("window").height;
 
 import TitleBar from "../components/TitleBar"
 var _ = require('lodash');
@@ -196,7 +188,14 @@ class Profile extends Component {
                     <Root>
                         <TitleBar left={this.titleBarLeft()} body={titleBarbody} right={this.titleBarRight()}></TitleBar>
                         <Content padder>
-                            <View style={styles.positionR}>                
+                            <View style={styles.positionR}>     
+                                <View style={styles.container}>
+                                    <Thumbnail
+                                        source={{ uri: 'https://banner2.kisspng.com/20180406/sve/kisspng-computer-icons-user-material-design-business-login-dizzy-5ac7f1c61041c2.5160856515230529980666.jpg' }}
+                                        style={{ width: 120, height: 120 }}
+                                        resizeMode='cover'
+                                    />
+                                </View>
                                 <Item stackedLabel style={styles.formItem} >
                                     <Label style={[styles.formLabel, { fontSize: 12, color: colors.brandBlack,}]}>
                                         Name
@@ -263,9 +262,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: colors.background
     },
-
     addButton: {
         backgroundColor: colors.brandGreen, 
         borderRadius: 100, 
@@ -280,7 +277,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.8,
         shadowRadius: 2,
     },
-    
     main: {
         fontSize: 20,
         textAlign: "center",

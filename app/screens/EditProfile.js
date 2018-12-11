@@ -26,7 +26,8 @@ import {
     Spinner,
     Picker,
     Root,
-    Toast
+    Toast,
+    Thumbnail
 } from 'native-base';
 
 import { colors, paddingHelpers } from "../config/styles";
@@ -256,7 +257,14 @@ class EditProfile extends Component {
                     <Container style={{ paddingBottom: 10 }}>
                         <TitleBar left={this.titleBarLeft()} body={titleBarbody} right={this.titleBarRight()}></TitleBar>
                         <Content padder>
-                            <View style={styles.positionR}>                
+                            <View style={styles.positionR}>  
+                                <View style={styles.container}>
+                                    <Thumbnail
+                                        source={{ uri: 'https://banner2.kisspng.com/20180406/sve/kisspng-computer-icons-user-material-design-business-login-dizzy-5ac7f1c61041c2.5160856515230529980666.jpg' }}
+                                        style={{ width: 120, height: 120 }}
+                                        resizeMode='cover'
+                                    />
+                                </View>              
                                 <Item stackedLabel style={styles.formItem} error={!this.state.userName}>
                                     <Label style={[styles.formLabel, { fontSize: 12, color: this.state.userName ? colors.brandBlack : 'red' }]}>
                                         Name
@@ -350,9 +358,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: colors.background
     },
-
     addButton: {
         backgroundColor: colors.brandGreen, 
         borderRadius: 100, 

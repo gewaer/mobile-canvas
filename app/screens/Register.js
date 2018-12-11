@@ -172,7 +172,7 @@ class Register extends Component {
         this.setState({ isLoading: true });
 
         let data = {
-            'firstname': this.state.username,
+            'firstname': this.state.firstname,
             'lastname': this.state.lastname,
             'email': this.state.email,
             'password': this.state.password,
@@ -259,7 +259,7 @@ class Register extends Component {
                                                 </Label>
                                                 <Input
                                                     value={this.state.firstname}
-                                                    onChangeText={(firstName) => this.setState({ firstname: firstName })}
+                                                    onChangeText={(firstname) => this.setState({ firstname })}
                                                     style={globalStyle.formInput}
                                                 />
                                             </Item>
@@ -269,7 +269,7 @@ class Register extends Component {
                                                 </Label>
                                                 <Input
                                                     value={this.state.lastname}
-                                                    onChangeText={(lastName) => this.setState({ lastname: lastName })}
+                                                    onChangeText={(lastname) => this.setState({ lastname })}
                                                     style={globalStyle.formInput}
                                                 />
                                             </Item>
@@ -279,7 +279,7 @@ class Register extends Component {
                                                 </Label>
                                                 <Input
                                                     value={this.state.email}
-                                                    onChangeText={(email) => this.setState({ email: email })}
+                                                    onChangeText={(email) => this.setState({ email })}
                                                     style={globalStyle.formInput}
                                                     keyboardType={'email-address'} 
                                                     autoCapitalize={'none'}
@@ -291,7 +291,7 @@ class Register extends Component {
                                                 </Label>
                                                 <Input
                                                     value={this.state.password}
-                                                    onChangeText={(password) => this.setState({ password: password })}
+                                                    onChangeText={(password) => this.setState({ password })}
                                                     style={globalStyle.formInput}
                                                     secureTextEntry={true}
                                                     autoCapitalize={'none'}
@@ -303,7 +303,7 @@ class Register extends Component {
                                                 </Label>
                                                 <Input
                                                     value={this.state.confirmPassword}
-                                                    onChangeText={(confirmPassword) => this.setState({ confirmPassword: confirmPassword })}
+                                                    onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
                                                     style={globalStyle.formInput}
                                                     secureTextEntry={true}
                                                     autoCapitalize={'none'}
@@ -315,7 +315,7 @@ class Register extends Component {
                                                 </Label>
                                                 <Input
                                                     value={this.state.family}
-                                                    onChangeText={(family) => this.setState({ family: family })}
+                                                    onChangeText={(family) => this.setState({ family })}
                                                     style={globalStyle.formInput}
                                                 />
                                             </Item>
