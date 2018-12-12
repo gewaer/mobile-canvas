@@ -19,6 +19,26 @@ onStoreUpdate = () => {
 
 startApp = (root) => {
     switch (root) {
+        case 'login':
+            Navigation.startSingleScreenApp({
+                screen: {
+                    screen: 'vv.Login', // unique ID registered with Navigation.registerScreen
+                    navigatorStyle: {
+                        navBarHidden: true,
+                    },
+                },
+            });
+            return;
+        case 'forgotPassword':
+        Navigation.startSingleScreenApp({
+            screen: {
+                screen: 'vv.ForgotPassword', // unique ID registered with Navigation.registerScreen
+                navigatorStyle: {
+                    navBarHidden: true,
+                },
+            },
+        });
+            return;
         case 'welcome':
             Navigation.startSingleScreenApp({
                 screen: {
@@ -29,16 +49,7 @@ startApp = (root) => {
                 },
             });
             return;
-        case 'login':
-            Navigation.startSingleScreenApp({
-                screen: {
-                    screen: 'dac.Login', // unique ID registered with Navigation.registerScreen
-                    navigatorStyle: {
-                        navBarHidden: true,
-                    },
-                },
-            });
-            return;
+        
         case 'dashboard':
             Navigation.startTabBasedApp({
                 tabs: [
