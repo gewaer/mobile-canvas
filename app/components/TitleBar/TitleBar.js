@@ -16,11 +16,14 @@ import { colors } from "../../config/styles";
 const TitleBar = props => {
     const { left, body, right } = props;
     return (
-        <Header style={styles.bar} noShadow>
-            <StatusBar
-                backgroundColor={colors.brandGreen}
-                barStyle="light-content" 
-            />
+        <View style={styles.bar}>
+            <View style={{ backgroundColor: colors.brandLightBlack, height: 25 }}>
+                <StatusBar
+                    translucent
+                    backgroundColor={colors.brandLightBlack}
+                    barStyle="light-content" 
+                />
+            </View>
             <View style={styles.barContent}>
                 <Left style={styles.titleBarLeft}>
                     {left.content}
@@ -32,8 +35,27 @@ const TitleBar = props => {
                     {right.content}
                 </Right>
             </View>
-            
-        </Header>
+        </View>
+        // <Header style={styles.bar} noShadow>
+        //     <View style={{ backgroundColor: 'black', height: 20 }}>
+        //         <StatusBar
+        //             translucent
+        //             backgroundColor={'black'}
+        //             barStyle="light-content" 
+        //         />
+        //     </View>
+            // <View style={styles.barContent}>
+            //     <Left style={styles.titleBarLeft}>
+            //         {left.content}
+            //     </Left>
+            //     <Body style={styles.titleBarBody}>
+            //         {body.content}
+            //     </Body>
+            //     <Right style={styles.titleBarRight}>
+            //         {right.content}
+            //     </Right>
+            // </View>
+        // </Header>
     );
 };
 // Define Prop Types

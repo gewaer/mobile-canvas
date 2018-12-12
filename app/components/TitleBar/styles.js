@@ -5,11 +5,9 @@ const platform = Platform.OS;
 
 export default StyleSheet.create({
     bar: {
-        backgroundColor: colors.brandSecondary,
-        paddingTop: 5,
         justifyContent: 'space-between',
-        alignItems: 'center',
-        flexDirection: 'row',
+        height: '10%'
+        //alignItems: 'center'
     },
     barContent: {
         flex: 1,
@@ -17,7 +15,8 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: 15,
-        paddingBottom: platform === "ios" ? 0 : 20, 
+        paddingBottom: platform === "ios" ? 0 : 20,
+        backgroundColor: colors.normalWhite
     },
     titleBarLeft: {
         flexShrink: 1,
