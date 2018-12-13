@@ -31,6 +31,7 @@ import {
     Body,
     Left,
     Right,
+    Picker
 } from "native-base";
 
 import { connect } from 'react-redux';
@@ -79,8 +80,22 @@ class Reports extends Component {
             error: null,
             loggedIn: false,
             isLoading: false,
-            isLoginIn: false
+            isLoginIn: false,
+            pickerSelection1: undefined,
+            pickerSelection2: undefined
         };
+    }
+
+    onValueChange1(value) {
+        this.setState({
+            pickerSelection1: value
+        });
+    }
+
+    onValueChange2(value) {
+        this.setState({
+            pickerSelection2: value
+        });
     }
 
     // Handles Android's back button's action
@@ -265,6 +280,46 @@ class Reports extends Component {
                             this.state.isLoading ?
                                 <Spinner color={colors.brandLightBlack} /> :
                                 <View style={Stylesheet.containerView}>
+                                    <Form>
+                                        <Text>Sección de la App:</Text>
+                                        <Item picker style={ Stylesheet.formItem }>
+                                            <Picker
+                                                mode="dropdown"
+                                                iosIcon={<Icon name="ios-arrow-down-outline" />}
+                                                style={{ width: 350 }}
+                                                placeholder="Seleccionar..."
+                                                placeholderStyle={{ color: colors.brandLightGray }}
+                                                placeholderIconColor="#007aff"
+                                                selectedValue={this.state.selected1}
+                                                onValueChange={this.onValueChange1.bind(this)}
+                                            >
+                                                <Picker.Item label="Wallet" value="key0" />
+                                                <Picker.Item label="ATM Card" value="key1" />
+                                                <Picker.Item label="Debit Card" value="key2" />
+                                                <Picker.Item label="Credit Card" value="key3" />
+                                                <Picker.Item label="Net Banking" value="key4" />
+                                            </Picker>
+                                        </Item>
+                                        <Text>Tipo de reporte:</Text>
+                                        <Item picker style={ Stylesheet.formItem }>
+                                            <Picker
+                                                mode="dropdown"
+                                                iosIcon={<Icon name="ios-arrow-down-outline" />}
+                                                style={{ width: 350 }}
+                                                placeholder="Seleccionar..."
+                                                placeholderStyle={{ color: colors.brandLightGray }}
+                                                placeholderIconColor="#007aff"
+                                                selectedValue={this.state.selected2}
+                                                onValueChange={this.onValueChange2.bind(this)}
+                                            >
+                                                <Picker.Item label="Wallet" value="key0" />
+                                                <Picker.Item label="ATM Card" value="key1" />
+                                                <Picker.Item label="Debit Card" value="key2" />
+                                                <Picker.Item label="Credit Card" value="key3" />
+                                                <Picker.Item label="Net Banking" value="key4" />
+                                            </Picker>
+                                        </Item>
+                                    </Form>
                                     <Button
                                         block
                                         primary

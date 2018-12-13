@@ -49,15 +49,20 @@ export default StyleSheet.create({
         width: '100%'
     },
     formItem: {
-        borderBottomWidth: 2,
-        borderBottomColor: '#241D1E'
+        borderTopWidth: 1,
+        borderLeftWidth: 1,
+        borderRightWidth: 1,
+        borderColor: colors.brandOrange,
+        marginTop: 10,
+        height: 29.5
     },
     titleBarContent: {
         color: "white",
         fontWeight: "600"
     },
     containerView: {
-        marginBottom: paddingHelpers.XS
+        marginBottom: paddingHelpers.XS,
+        marginHorizontal: 12
     },
     containerViewBack: {
         flexGrow: 1,
