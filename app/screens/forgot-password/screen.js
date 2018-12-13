@@ -24,9 +24,10 @@ import {
     Label,
     Spinner,
     Root,
-    Toast
+    Toast,
+    Icon
 } from "native-base";
-import Icon from "react-native-vector-icons/FontAwesome"
+//import Icon from "react-native-vector-icons/FontAwesome"
 
 import { connect } from 'react-redux';
 import * as axios from 'axios'
@@ -281,22 +282,16 @@ class Login extends Component {
                                                     />
                                                 </Item>
                                                 <Text style={ Stylesheet.underInputLabel }>Ingresa tu correo electrónico para recuperar la contraseña.</Text>
-                                                {
-                                                    this.state.isLoginIn ?
-                                                        <Spinner color={colors.brandRed} />
-                                                    :
-                                                        <Button
-                                                            block
-                                                            primary
-                                                            onPress={() => this.logIn()}
-                                                            style={[Stylesheet.submitBtn, { marginTop: 30 }]}>
-                                                            <Text style={{ color: colors.normalWhite }}>
-                                                                Enviar
-                                                            </Text>
-                                                            <Icon name="envelope" color={colors.normalWhite} />
-                                                        </Button>
-                                                        
-                                                }
+                                                <Button
+                                                    block
+                                                    primary
+                                                    onPress={() => this.logIn()}
+                                                    style={[Stylesheet.submitBtn, { marginTop: 30 }]}>
+                                                    <Text style={{ color: colors.normalWhite }}>
+                                                        Enviar
+                                                    </Text>
+                                                    <Icon type="Ionicons" name="ios-mail"  color={colors.normalWhite} />
+                                                </Button>
                                             </Form>
                                             
                                         </View>
