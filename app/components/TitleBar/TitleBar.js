@@ -14,9 +14,9 @@ import { colors } from "../../config/styles";
 
 // Define Component for Header
 const TitleBar = props => {
-    const { left, body, right } = props;
+    const { left, body, right, bgColor } = props;
     return (
-        <View style={styles.bar}>
+        <View style={ [styles.bar, { backgroundColor: bgColor}]}>
             <View style={{ backgroundColor: colors.brandLightBlack, height: 25 }}>
                 <StatusBar
                     translucent
@@ -24,7 +24,7 @@ const TitleBar = props => {
                     barStyle="light-content" 
                 />
             </View>
-            <View style={styles.barContent}>
+            <View style={ styles.barContent }>
                 <Left style={styles.titleBarLeft}>
                     {left.content}
                 </Left>
