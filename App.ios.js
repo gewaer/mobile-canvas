@@ -14,7 +14,7 @@ export default class App extends Component {
 		super(props);
 		store.subscribe(this.onStoreUpdate.bind(this));
 		store.dispatch(changeActiveScreen({
-			activeScreen: 'forgot-password'
+			activeScreen: 'reports'
 		}));
 		console.disableYellowBox = true;
 	}
@@ -44,6 +44,26 @@ export default class App extends Component {
 			Navigation.startSingleScreenApp({
 				screen: {
 					screen: 'vv.ForgotPassword', // unique ID registered with Navigation.registerScreen
+					navigatorStyle: {
+						navBarHidden: true,
+					},
+				},
+			});
+				break;
+			case 'condominiums':
+			Navigation.startSingleScreenApp({
+				screen: {
+					screen: 'vv.Condominiums', // unique ID registered with Navigation.registerScreen
+					navigatorStyle: {
+						navBarHidden: true,
+					},
+				},
+			});
+				break;
+			case 'reports':
+			Navigation.startSingleScreenApp({
+				screen: {
+					screen: 'vv.Reports', // unique ID registered with Navigation.registerScreen
 					navigatorStyle: {
 						navBarHidden: true,
 					},

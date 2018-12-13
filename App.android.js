@@ -39,6 +39,26 @@ startApp = (root) => {
             },
         });
             return;
+        case 'condominiums':
+        Navigation.startSingleScreenApp({
+            screen: {
+                screen: 'vv.Condominiums', // unique ID registered with Navigation.registerScreen
+                navigatorStyle: {
+                    navBarHidden: true,
+                },
+            },
+        });
+            return;
+        case 'reports':
+        Navigation.startSingleScreenApp({
+            screen: {
+                screen: 'vv.Reports', // unique ID registered with Navigation.registerScreen
+                navigatorStyle: {
+                    navBarHidden: true,
+                },
+            },
+        });
+            return;
         case 'welcome':
             Navigation.startSingleScreenApp({
                 screen: {
@@ -280,4 +300,4 @@ startApp = (root) => {
 }
 
 store.subscribe(onStoreUpdate.bind());
-store.dispatch(changeActiveScreen({ activeScreen: 'welcome' }));
+store.dispatch(changeActiveScreen({ activeScreen: 'login' }));
