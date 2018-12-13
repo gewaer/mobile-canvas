@@ -53,7 +53,7 @@ export default StyleSheet.create({
         borderBottomColor: '#241D1E'
     },
     titleBarContent: {
-        color: "white",
+        color: "black",
         fontWeight: "600"
     },
     containerView: {

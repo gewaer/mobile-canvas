@@ -108,11 +108,7 @@ class Login extends Component {
     titleBarLeft() {
         return {
             content: (
-                <View>
-                    {/* <TouchableOpacity transparent onPress={() => this.pushScreen('dac.Welcome')}>
-                        <Icon type={'MaterialIcons'} name={'chevron-left'} style={{ color: '#fff', fontSize: platform === "ios" ? 22 : 24 }} />
-                    </TouchableOpacity> */}
-                </View>
+                <View></View>
             )
         };
     }
@@ -121,13 +117,7 @@ class Login extends Component {
     titleBarBody() {
         return {
             content: (
-                <View>
-                    {/* <Title>
-                        <Text style={[Stylesheet.titleBarContent, { paddingLeft: platform === "ios" ? 0 : 10, fontSize: platform === "ios" ? 18 : 19.64 }]}>
-                            Sign In
-                        </Text>
-                    </Title> */}
-                </View>
+                <View></View>
             )
         };
     }
@@ -252,7 +242,7 @@ class Login extends Component {
         return (
             <Root>
                 <Container style={{ backgroundColor: colors.normalWhite }}>
-                    <TitleBar noShadow left={this.titleBarLeft()} body={this.titleBarBody()} />
+                    <TitleBar noShadow left={this.titleBarLeft()} body={this.titleBarBody()} bgColor={colors.normalWhite} />
                     <View style={{alignItems: 'center'}}>
                         <ImageBackground
                             source={appImages.Logo.uri}
