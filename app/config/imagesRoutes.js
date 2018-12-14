@@ -7,7 +7,7 @@ export const appImages = {
         uri: require("../assets/images/companyBranding/secondary-logo.10e49eac.png")
     },
     Logo: {
-        uri: require("../assets/images/companyBranding/secondary-logo.10e49eac.png")
+        uri: require("../assets/images/vivook/logo-vivook.png")
     },
     Group: {
         uri: require("../assets/images/icons/users.svg"),

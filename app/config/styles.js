@@ -23,8 +23,8 @@ export const globalStyle = {
         height: 300
     },
     logoTag: {
-        width: 280,
-        height: 100
+        width: 212,
+        height: 160
     },
     text: {
         color: "#D8D8D8",
@@ -41,12 +41,13 @@ export const globalStyle = {
     },
     // Welcome Inputs
     formLabel: {
-        color: 'white',
-        top: platform === "ios" ? 8 : 13
+        color: '#241D1E',
+        top: platform === "ios" ? 8 : 13,
+        fontSize: 18
     },
     formInput: {
         height: 60,
-        color: 'white',
+        color: '#241D1E',
     }
 };
 
@@ -69,10 +70,14 @@ export const colors = {
     brandBlack: '#1c1d1d',
     brandGrey: '#c2c1c0',
     brandDarkGrey: '#4b4b4b',
+    brandLightGray: '#b5b5b5',
     brandGreen: '#189687',
     brandGold: '#f1ac2f',
     brandGoldDisable: '#f1ac2f',
+    brandRed: '#E8523F',
+    brandOrange: '#F49B48',
     normalWhite: '#ffffff',
+    brandLightBlack: '#241D1E',
     facebook: "#3b5998",
     gmail: "#CD5644"
 };
@@ -87,6 +92,9 @@ export const paddingHelpers = {
     XL2: platform === "ios" ? 28 : 30,
     XL3: platform === "ios" ? 30 : 32,
     XL4: platform === "ios" ? 32 : 34,
+    XL5: platform === "ios" ? 34 : 36,
+    XL6: platform === "ios" ? 36 : 38,
+    XL7: platform === "ios" ? 45 : 45,
 };
 
 export const titleBarStyles = {

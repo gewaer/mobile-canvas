@@ -1,6 +1,10 @@
 import { Navigation } from 'react-native-navigation';
+import Login from './screens/login';
+import ForgotPassword from './screens/forgot-password';
+import Condominiums from './screens/condominiums';
+import Reports from './screens/reports';
+
 import Welcome from './screens/Welcome';
-import Login from './screens/Login';
 import TitleBar from "./components/TitleBar";
 import SideMenu from './components/SideMenu';
 import Dashboard from './screens/Dashboard';
@@ -17,8 +21,12 @@ import EditItem from "./screens/EditItem";
 import AddItem from "./screens/AddItem";
 
 export function registerScreen(store, Provider) {
+    Navigation.registerComponent('vv.ForgotPassword', () => ForgotPassword, store, Provider);
+    Navigation.registerComponent('vv.Login', () => Login, store, Provider);
+    Navigation.registerComponent('vv.Condominiums', () => Condominiums, store, Provider);
+    Navigation.registerComponent('vv.Reports', () => Reports, store, Provider);
+    
     Navigation.registerComponent('dac.Welcome', () => Welcome, store, Provider);
-    Navigation.registerComponent('dac.Login', () => Login, store, Provider);
     Navigation.registerComponent('dac.Register', () => Register, store, Provider);
     Navigation.registerComponent('dac.SideMenu', () => SideMenu, store, Provider);
     Navigation.registerComponent('dac.Dashboard', () => Dashboard, store, Provider);

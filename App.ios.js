@@ -14,7 +14,7 @@ export default class App extends Component {
 		super(props);
 		store.subscribe(this.onStoreUpdate.bind(this));
 		store.dispatch(changeActiveScreen({
-			activeScreen: 'welcome'
+			activeScreen: 'reports'
 		}));
 		console.disableYellowBox = true;
 	}
@@ -30,20 +30,50 @@ export default class App extends Component {
 
 	startApp(root) {
 		switch (root) {
-			case 'welcome':
+			case 'login':
 				Navigation.startSingleScreenApp({
 					screen: {
-						screen: 'dac.Welcome', // unique ID registered with Navigation.registerScreen
+						screen: 'vv.Login', // unique ID registered with Navigation.registerScreen
 						navigatorStyle: {
 							navBarHidden: true,
 						},
 					},
 				});
 				break;
-			case 'login':
+			case 'forgot-password':
+			Navigation.startSingleScreenApp({
+				screen: {
+					screen: 'vv.ForgotPassword', // unique ID registered with Navigation.registerScreen
+					navigatorStyle: {
+						navBarHidden: true,
+					},
+				},
+			});
+				break;
+			case 'condominiums':
+			Navigation.startSingleScreenApp({
+				screen: {
+					screen: 'vv.Condominiums', // unique ID registered with Navigation.registerScreen
+					navigatorStyle: {
+						navBarHidden: true,
+					},
+				},
+			});
+				break;
+			case 'reports':
+			Navigation.startSingleScreenApp({
+				screen: {
+					screen: 'vv.Reports', // unique ID registered with Navigation.registerScreen
+					navigatorStyle: {
+						navBarHidden: true,
+					},
+				},
+			});
+				break;
+			case 'welcome':
 				Navigation.startSingleScreenApp({
 					screen: {
-						screen: 'dac.Login', // unique ID registered with Navigation.registerScreen
+						screen: 'dac.Welcome', // unique ID registered with Navigation.registerScreen
 						navigatorStyle: {
 							navBarHidden: true,
 						},
