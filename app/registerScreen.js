@@ -3,6 +3,8 @@ import Login from './screens/login';
 import ForgotPassword from './screens/forgot-password';
 import Condominiums from './screens/condominiums';
 import Reports from './screens/reports';
+import AddPost from './screens/add-post';
+import Home from './screens/home';
 
 import Welcome from './screens/Welcome';
 import TitleBar from "./components/TitleBar";
@@ -25,6 +27,8 @@ export function registerScreen(store, Provider) {
     Navigation.registerComponent('vv.Login', () => Login, store, Provider);
     Navigation.registerComponent('vv.Condominiums', () => Condominiums, store, Provider);
     Navigation.registerComponent('vv.Reports', () => Reports, store, Provider);
+    Navigation.registerComponent('vv.AddPost', () => AddPost, store, Provider);
+    Navigation.registerComponent('vv.Home', () => Home, store, Provider);
     
     Navigation.registerComponent('dac.Welcome', () => Welcome, store, Provider);
     Navigation.registerComponent('dac.Register', () => Register, store, Provider);
