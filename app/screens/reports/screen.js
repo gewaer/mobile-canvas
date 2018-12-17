@@ -279,47 +279,54 @@ class Reports extends Component {
                         {
                             this.state.isLoading ?
                                 <Spinner color={colors.brandLightBlack} /> :
-                                <View style={Stylesheet.containerView}>
-                                    <Form>
-                                        <Text>Sección de la App:</Text>
-                                        <Item picker style={ Stylesheet.formItem }>
-                                            <Picker
-                                                mode="dropdown"
-                                                iosIcon={<Icon name="ios-arrow-down-outline" />}
-                                                style={{ width: 350 }}
-                                                placeholder="Seleccionar..."
-                                                placeholderStyle={{ color: colors.brandLightGray }}
-                                                placeholderIconColor="#007aff"
-                                                selectedValue={this.state.selected1}
-                                                onValueChange={this.onValueChange1.bind(this)}
-                                            >
-                                                <Picker.Item label="Wallet" value="key0" />
-                                                <Picker.Item label="ATM Card" value="key1" />
-                                                <Picker.Item label="Debit Card" value="key2" />
-                                                <Picker.Item label="Credit Card" value="key3" />
-                                                <Picker.Item label="Net Banking" value="key4" />
-                                            </Picker>
-                                        </Item>
-                                        <Text>Tipo de reporte:</Text>
-                                        <Item picker style={ Stylesheet.formItem }>
-                                            <Picker
-                                                mode="dropdown"
-                                                iosIcon={<Icon name="ios-arrow-down-outline" />}
-                                                style={{ width: 350 }}
-                                                placeholder="Seleccionar..."
-                                                placeholderStyle={{ color: colors.brandLightGray }}
-                                                placeholderIconColor="#007aff"
-                                                selectedValue={this.state.selected2}
-                                                onValueChange={this.onValueChange2.bind(this)}
-                                            >
-                                                <Picker.Item label="Wallet" value="key0" />
-                                                <Picker.Item label="ATM Card" value="key1" />
-                                                <Picker.Item label="Debit Card" value="key2" />
-                                                <Picker.Item label="Credit Card" value="key3" />
-                                                <Picker.Item label="Net Banking" value="key4" />
-                                            </Picker>
-                                        </Item>
-                                    </Form>
+                                <View>
+                                    <Text style={ Stylesheet.titleText }>¡Ayúdanos a mejorar!</Text>
+                                    <View style={ Stylesheet.divisionLine }></View>
+                                    <View style={Stylesheet.containerView}>
+                                        <Form>
+                                            <Text style={ Stylesheet.labelText }>Sección de la App:</Text>
+                                            <Item picker style={ Stylesheet.formItem }>
+                                                <Picker
+                                                    mode="dropdown"
+                                                    iosIcon={<Icon name="ios-arrow-down-outline" />}
+                                                    style={{ width: 350 }}
+                                                    placeholder="Seleccionar..."
+                                                    placeholderStyle={{ color: colors.brandLightGray, fontSize: 12 }}
+                                                    placeholderIconColor="#007aff"
+                                                    selectedValue={this.state.pickerSelection1}
+                                                    onValueChange={(itemValue, itemIndex) => this.setState({pickerSelection1: itemValue})}
+                                                >
+                                                    <Picker.Item label="Wallet" value="key0" />
+                                                    <Picker.Item label="ATM Card" value="key1" />
+                                                    <Picker.Item label="Debit Card" value="key2" />
+                                                    <Picker.Item label="Credit Card" value="key3" />
+                                                    <Picker.Item label="Net Banking" value="key4" />
+                                                </Picker>
+                                            </Item>
+                                            <Text style={ Stylesheet.labelText }>Tipo de reporte:</Text>
+                                            <Item picker style={ Stylesheet.formItem }>
+                                                <Picker
+                                                    mode="dropdown"
+                                                    iosIcon={<Icon name="ios-arrow-down-outline" />}
+                                                    style={{ width: 350 }}
+                                                    placeholder="Seleccionar..."
+                                                    placeholderStyle={{ color: colors.brandLightGray, fontSize: 12 }}
+                                                    placeholderIconColor="#007aff"
+                                                    selectedValue={this.state.pickerSelection2}
+                                                    onValueChange={(itemValue, itemIndex) => this.setState({pickerSelection2: itemValue})}
+                                                >
+                                                    <Picker.Item label="Wallet" value="key0" />
+                                                    <Picker.Item label="ATM Card" value="key1" />
+                                                    <Picker.Item label="Debit Card" value="key2" />
+                                                    <Picker.Item label="Credit Card" value="key3" />
+                                                    <Picker.Item label="Net Banking" value="key4" />
+                                                </Picker>
+                                            </Item>
+                                            <Text style={ Stylesheet.labelText }>Comentario:</Text>
+                                            <Input placeholderTextColor={ colors.brandLightGray } style={ [Stylesheet.formInput, { fontSize: 12, paddingLeft: 16, paddingRight: 16 }] } multiline={ true } placeholder="Deja un comentario..." />                                   
+                                        </Form>
+                                    </View>
+                                    <View style={ Stylesheet.divisionLine }></View>
                                     <Button
                                         block
                                         primary

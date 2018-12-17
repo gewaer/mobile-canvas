@@ -26,42 +26,26 @@ export default StyleSheet.create({
         alignSelf: 'center',
         height: 36
     },
-    googleBtn: {
-        backgroundColor: colors.gmail,
-        width: '100%',
-        alignItems: 'center'
-    },
-    googleText: {
-        color: "#fff",
-        textAlign: 'center',
-        width: '100%'
-    },
-    facebookBtn: {
-        marginTop: paddingHelpers.S,
-        marginBottom: paddingHelpers.XS,
-        backgroundColor: colors.facebook,
-        width: '100%',
-        alignItems: 'center'
-    },
-    facebookText: {
-        color: "#fff",
-        textAlign: 'center',
-        width: '100%'
-    },
     formItem: {
         borderTopWidth: 1,
         borderLeftWidth: 1,
         borderRightWidth: 1,
         borderColor: colors.brandOrange,
-        marginTop: 10,
+        marginTop: 8,
         height: 29.5
+    },
+    formInput: {
+        borderWidth: 1,
+        borderColor: colors.brandOrange,
+        marginTop: 8,
+        height: 142.5
     },
     titleBarContent: {
         color: "white",
         fontWeight: "600"
     },
     containerView: {
-        marginBottom: paddingHelpers.XS,
+        marginBottom: paddingHelpers.S,
         marginHorizontal: 12
     },
     containerViewBack: {
@@ -79,8 +63,18 @@ export default StyleSheet.create({
         backgroundColor: "transparent"
     },
     divisionLine: {
-        height: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: colors.brandOrange
+        height: 1,
+        borderBottomWidth: 0.7,
+        borderBottomColor: colors.brandDarkGrey
+    },
+    labelText: {
+        fontSize: 14,
+        marginTop: 10
+    },
+    titleText: {
+        fontSize: 16,
+        color: colors.brandOrange,
+        marginLeft: 12,
+        marginVertical: 12
     }
 });
