@@ -7,7 +7,8 @@ import {
 	View,
 	TouchableOpacity,
 	AsyncStorage,
-	StyleSheet
+	StyleSheet,
+	Image
 } from "react-native";
 
 import {
@@ -26,7 +27,7 @@ import {
 	colors,
 } from "../../config/styles";
 
-import styles from "./styles";
+import Stylesheet from "./stylesheet";
 
 // Importing Redux's actions
 import { changeActiveScreen } from '../../actions/SessionActions';
@@ -72,32 +73,28 @@ class SideMenu extends Component {
 	
 	render() {
 		return (
-			<View style={[styles.container, styles.navSectionStyle]}>
+			<View style={[Stylesheet.container, Stylesheet.navSectionStyle]}>
 				<View>
-					<View style={{paddingVertical: paddingHelpers.S, backgroundColor: colors.brandSecondary }}/>
-					<ScrollView style={{paddingTop:paddingHelpers.N}}>
+					<View style={{paddingVertical: paddingHelpers.S, backgroundColor: colors.brandLightBlack }}/>
+					<View style={[ Stylesheet.itemContainer, { backgroundColor: colors.brandLightBlack }]}>
+						<Image
+							source={require('../../assets/images/vivook/logo-vivook.png')}
+							style={ Stylesheet.thumbnail }
+						/>
+						<View style={ { justifyContent: 'center' } }>
+							<Text style={ Stylesheet.title }>Sarai Ramirez Rodriguez</Text>
+							<Text style={ Stylesheet.subTitle }>Itera Intranet</Text>
+						</View>
+					</View>
+					<ScrollView style={{paddingTop:paddingHelpers.XS}}>
 						<List>
-							<ListItem style={ListStyles.listItemDarkBorder}>
-								<Body style={{flexGrow: 2}}>
-									<View style={[styles.navSectionStyle, {paddingLeft: 0}]}>
-										<Text style={[{paddingLeft: 0, marginLeft: 0, marginRight: 0, color: colors.brandBlack, fontSize: 18, fontWeight: '900'}]}>
-											{ this.props.company ? this.props.company.name : 'Familia no disponible' }
-										</Text>
-									</View>
-								</Body>
-								<Right style={{flexGrow: 1}}>
-									<TouchableOpacity style={{ backgroundColor: colors.brandGold, borderRadius: 3, padding: 5 }} onPress={() => this.changeToDashboard()}>
-										<Text style={{color:'#fff', fontSize: 13, fontWeight: '900'}}t>Change</Text>
-									</TouchableOpacity>
-								</Right>
-							</ListItem>
 							<ListItem style={ListStyles.listItemDarkBorder} onPress={() => this.changeScreen('dashboard')}>
 								<View style={{ width: 30, alignItems: 'center' }}>
 									<Icon type={'MaterialIcons'} name={'dashboard'} style={{ fontSize: 22 }} />
 								</View>
 								<Body>
-									<View style={styles.navSectionStyle}>
-										<Text style={styles.navItemStyle}>
+									<View style={Stylesheet.navSectionStyle}>
+										<Text style={Stylesheet.navItemStyle}>
 											Dashboard
 										</Text>
 									</View>
@@ -108,8 +105,8 @@ class SideMenu extends Component {
 									<Icon type={'FontAwesome'} name={'user'} style={{ fontSize: 22 }} />
 								</View>
 								<Body>
-									<View style={styles.navSectionStyle}>
-										<Text style={styles.navItemStyle}>
+									<View style={Stylesheet.navSectionStyle}>
+										<Text style={Stylesheet.navItemStyle}>
 											My Profile
 										</Text>
 									</View>
@@ -120,35 +117,17 @@ class SideMenu extends Component {
 									<Icon type={'MaterialIcons'} name={'settings'} style={{ fontSize: 22 }} />
 								</View>
 								<Body>
-									<View style={styles.navSectionStyle}>
-										<Text style={styles.navItemStyle}>
+									<View style={Stylesheet.navSectionStyle}>
+										<Text style={Stylesheet.navItemStyle}>
 											Settings
 										</Text>
 									</View>
 								</Body>
 							</ListItem>
 						</List>
-						<View style={{ marginTop: paddingHelpers.XL3 }}>
-							<List>
-								<ListItem style={ListStyles.listItemNoBorder}>
-									<Body>
-										<View style={[styles.navSectionStyle, {paddingLeft: 0}]}>
-											<TouchableOpacity onPress={() => this.logOut()}>
-												<Text style={{paddingLeft: 0, marginLeft: 0, marginRight: 0,}}>
-													Log Out
-												</Text>
-											</TouchableOpacity>
-										</View>
-									</Body>
-									<Right>
-										<Icon onPress={() => this.logOut()} type={'MaterialCommunityIcons'} name={'logout-variant'} style={{color: colors.brandBlack}}/>
-									</Right>
-								</ListItem>
-							</List>
-						</View>
 					</ScrollView>
 				</View>
-				<View style = {[ styles.footerContainer, localStyles.footer ]}/>
+				<View style = {[ Stylesheet.footerContainer, localStyles.footer ]}/>
 			</View>
 		);
 	}

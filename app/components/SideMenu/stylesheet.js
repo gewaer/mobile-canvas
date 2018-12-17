@@ -88,5 +88,31 @@ export default StyleSheet.create({
   // For bg colors
   darkerColor: {
     backgroundColor: "#1E2A39"
-  }
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 14,
+    marginBottom: 2,
+    color: colors.normalWhite
+  },
+  subTitle: {
+    fontSize: 13,
+     color: colors.normalWhite
+  },
+  thumbnail: {
+    width: 40,
+    height: 40,
+    borderColor: colors.brandLightGray,
+    borderWidth: 1,
+    borderRadius: 20,
+    marginRight: 12,
+    backgroundColor: 'white' //REMOVE THIS
+  },
+  itemContainer: {
+    borderBottomWidth: 0.6,
+    borderBottomColor: "#707070",
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    flexDirection: 'row'
+  },
 });
