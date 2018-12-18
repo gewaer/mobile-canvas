@@ -26,9 +26,9 @@ export const changeActiveFamily = (type) => {
     };
 };
 
-export const changeActiveCompany = (type) => {
+export const changeCondos = (type) => {
     return {
-        type: 'CHANGE_ACTIVE_COMPANY',
+        type: 'CHANGE_CONDOS',
         payload: type
     };
 };
