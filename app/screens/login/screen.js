@@ -29,7 +29,6 @@ import {
 } from "native-base";
 
 import { connect } from 'react-redux';
-import * as axios from 'axios'
 
 // Importing local assets and components.
 import { appImages } from "../../config/imagesRoutes";
@@ -47,10 +46,12 @@ import {
     changeActiveScreen, 
     changeSessionToken, 
     changeUser, 
-    changeActiveCompany 
+    changeCondos 
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/index'
+
+const axios = require('../../config/axios')
 
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
@@ -72,7 +73,7 @@ class Login extends Component {
             passwordError: '',
             error: null,
             loggedIn: false,
-            isLoading: false,
+            isLoading: true,
             isLoginIn: false
         };
     }
@@ -85,8 +86,20 @@ class Login extends Component {
 
     componentDidMount() {
         // Creates an event listener for Android's back button
+        this.handleSessionData();
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
     }
+
+    async handleSessionData() {
+		let data = JSON.parse(await AsyncStorage.getItem('sessionData'));
+		if (data && data.token && data.id) {
+			// Sets session's token in redux state.
+			this.props.changeSessionToken({ token: data.token });
+			this.getUserInfo();
+		} else {
+			this.setState({ isLoading: false })
+		}
+	}
 
     // Changes the active screen using redux.
     changeScreen(activeScreen) {
@@ -126,17 +139,25 @@ class Login extends Component {
     logIn() {
         if (this.state.username && this.state.password) {
             this.setState({ isLoginIn: true });
-            let formData = new FormData();
-            formData.append('email', this.state.username);
-            formData.append('password', this.state.password);
-
-            axios.post(`${VUE_APP_BASE_API_URL}/auth`, formData)
+            axios({
+                url: '/auth',
+                method: "POST",
+                data: {
+                    email: this.state.username,
+                    password: this.state.password
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
             .then((response) => {
                 this.saveSessionData('sessionData', JSON.stringify(response.data));
                 this.props.changeSessionToken({ token: response.data.token });
-                this.getUserInfo(response.data.id, response.data.token);
+                //this.changeScreen('dashboard');
+                this.getUserInfo();
             })
             .catch((error) => {
+                console.log(error.response);
                 this.setState({ isLoginIn: false });
                 Toast.show({
                     text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
@@ -172,19 +193,26 @@ class Login extends Component {
     // Logs user in dev mode
     logInDevMode() {
         this.setState({ isLoginIn: true });
-        let formData = new FormData();
-        formData.append('email', 'rogelio@mctekk.com');
-        formData.append('password', 'nosenose');
-
-        axios.post(`${VUE_APP_BASE_API_URL}/auth`, formData)
+        axios({
+            url: '/auth',
+            method: "POST",
+            data: {
+                email: 'rene.bravo@iteraprocess.com',
+                password: '135'
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
         .then((response) => {
+            console.log(response.data)
             this.saveSessionData('sessionData', JSON.stringify(response.data));
             this.props.changeSessionToken({ token: response.data.token });
             //this.changeScreen('dashboard');
-            this.getUserInfo(response.data.id, response.data.token);
+            this.getUserInfo();
         })
         .catch((error) => {
-            console.log(error);
+            console.log(error.response);
             this.setState({ isLoginIn: false });
             Toast.show({
                 text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
@@ -197,14 +225,11 @@ class Login extends Component {
 
     // Tries to get the user's information using the stored token.
 	// If the response is an error then the token is expired and removes the session data.
-    getUserInfo(userId, token) {
-        const data = {
-            'Authorization': token,
-        };
-        axios.get(`${VUE_APP_BASE_API_URL}/users/${userId}`, { headers: data })
+    getUserInfo() {
+        axios.get(`/users`)
         .then((response) => {
             this.props.changeUser({ user: response.data });
-            this.getUserDefaultCompany(response.data.default_company, token);
+            this.getUserCondos();
         })
         .catch((error) => {
             this.setState({ isLoginIn: false });
@@ -218,13 +243,11 @@ class Login extends Component {
     }
 
     // Gets user's default company.
-    getUserDefaultCompany(companyId, token) {
-        const data = {
-            'Authorization': token,
-        };
-        axios.get(`${VUE_APP_BASE_API_URL}/companies?q=(id:${companyId})`, { headers: data })
+    getUserCondos() {
+        axios.get(`/condos`)
         .then((response) => {
-            this.props.changeActiveCompany({ company: response.data[0] });
+            this.props.changeCondos({ condos: response.data });
+            console.log(this.props.state)
             this.changeScreen('dashboard');
         })
         .catch((error) => {
@@ -254,7 +277,7 @@ class Login extends Component {
                     <Content style={{ backgroundColor: colors.normalWhite }}>
                         {
                             this.state.isLoading ?
-                                <Spinner color={colors.brandWhite} /> :
+                                <Spinner color={colors.brandOrange} /> :
                                 <View>
                                     <View>
                                         <View style={Stylesheet.containerView}>
@@ -283,7 +306,7 @@ class Login extends Component {
                                                 </Item>
                                                 {
                                                     this.state.isLoginIn ?
-                                                        <Spinner color={colors.brandRed} />
+                                                        <Spinner color={colors.brandOrange} />
                                                     :
                                                         <Button
                                                             block
@@ -360,7 +383,9 @@ class Login extends Component {
 
 // Maps redux's state variables to this class' props
 const mapStateToProps = state => {
-    return {};
+    return {
+        state: state
+    };
 };
 
 // Connects redux actions to this class' props
@@ -368,5 +393,5 @@ export default connect(mapStateToProps, {
     changeActiveScreen, 
     changeSessionToken, 
     changeUser, 
-    changeActiveCompany
+    changeCondos
 })(Login);
