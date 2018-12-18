@@ -149,7 +149,7 @@ class EditInfo extends Component {
 				</View>
 			)
 		}
-	};
+	}
     
     titleBarLeft() {
         return {

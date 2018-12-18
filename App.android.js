@@ -72,41 +72,74 @@ startApp = (root) => {
         
         case 'dashboard':
             Navigation.startTabBasedApp({
-                tabs: [
-                    {
-                        screen: 'dac.Dashboard', // unique ID registered with Navigation.registerScreen
-                        icon: require('./app/assets/images/icons/apps.png'), // local image asset for the tab icon unselected state (optional on iOS)
-                        iconInsets: { // add this to change icon position (optional, iOS only).
-                            top: 6, // optional, default is 0.
-                            left: 0, // optional, default is 0.
-                            bottom: -6, // optional, default is 0.
-                            right: 0 // optional, default is 0.
-                        },
-                        navigatorStyle: {
-                            navBarBackgroundColor: '#551A8B',
-                            navBarComponentAlignment: 'center',
-                            statusBarTextColorScheme: 'light',
-                            navBarHidden: true,
-                        }, // override the navigator style for the tab screen, see "Styling the navigator" below (optional),
-                        navigatorButtons: {} // override the nav buttons for the tab screen, see "Adding buttons to the navigator" below (optional)
+                tabs: [{
+                    screen: 'vv.Home', // unique ID registered with Navigation.registerScreen
+                    icon: require('./app/assets/images/icons/home.png'), // local image asset for the tab icon unselected state (optional on iOS)
+                    iconInsets: { // add this to change icon position (optional, iOS only).
+                        top: 6, // optional, default is 0.
+                        left: 0, // optional, default is 0.
+                        bottom: -6, // optional, default is 0.
+                        right: 0 // optional, default is 0.
                     },
-                    {
-                        screen: 'dac.Companies', // unique ID registered with Navigation.registerScreen
-                        icon: require('./app/assets/images/icons/family.png'), // local image asset for the tab icon unselected state (optional on iOS)
-                        iconInsets: { // add this to change icon position (optional, iOS only).
-                            top: 6, // optional, default is 0.
-                            left: 0, // optional, default is 0.
-                            bottom: -6, // optional, default is 0.
-                            right: 0 // optional, default is 0.
-                        },
-                        navigatorStyle: {
-                            navBarBackgroundColor: '#551A8B',
-                            navBarComponentAlignment: 'center',
-                            statusBarTextColorScheme: 'light',
-                            navBarHidden: true,
-                        }, // override the navigator style for the tab screen, see "Styling the navigator" below (optional),
-                        navigatorButtons: {} // override the nav buttons for the tab screen, see "Adding buttons to the navigator" below (optional)
-                    }
+                    navigatorStyle: {
+                        navBarBackgroundColor: '#551A8B',
+                        navBarComponentAlignment: 'center',
+                        statusBarTextColorScheme: 'light',
+                        navBarHidden: true,
+                    }, // override the navigator style for the tab screen, see "Styling the navigator" below (optional),
+                    navigatorButtons: {} // override the nav buttons for the tab screen, see "Adding buttons to the navigator" below (optional)
+                },
+                {
+                    screen: 'vv.AddPost', // unique ID registered with Navigation.registerScreen
+                    icon: require('./app/assets/images/icons/post.png'), // local image asset for the tab icon unselected state (optional on iOS)
+                    iconInsets: { // add this to change icon position (optional, iOS only).
+                        top: 6, // optional, default is 0.
+                        left: 0, // optional, default is 0.
+                        bottom: -6, // optional, default is 0.
+                        right: 0 // optional, default is 0.
+                    },
+                    navigatorStyle: {
+                        navBarBackgroundColor: '#551A8B',
+                        navBarComponentAlignment: 'center',
+                        statusBarTextColorScheme: 'light',
+                        navBarHidden: true,
+                    }, // override the navigator style for the tab screen, see "Styling the navigator" below (optional),
+                    navigatorButtons: {} // override the nav buttons for the tab screen, see "Adding buttons to the navigator" below (optional)
+                },
+                {
+                    screen: 'dac.Companies', // unique ID registered with Navigation.registerScreen
+                    icon: require('./app/assets/images/icons/bills.png'), // local image asset for the tab icon unselected state (optional on iOS)
+                    iconInsets: { // add this to change icon position (optional, iOS only).
+                        top: 6, // optional, default is 0.
+                        left: 0, // optional, default is 0.
+                        bottom: -6, // optional, default is 0.
+                        right: 0 // optional, default is 0.
+                    },
+                    navigatorStyle: {
+                        navBarBackgroundColor: '#551A8B',
+                        navBarComponentAlignment: 'center',
+                        statusBarTextColorScheme: 'light',
+                        navBarHidden: true,
+                    }, // override the navigator style for the tab screen, see "Styling the navigator" below (optional),
+                    navigatorButtons: {} // override the nav buttons for the tab screen, see "Adding buttons to the navigator" below (optional)
+                },
+                {
+                    screen: 'dac.Companies', // unique ID registered with Navigation.registerScreen
+                    icon: require('./app/assets/images/icons/notifications.png'), // local image asset for the tab icon unselected state (optional on iOS)
+                    iconInsets: { // add this to change icon position (optional, iOS only).
+                        top: 6, // optional, default is 0.
+                        left: 0, // optional, default is 0.
+                        bottom: -6, // optional, default is 0.
+                        right: 0 // optional, default is 0.
+                    },
+                    navigatorStyle: {
+                        navBarBackgroundColor: '#551A8B',
+                        navBarComponentAlignment: 'center',
+                        statusBarTextColorScheme: 'light',
+                        navBarHidden: true,
+                    }, // override the navigator style for the tab screen, see "Styling the navigator" below (optional),
+                    navigatorButtons: {} // override the nav buttons for the tab screen, see "Adding buttons to the navigator" below (optional)
+                }
                 ],
                 tabsStyle: {
                     tabBarButtonColor: '#12776b', // optional, change the color of the tab icons and text (also unselected). On Android, add this to appStyle

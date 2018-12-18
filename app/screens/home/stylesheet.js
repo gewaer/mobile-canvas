@@ -12,7 +12,7 @@ const isIphoneX =
   platform === "ios" && deviceHeight === 812 && deviceWidth === 375;
 export default StyleSheet.create({
     linkBTN: {
-        color: colors.brandOrange,
+        color: '#00A1B4',
         textDecorationLine: "underline",
         fontSize: 14
     },
@@ -22,23 +22,26 @@ export default StyleSheet.create({
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.2,
         shadowRadius: 4,
-        width: 280,
-        alignSelf: 'center',
-        height: 36
+        width: 90,
+        alignSelf: 'flex-end',
+        height: 25,
+        marginLeft: 12
     },
     formItem: {
         borderTopWidth: 1,
         borderLeftWidth: 1,
         borderRightWidth: 1,
-        borderColor: colors.brandOrange,
-        marginTop: 8,
-        height: 29.5
+        borderRadius: 4,
+        borderColor: colors.brandLightGray,
+        height: 27,
     },
     formInput: {
         borderWidth: 1,
-        borderColor: colors.brandOrange,
+        borderColor: '#00A1B4',
         marginTop: 8,
-        height: 142.5
+        fontSize: 12,
+        paddingLeft: 16,
+        paddingRight: 16
     },
     titleBarContent: {
         color: "white",
@@ -63,8 +66,8 @@ export default StyleSheet.create({
         backgroundColor: "transparent"
     },
     divisionLine: {
-        height: 1,
-        borderBottomWidth: 0.7,
+        height: 3,
+        borderBottomWidth: 3,
         borderBottomColor: colors.brandDarkGrey
     },
     labelText: {
@@ -73,8 +76,19 @@ export default StyleSheet.create({
     },
     titleText: {
         fontSize: 16,
-        color: colors.brandOrange,
+        color: '#00A1B4',
         marginLeft: 12,
         marginVertical: 12
+    },
+    buttonIcon: {
+        marginLeft: 0,
+        marginRight: 0,
+        paddingTop: 0,
+        height: 27,
+    },
+    topContainer: {
+        marginHorizontal: 12,
+        marginVertical: 16,
+        flexDirection: 'row'
     }
 });

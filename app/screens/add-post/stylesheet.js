@@ -12,33 +12,36 @@ const isIphoneX =
   platform === "ios" && deviceHeight === 812 && deviceWidth === 375;
 export default StyleSheet.create({
     linkBTN: {
-        color: colors.brandOrange,
+        color: '#00A1B4',
         textDecorationLine: "underline",
         fontSize: 14
     },
     submitBtn: {
-        backgroundColor: colors.brandRed,
+        backgroundColor: '#00A1B4',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.2,
         shadowRadius: 4,
-        width: 280,
-        alignSelf: 'center',
-        height: 36
+        width: 169,
+        alignSelf: 'flex-end',
+        height: 30,
+        marginHorizontal: 16
     },
     formItem: {
         borderTopWidth: 1,
         borderLeftWidth: 1,
         borderRightWidth: 1,
-        borderColor: colors.brandOrange,
+        borderColor: '#00A1B4',
         marginTop: 8,
         height: 29.5
     },
     formInput: {
         borderWidth: 1,
-        borderColor: colors.brandOrange,
+        borderColor: '#00A1B4',
         marginTop: 8,
-        height: 142.5
+        fontSize: 12,
+        paddingLeft: 16,
+        paddingRight: 16
     },
     titleBarContent: {
         color: "white",
@@ -73,8 +76,14 @@ export default StyleSheet.create({
     },
     titleText: {
         fontSize: 16,
-        color: colors.brandOrange,
+        color: '#00A1B4',
         marginLeft: 12,
         marginVertical: 12
+    },
+    buttonIcon: {
+        marginLeft: 0,
+        marginRight: 0,
+        paddingTop: 0,
+        height: 25,
     }
 });

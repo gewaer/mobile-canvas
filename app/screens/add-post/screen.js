@@ -57,7 +57,7 @@ import {
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/'
-import RadioRow from '../../components/radio-row'
+import AddFileButton from '../../components/add-file-button'
 
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
@@ -66,7 +66,7 @@ const platform = Platform.OS;
 	Screen Name: Login. 
 	Description: This screen is used to let the user log in with his/her email or with social options.
 */
-class Reports extends Component {
+class AddPost extends Component {
     
     constructor(props) {
         super(props);
@@ -130,7 +130,7 @@ class Reports extends Component {
         return {
             content: (
                 <View>
-                    <TouchableOpacity transparent onPress={() => this.pushScreen('dac.Welcome')}>
+                    <TouchableOpacity transparent onPress={() => this.props.navigator.toggleDrawer({ side: 'left', animated: true, to: 'open' })}>
                         <Icon type={'Ionicons'} name={'ios-menu'} style={{ color: 'white', width: 22 }} />
                     </TouchableOpacity>
                 </View>
@@ -142,12 +142,13 @@ class Reports extends Component {
     titleBarBody() {
         return {
             content: (
-                <View>
-                    <Title>
-                        <Text style={[Stylesheet.titleBarContent, { fontSize: 20 }]}>
-                            Reportes
-                        </Text>
-                    </Title>
+                <View style={[Stylesheet.titleBarContent, { width: '105%' }]}>
+                    <Text style={[Stylesheet.titleBarContent, { fontSize: 20 }]}>
+                        Sarai Ramirez Rodriguez
+                    </Text>
+                    <Text style={[Stylesheet.titleBarContent, { fontSize: 14 }]}>
+                        Itera Intranet
+                    </Text>
                 </View>
             )
         };
@@ -280,21 +281,21 @@ class Reports extends Component {
                             this.state.isLoading ?
                                 <Spinner color={colors.brandLightBlack} /> :
                                 <View>
-                                    <Text style={ Stylesheet.titleText }>¡Ayúdanos a mejorar!</Text>
+                                    <Text style={ Stylesheet.titleText }>Agregar Post</Text>
                                     <View style={ Stylesheet.divisionLine }></View>
                                     <View style={Stylesheet.containerView}>
                                         <Form>
-                                            <Text style={ Stylesheet.labelText }>Sección de la App:</Text>
+                                            <Text style={ Stylesheet.labelText }>Sección del blog:</Text>
                                             <Item picker style={ Stylesheet.formItem }>
                                                 <Picker
                                                     mode="dropdown"
                                                     iosIcon={<Icon name="ios-arrow-down-outline" />}
                                                     style={{ width: 350 }}
-                                                    placeholder="Seleccionar..."
+                                                    placeholder="Selecciona una sección..."
                                                     placeholderStyle={{ color: colors.brandLightGray, fontSize: 12 }}
                                                     placeholderIconColor="#007aff"
-                                                    selectedValue={this.state.pickerSelection1}
-                                                    onValueChange={(itemValue, itemIndex) => this.setState({pickerSelection1: itemValue})}
+                                                    selectedValue={this.state.selected1}
+                                                    onValueChange={(itemValue, itemIndex) => this.setState({selected1: itemValue})}
                                                 >
                                                     <Picker.Item label="Wallet" value="key0" />
                                                     <Picker.Item label="ATM Card" value="key1" />
@@ -303,28 +304,13 @@ class Reports extends Component {
                                                     <Picker.Item label="Net Banking" value="key4" />
                                                 </Picker>
                                             </Item>
-                                            <Text style={ Stylesheet.labelText }>Tipo de reporte:</Text>
-                                            <Item picker style={ Stylesheet.formItem }>
-                                                <Picker
-                                                    mode="dropdown"
-                                                    iosIcon={<Icon name="ios-arrow-down-outline" />}
-                                                    style={{ width: 350 }}
-                                                    placeholder="Seleccionar..."
-                                                    placeholderStyle={{ color: colors.brandLightGray, fontSize: 12 }}
-                                                    placeholderIconColor="#007aff"
-                                                    selectedValue={this.state.pickerSelection2}
-                                                    onValueChange={(itemValue, itemIndex) => this.setState({pickerSelection2: itemValue})}
-                                                >
-                                                    <Picker.Item label="Wallet" value="key0" />
-                                                    <Picker.Item label="ATM Card" value="key1" />
-                                                    <Picker.Item label="Debit Card" value="key2" />
-                                                    <Picker.Item label="Credit Card" value="key3" />
-                                                    <Picker.Item label="Net Banking" value="key4" />
-                                                </Picker>
-                                            </Item>
-                                            <Text style={ Stylesheet.labelText }>Comentario:</Text>
-                                            <Input placeholderTextColor={ colors.brandLightGray } style={ [Stylesheet.formInput, { fontSize: 12, paddingLeft: 16, paddingRight: 16 }] } multiline={ true } placeholder="Deja un comentario..." />                                   
+                                            <Text style={ Stylesheet.labelText }>Título:</Text>
+                                            <Input placeholderTextColor={ colors.brandLightGray } style={ [Stylesheet.formInput, { height: 29.5 }] } placeholder="Escribe el título..." />
+                                            <Text style={ Stylesheet.labelText }>Contenido:</Text>
+                                            <Input placeholderTextColor={ colors.brandLightGray } style={ [Stylesheet.formInput, { height: 142.5 }] } multiline={ true } placeholder="Agrega contenido..." />                                   
                                         </Form>
+                                        <Text style={ [Stylesheet.labelText, { marginBottom: 8 }] }>Adjuntar imagen o archivo:</Text>
+                                        <AddFileButton/>
                                     </View>
                                     <View style={ Stylesheet.divisionLine }></View>
                                     <Button
@@ -332,10 +318,10 @@ class Reports extends Component {
                                         primary
                                         onPress={() => { console.log('button pressed') }}
                                         style={[Stylesheet.submitBtn, { marginTop: 20 }]}>
-                                        <Text style={{ color: colors.normalWhite }}>
-                                            Enviar reporte
+                                        <Text style={{ color: colors.normalWhite, fontSize: 12, paddingRight: 10 }}>
+                                            Crear
                                         </Text>
-                                        <Icon type="Ionicons"  name="ios-send"  color={colors.normalWhite} />
+                                        <Icon type="Ionicons"  name="ios-add"  color={colors.normalWhite} style={ Stylesheet.buttonIcon }/>
                                     </Button>
                                 </View>
                         }
@@ -345,7 +331,7 @@ class Reports extends Component {
         );
     }
 }
-
+  
 // Maps redux's state variables to this class' props
 const mapStateToProps = state => {
     return {};
@@ -357,4 +343,4 @@ export default connect(mapStateToProps, {
     changeSessionToken, 
     changeUser, 
     changeActiveCompany
-})(Reports);
+})(AddPost);

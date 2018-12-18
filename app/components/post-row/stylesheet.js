@@ -8,7 +8,9 @@ const platformStyle = undefined;
 const isIphoneX =
   platform === "ios" && deviceHeight === 812 && deviceWidth === 375;
 export default StyleSheet.create({
-  // Cover
+  container: {
+    flexDirection: 'row'
+  },
   drawerCover: {
     alignSelf: "stretch",
     height: deviceHeight / 3.5,
@@ -34,10 +36,6 @@ export default StyleSheet.create({
     fontWeight: "400",
     textAlign: "center",
     marginTop: Platform.OS === "android" ? -3 : undefined
-  },
-  // Sidebar Styles
-  container: {
-    flex: 1
   },
   navItemStyle: {
     padding: 10,
@@ -88,5 +86,40 @@ export default StyleSheet.create({
   // For bg colors
   darkerColor: {
     backgroundColor: "#1E2A39"
+  },
+  thumbnail: {
+    width: 40,
+    height: 40,
+    borderColor: colors.brandLightGray,
+    borderWidth: 1,
+    borderRadius: 20,
+    marginRight: 12
+  },
+  itemContainer: {
+    borderBottomWidth: 0.6,
+    borderBottomColor: "#707070",
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  topContainer: {
+    flexDirection: 'row',
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 14,
+    marginBottom: 2
+  },
+  subTitle: {
+    fontSize: 12,
+     color: colors.brandLightGray
+  },
+  content: {
+    fontSize: 12,
+    marginVertical: 12
+  },
+  bottomText: {
+    color: '#00A1B4',
+    fontSize: 15,
+    marginLeft: 5
   }
 });
