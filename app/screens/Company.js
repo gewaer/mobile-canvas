@@ -106,7 +106,7 @@ class Company extends Component {
                 </View>
             )
        }
-    };
+    }
     
     titleBarLeft() {
         return {

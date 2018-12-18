@@ -149,7 +149,7 @@ class ItemInfo extends Component {
 				</View>
 			)
 		}
-	};
+	}
     
     titleBarLeft() {
         return {

@@ -2,7 +2,6 @@
 import React, { Component } from "react";
 
 import {
-	ScrollView,
 	View,
 	TouchableOpacity,
 	AsyncStorage,
@@ -41,10 +40,9 @@ class PostRow extends Component {
 		intImage: 1,
 		intMsg: 0,
 		intClip: 1
-    } 
+	} 
 	
 	render() {
-	
 		const {
 			colors,
 			title,

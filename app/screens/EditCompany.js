@@ -164,7 +164,7 @@ class EditCompany extends Component {
                 </View>
             )
         }
-    };
+    }
 
     // Defines title bar's left content.
     titleBarLeft() {
