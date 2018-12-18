@@ -157,7 +157,6 @@ class Login extends Component {
                 this.getUserInfo();
             })
             .catch((error) => {
-                console.log(error.response);
                 this.setState({ isLoginIn: false });
                 Toast.show({
                     text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
@@ -205,7 +204,6 @@ class Login extends Component {
             }
         })
         .then((response) => {
-            console.log(response.data)
             this.saveSessionData('sessionData', JSON.stringify(response.data));
             this.props.changeSessionToken({ token: response.data.token });
             //this.changeScreen('dashboard');
@@ -247,7 +245,6 @@ class Login extends Component {
         axios.get(`/condos`)
         .then((response) => {
             this.props.changeCondos({ condos: response.data });
-            console.log(this.props.state)
             this.changeScreen('dashboard');
         })
         .catch((error) => {
