@@ -9,9 +9,10 @@ let instance = axios.create({
 
 instance.interceptors.request.use(function (config) {
     if(!config.url.includes('auth')){
+        console.log(config)
         const token = getStore().getState().session.token;
         config.headers.Authorization = token;
-        config.headers.Accept = "application/json, text/plain, */*";
+        config.headers["Content-Type"] = "application/json";
     }
     return config;
   }, function (error) {
