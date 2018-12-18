@@ -145,15 +145,11 @@ class Login extends Component {
                 data: {
                     email: this.state.username,
                     password: this.state.password
-                },
-                headers: {
-                    'Content-Type': 'application/json'
                 }
             })
             .then((response) => {
                 this.saveSessionData('sessionData', JSON.stringify(response.data));
                 this.props.changeSessionToken({ token: response.data.token });
-                //this.changeScreen('dashboard');
                 this.getUserInfo();
             })
             .catch((error) => {
@@ -198,15 +194,11 @@ class Login extends Component {
             data: {
                 email: 'rene.bravo@iteraprocess.com',
                 password: '135'
-            },
-            headers: {
-                'Content-Type': 'application/json'
             }
         })
         .then((response) => {
             this.saveSessionData('sessionData', JSON.stringify(response.data));
             this.props.changeSessionToken({ token: response.data.token });
-            //this.changeScreen('dashboard');
             this.getUserInfo();
         })
         .catch((error) => {
