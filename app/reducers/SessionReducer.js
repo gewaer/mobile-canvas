@@ -2,7 +2,7 @@ const initialState = {
     activeScreen: 'login',
     token: '',
     user: {},
-    company: {}
+    condos: {}
 };
 
 const SessionReducer = (state = initialState, action) => {
@@ -19,8 +19,8 @@ const SessionReducer = (state = initialState, action) => {
         case 'CHANGE_ACTIVE_FAMILY':
             return { ...state, selectedCompanyId: action.payload.selectedCompanyId };
             break;
-        case 'CHANGE_ACTIVE_COMPANY':
-            return { ...state, company: action.payload.company };
+        case 'CHANGE_CONDOS':
+            return { ...state, condos: action.payload.condos };
             break;
         default:
             return state;
