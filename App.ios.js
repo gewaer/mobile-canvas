@@ -14,7 +14,7 @@ export default class App extends Component {
 		super(props);
 		store.subscribe(this.onStoreUpdate.bind(this));
 		store.dispatch(changeActiveScreen({
-			activeScreen: 'dashboard'
+			activeScreen: 'login'
 		}));
 		console.disableYellowBox = true;
 	}
