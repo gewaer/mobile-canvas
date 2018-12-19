@@ -31,8 +31,7 @@ import Stylesheet from "./stylesheet";
 class MulticolorBar extends Component {
 
 	static defaultProps = {
-		colors: ['#68B143', '#E8523F', '#00A1B4', '#F49B48'],
-		source: require('../../assets/images/vivook/logo-vivook.png'),
+		source: null,
 		title: 'Itera Intranet',
 		subTitle: 'Sarai Ramirez Rodriguez',
 		isSelected: false
@@ -41,38 +40,33 @@ class MulticolorBar extends Component {
 	render() {
 	
 		const {
-			colors,
 			title,
 			subTitle,
-			isSelected
+			isSelected,
+			source
 		} = this.props;
 
 		return (
-			<View style={ Stylesheet.itemContainer } onPress={() => console.log("p")}>
-				<Left style={{ maxWidth: 40 }}>
+			<TouchableOpacity style={ Stylesheet.itemContainer } onPress={ this.props.onPress }>
+				{ this.props.source ?
 				<Image
-					source={this.props.source}
+					source={ { uri: this.props.source } }
 					style={ Stylesheet.thumbnail }
-				/>
-					
-				</Left>
-				<Body>
-				
-					<View>
-						<Text style={ Stylesheet.title }>{ this.props.title }</Text>
-						<Text style={ Stylesheet.subTitle }>{ this.props.subTitle }</Text>
-					</View>
-				</Body>
-				<Right>
-					<TouchableOpacity onPress={() => { this.props.onPress }}>
-						{
-							this.props.isSelected ? <Icon type={'Ionicons'} name={'ios-radio-button-on'} style={{ color: 'black', fontSize: 22 }} />
-							: <Icon type={'Ionicons'} name={'ios-radio-button-off'} style={{ color: 'black', fontSize: 22 }} />
-						}
-						
-					</TouchableOpacity>
-				</Right>
-			</View>
+				/> :
+				<View style={ [Stylesheet.thumbnail, { justifyContent: 'center', alignItems: 'center' }] }>
+					<Icon type={'FontAwesome'} name={'building'} style={ { color: '#B5B5B5',  fontSize: 25} } /> 
+				</View> }
+				<View>
+					<Text style={ Stylesheet.title }>{ this.props.title }</Text>
+					<Text style={ Stylesheet.subTitle }>{ this.props.subTitle }</Text>
+				</View>
+				<View style={ Stylesheet.rightStyle }>
+					{
+						this.props.isSelected ? <Icon type={'Ionicons'} name={'ios-radio-button-on'} style={{ color: 'black', fontSize: 22 }} />
+						: <Icon type={'Ionicons'} name={'ios-radio-button-off'} style={{ color: 'black', fontSize: 22 }} />
+					}
+				</View>
+			</TouchableOpacity>
 		);
 	}
 }

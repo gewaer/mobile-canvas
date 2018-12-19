@@ -145,7 +145,8 @@ class Login extends Component {
                 data: {
                     email: this.state.username,
                     password: this.state.password
-                }
+                },
+                timeout: 5000
             })
             .then((response) => {
                 this.saveSessionData('sessionData', JSON.stringify(response.data));
@@ -194,7 +195,8 @@ class Login extends Component {
             data: {
                 email: 'rene.bravo@iteraprocess.com',
                 password: '135'
-            }
+            },
+            timeout: 5000
         })
         .then((response) => {
             this.saveSessionData('sessionData', JSON.stringify(response.data));
@@ -237,7 +239,7 @@ class Login extends Component {
         axios.get(`/condos`)
         .then((response) => {
             this.props.changeCondos({ condos: response.data });
-            this.changeScreen('dashboard');
+            this.changeScreen('condominiums');
         })
         .catch((error) => {
             this.setState({ isLoginIn: false });

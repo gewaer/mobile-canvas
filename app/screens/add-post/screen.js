@@ -2,9 +2,7 @@
 import React, { Component } from 'react';
 
 import {
-    StyleSheet,
     View,
-    Linking,
     Image,
     AsyncStorage,
     Platform,
@@ -14,23 +12,16 @@ import {
 
 import {
     Button,
-    Title,
     Text,
     Content,
     Container,
     Form,
     Item,
     Input,
-    Label,
     Spinner,
     Icon,
     Root,
     Toast,
-    List,
-    ListItem,
-    Body,
-    Left,
-    Right,
     Picker
 } from "native-base";
 
@@ -53,7 +44,8 @@ import {
     changeActiveScreen, 
     changeSessionToken, 
     changeUser, 
-    changeActiveCompany 
+    changeCurrentCondo,
+    changeCondos
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/'
@@ -72,15 +64,7 @@ class AddPost extends Component {
         super(props);
 
         this.state = {
-            username: '',
-            password: '',
-            confirmPassword: '',
-            emailError: '',
-            passwordError: '',
-            error: null,
-            loggedIn: false,
             isLoading: false,
-            isLoginIn: false,
             pickerSelection1: undefined,
             pickerSelection2: undefined
         };
@@ -144,130 +128,14 @@ class AddPost extends Component {
             content: (
                 <View style={[Stylesheet.titleBarContent, { width: '105%' }]}>
                     <Text style={[Stylesheet.titleBarContent, { fontSize: 20 }]}>
-                        Sarai Ramirez Rodriguez
+                        { this.props.user.UserName }
                     </Text>
                     <Text style={[Stylesheet.titleBarContent, { fontSize: 14 }]}>
-                        Itera Intranet
+                        { this.props.currentCondo && this.props.currentCondo.CondoName }
                     </Text>
                 </View>
             )
         };
-    }
-
-    // Process LogIn
-    logIn() {
-        if (this.state.username && this.state.password) {
-            this.setState({ isLoginIn: true });
-            let formData = new FormData();
-            formData.append('email', this.state.username);
-            formData.append('password', this.state.password);
-
-            axios.post(`${VUE_APP_BASE_API_URL}/auth`, formData)
-            .then((response) => {
-                this.saveSessionData('sessionData', JSON.stringify(response.data));
-                this.props.changeSessionToken({ token: response.data.token });
-                this.getUserInfo(response.data.id, response.data.token);
-            })
-            .catch((error) => {
-                this.setState({ isLoginIn: false });
-                Toast.show({
-                    text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
-                    buttonText: 'Ok',
-                    duration: 3000,
-                    type: 'danger'
-                });
-            });
-        } else {
-            Toast.show({
-                text: 'Email and password are required!',
-                buttonText: 'Ok',
-                duration: 3000,
-                type: 'danger'
-            });
-        }
-    }
-
-    // Saves user's session data in the local storage.
-    async saveSessionData(item, value) {
-        try {
-            await AsyncStorage.setItem(item, value);
-            let data = JSON.parse(await AsyncStorage.getItem(item));
-            if (data) {
-                return data;
-            }
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    // Logs user in dev mode
-    logInDevMode() {
-        this.setState({ isLoginIn: true });
-        let formData = new FormData();
-        formData.append('email', 'rogelio@mctekk.com');
-        formData.append('password', 'nosenose');
-
-        axios.post(`${VUE_APP_BASE_API_URL}/auth`, formData)
-        .then((response) => {
-            this.saveSessionData('sessionData', JSON.stringify(response.data));
-            this.props.changeSessionToken({ token: response.data.token });
-            //this.changeScreen('dashboard');
-            this.getUserInfo(response.data.id, response.data.token);
-        })
-        .catch((error) => {
-            console.log(error);
-            this.setState({ isLoginIn: false });
-            Toast.show({
-                text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
-                buttonText: 'Ok',
-                duration: 3000,
-                type: 'danger'
-            });
-        });
-    }
-
-    // Tries to get the user's information using the stored token.
-	// If the response is an error then the token is expired and removes the session data.
-    getUserInfo(userId, token) {
-        const data = {
-            'Authorization': token,
-        };
-        axios.get(`${VUE_APP_BASE_API_URL}/users/${userId}`, { headers: data })
-        .then((response) => {
-            this.props.changeUser({ user: response.data });
-            this.getUserDefaultCompany(response.data.default_company, token);
-        })
-        .catch((error) => {
-            this.setState({ isLoginIn: false });
-            Toast.show({
-                text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
-                buttonText: 'Ok',
-                duration: 3000,
-                type: 'danger'
-            });
-        })
-    }
-
-    // Gets user's default company.
-    getUserDefaultCompany(companyId, token) {
-        const data = {
-            'Authorization': token,
-        };
-        axios.get(`${VUE_APP_BASE_API_URL}/companies?q=(id:${companyId})`, { headers: data })
-        .then((response) => {
-            this.props.changeActiveCompany({ company: response.data[0] });
-            this.changeScreen('dashboard');
-        })
-        .catch((error) => {
-            this.setState({ isLoginIn: false });
-            Toast.show({
-                text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
-                buttonText: 'Ok',
-                duration: 3000,
-                type: 'danger'
-            });
-        })
     }
 
     render() {
@@ -334,7 +202,12 @@ class AddPost extends Component {
   
 // Maps redux's state variables to this class' props
 const mapStateToProps = state => {
-    return {};
+    return {
+        state: state,
+        condos: state.session.condos,
+        currentCondo: state.session.currentCondo,
+        user: state.session.user
+    };
 };
 
 // Connects redux actions to this class' props
@@ -342,5 +215,6 @@ export default connect(mapStateToProps, {
     changeActiveScreen, 
     changeSessionToken, 
     changeUser, 
-    changeActiveCompany
+    changeCurrentCondo,
+    changeCondos
 })(AddPost);

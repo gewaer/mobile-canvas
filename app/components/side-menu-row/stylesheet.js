@@ -20,8 +20,10 @@ export default StyleSheet.create({
     borderBottomWidth: 0.6,
     borderBottomColor: "#707070",
     flexDirection: 'row',
-    paddingVertical: 25,
-    paddingHorizontal: 12
+    paddingVertical: 12,
+    marginLeft: 8,
+    marginRight: 8,
+    height: 47
   },
   title: {
     fontWeight: "bold",
@@ -31,8 +33,21 @@ export default StyleSheet.create({
   subTitle: {
     fontSize: 12
   },
-  rightStyle: {
+  text: {
+    fontSize: 14
+  },
+  bodyContainer: {
+    paddingHorizontal: 8,
+    paddingTop: 4
+  },
+  rightContainer: {
     alignSelf: 'center',
-    marginLeft: 'auto'
+    marginLeft: 'auto',
+    paddingHorizontal: 8
+  },
+  leftContainer: {
+    width: 30,
+    alignItems: 'center',
+    paddingLeft: 8
   }
 });

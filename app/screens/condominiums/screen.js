@@ -52,7 +52,8 @@ import {
     changeActiveScreen, 
     changeSessionToken, 
     changeUser, 
-    changeActiveCompany 
+    changeCurrentCondo,
+    changeCondos
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/'
@@ -71,15 +72,7 @@ class Condominios extends Component {
         super(props);
 
         this.state = {
-            username: '',
-            password: '',
-            confirmPassword: '',
-            emailError: '',
-            passwordError: '',
-            error: null,
-            loggedIn: false,
-            isLoading: false,
-            isLoginIn: false
+            isLoading: false
         };
     }
 
@@ -90,6 +83,7 @@ class Condominios extends Component {
     }
 
     componentDidMount() {
+        this.validateCondos();
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
     }
@@ -110,19 +104,6 @@ class Condominios extends Component {
         });
     }
 
-    // Defines title bar's left content
-    titleBarLeft() {
-        return {
-            content: (
-                <View>
-                    <TouchableOpacity transparent onPress={() => this.pushScreen('dac.Welcome')}>
-                        <Icon type={'Ionicons'} name={'ios-menu'} style={{ color: 'white', width: 22 }} />
-                    </TouchableOpacity>
-                </View>
-            )
-        };
-    }
-
     // Defines title bar's body content
     titleBarBody() {
         return {
@@ -138,135 +119,43 @@ class Condominios extends Component {
         };
     }
 
-    // Process LogIn
-    logIn() {
-        if (this.state.username && this.state.password) {
-            this.setState({ isLoginIn: true });
-            let formData = new FormData();
-            formData.append('email', this.state.username);
-            formData.append('password', this.state.password);
-
-            axios.post(`${VUE_APP_BASE_API_URL}/auth`, formData)
-            .then((response) => {
-                this.saveSessionData('sessionData', JSON.stringify(response.data));
-                this.props.changeSessionToken({ token: response.data.token });
-                this.getUserInfo(response.data.id, response.data.token);
-            })
-            .catch((error) => {
-                this.setState({ isLoginIn: false });
-                Toast.show({
-                    text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
-                    buttonText: 'Ok',
-                    duration: 3000,
-                    type: 'danger'
-                });
-            });
-        } else {
-            Toast.show({
-                text: 'Email and password are required!',
-                buttonText: 'Ok',
-                duration: 3000,
-                type: 'danger'
-            });
+    validateCondos(){
+        if(this.props.condos.length == 1 && !this.props.currentCondo.CondoName){
+            this.setCurrentCondo(this.props.condos[0])
         }
     }
 
-    // Saves user's session data in the local storage.
-    async saveSessionData(item, value) {
-        try {
-            await AsyncStorage.setItem(item, value);
-            let data = JSON.parse(await AsyncStorage.getItem(item));
-            if (data) {
-                return data;
-            }
-
-        } catch (error) {
-            console.log(error)
+    setCurrentCondo(condo){
+        if(this.props.currentCondo != condo){
+            this.props.changeCurrentCondo({ currentCondo: condo });
         }
-    }
-
-    // Logs user in dev mode
-    logInDevMode() {
-        this.setState({ isLoginIn: true });
-        let formData = new FormData();
-        formData.append('email', 'rogelio@mctekk.com');
-        formData.append('password', 'nosenose');
-
-        axios.post(`${VUE_APP_BASE_API_URL}/auth`, formData)
-        .then((response) => {
-            this.saveSessionData('sessionData', JSON.stringify(response.data));
-            this.props.changeSessionToken({ token: response.data.token });
-            //this.changeScreen('dashboard');
-            this.getUserInfo(response.data.id, response.data.token);
-        })
-        .catch((error) => {
-            console.log(error);
-            this.setState({ isLoginIn: false });
-            Toast.show({
-                text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
-                buttonText: 'Ok',
-                duration: 3000,
-                type: 'danger'
-            });
-        });
-    }
-
-    // Tries to get the user's information using the stored token.
-	// If the response is an error then the token is expired and removes the session data.
-    getUserInfo(userId, token) {
-        const data = {
-            'Authorization': token,
-        };
-        axios.get(`${VUE_APP_BASE_API_URL}/users/${userId}`, { headers: data })
-        .then((response) => {
-            this.props.changeUser({ user: response.data });
-            this.getUserDefaultCompany(response.data.default_company, token);
-        })
-        .catch((error) => {
-            this.setState({ isLoginIn: false });
-            Toast.show({
-                text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
-                buttonText: 'Ok',
-                duration: 3000,
-                type: 'danger'
-            });
-        })
-    }
-
-    // Gets user's default company.
-    getUserDefaultCompany(companyId, token) {
-        const data = {
-            'Authorization': token,
-        };
-        axios.get(`${VUE_APP_BASE_API_URL}/companies?q=(id:${companyId})`, { headers: data })
-        .then((response) => {
-            this.props.changeActiveCompany({ company: response.data[0] });
-            this.changeScreen('dashboard');
-        })
-        .catch((error) => {
-            this.setState({ isLoginIn: false });
-            Toast.show({
-                text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
-                buttonText: 'Ok',
-                duration: 3000,
-                type: 'danger'
-            });
-        })
+        this.changeScreen('dashboard');
     }
 
     render() {
         return (
             <Root>
                 <Container style={{ backgroundColor: colors.normalWhite }}>
-                    <TitleBar noShadow left={this.titleBarLeft()} body={this.titleBarBody()} bgColor={colors.brandLightBlack} />
+                    <TitleBar noShadow body={this.titleBarBody()} bgColor={colors.brandLightBlack} />
                     <MulticolorBar/>
                     <Content style={{ backgroundColor: colors.normalWhite }}>
                         {
                             this.state.isLoading ?
                                 <Spinner color={colors.brandLightBlack} /> :
                                 <View style={Stylesheet.containerView}>
-                                    <RadioRow/>
-                                    <RadioRow/>
+                                    { this.props.condos && this.props.condos.map((condo, index) => {
+                                        return(
+                                            <RadioRow
+                                                key={index}
+                                                isSelected={ this.props.currentCondo.CondoId == condo.CondoId }
+                                                title={ condo.CondoName }
+                                                subTitle={ this.props.user.UserName }
+                                                onPress={ () => { this.setCurrentCondo(condo) } }
+                                                source={ condo.rutalogo }
+                                            />
+                                        );
+                                        })
+                                    }
                                 </View>
                         }
                     </Content>
@@ -278,7 +167,12 @@ class Condominios extends Component {
 
 // Maps redux's state variables to this class' props
 const mapStateToProps = state => {
-    return {};
+    return {
+        state: state,
+        condos: state.session.condos,
+        currentCondo: state.session.currentCondo,
+        user: state.session.user
+    };
 };
 
 // Connects redux actions to this class' props
@@ -286,5 +180,6 @@ export default connect(mapStateToProps, {
     changeActiveScreen, 
     changeSessionToken, 
     changeUser, 
-    changeActiveCompany
+    changeCurrentCondo,
+    changeCondos
 })(Condominios);

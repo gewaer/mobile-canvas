@@ -9,6 +9,9 @@ export const appImages = {
     Logo: {
         uri: require("../assets/images/vivook/logo-vivook.png")
     },
+    LogoChar: {
+        uri: require("../assets/images/vivook/logo-vivook-2.png")
+    },
     Group: {
         uri: require("../assets/images/icons/users.svg"),
         fill: colors.brandWhite,
