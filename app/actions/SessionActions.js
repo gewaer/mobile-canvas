@@ -19,9 +19,9 @@ export const changeSessionToken = (type) => {
     };
 };
 
-export const changeActiveFamily = (type) => {
+export const changeCurrentCondo = (type) => {
     return {
-        type: 'CHANGE_ACTIVE_FAMILY',
+        type: 'CHANGE_CURRENT_CONDO',
         payload: type
     };
 };
