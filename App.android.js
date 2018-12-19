@@ -148,9 +148,9 @@ startApp = (root) => {
                     initialTabIndex: 0, // optional, the default selected bottom tab. Default: 0. On Android, add this to appStyle
                 },
                 appStyle: {
-                    tabBarButtonColor: '#12776b', // optional, change the color of the tab icons and text (also unselected). On Android, add this to appStyle
-                    tabBarSelectedButtonColor: '#fff', // optional, change the color of the selected tab icon and text (only selected). On Android, add this to appStyle
-                    tabBarBackgroundColor: colors.brandGreen, // optional, change the background color of the tab bar
+                    tabBarButtonColor: colors.brandLightGray, // optional, change the color of the tab icons and text (also unselected). On Android, add this to appStyle
+                    tabBarSelectedButtonColor: colors.brandRed, // optional, change the color of the selected tab icon and text (only selected). On Android, add this to appStyle
+                    tabBarBackgroundColor: colors.brandLightBlack, // optional, change the background color of the tab bar
                     initialTabIndex: 0, // optional, the default selected bottom tab. Default: 0. On Android, add this to appStyle
                 },
                 drawer: {
