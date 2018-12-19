@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import {
 	ScrollView,
 	View,
-	TouchableOpacity,
 	AsyncStorage,
 	StyleSheet,
 	Image
@@ -16,8 +15,7 @@ import {
 	Icon,
 	Text,
 	ListItem,
-	List,
-	Right,
+	List
 } from "native-base";
 
 // Importing local assets and components.
@@ -27,10 +25,20 @@ import {
 	colors,
 } from "../../config/styles";
 
+import SideMenuRow from "../side-menu-row"
+
 import Stylesheet from "./stylesheet";
 
 // Importing Redux's actions
-import { changeActiveScreen } from '../../actions/SessionActions';
+import {
+	changeActiveScreen, 
+    changeSessionToken, 
+    changeUser, 
+    changeCurrentCondo,
+    changeCondos
+} from '../../actions/SessionActions';
+
+import { appImages } from "../../config/imagesRoutes";
 
 /*
 	Screen Name: SideMenu. 
@@ -60,11 +68,19 @@ class SideMenu extends Component {
 		});
 	}
 
+	switchTab(index) {
+		this.props.navigator.switchToTab({ tabIndex: index }); 
+		this.props.navigator.toggleDrawer({
+			side: 'left',
+			animated: true
+		});
+	}
+
 	// Removes session data from the storage and changes to welcome scren
 	async logOut() {
 		try {
 			AsyncStorage.removeItem('sessionData', () => {
-			this.props.changeActiveScreen({ activeScreen: 'welcome' });
+			this.props.changeActiveScreen({ activeScreen: 'login' });
 			})
 		} catch (error) {
 			console.error(error);
@@ -82,76 +98,51 @@ class SideMenu extends Component {
 							style={ Stylesheet.thumbnail }
 						/>
 						<View style={ { justifyContent: 'center' } }>
-							<Text style={ Stylesheet.title }>Sarai Ramirez Rodriguez</Text>
-							<Text style={ Stylesheet.subTitle }>Itera Intranet</Text>
+							<Text style={ Stylesheet.title }>{ this.props.user.UserName }</Text>
+							<Text style={ Stylesheet.subTitle }>{ this.props.currentCondo && this.props.currentCondo.CondoName }</Text>
 						</View>
 					</View>
 					<ScrollView style={{paddingTop:paddingHelpers.XS}}>
 						<List>
-							<ListItem style={ListStyles.listItemDarkBorder} onPress={() => this.changeScreen('dashboard')}>
-								<View style={{ width: 30, alignItems: 'center' }}>
-									<Icon type={'MaterialIcons'} name={'dashboard'} style={{ fontSize: 22 }} />
-								</View>
-								<Body>
-									<View style={Stylesheet.navSectionStyle}>
-										<Text style={Stylesheet.navItemStyle}>
-											Dashboard
-										</Text>
-									</View>
-								</Body>
-							</ListItem>
-							<ListItem style={ListStyles.listItemDarkBorder} onPress={() => this.changeScreen('profile')}>
-								<View style={{ width: 30, alignItems: 'center' }}>
-									<Icon type={'FontAwesome'} name={'user'} style={{ fontSize: 22 }} />
-								</View>
-								<Body>
-									<View style={Stylesheet.navSectionStyle}>
-										<Text style={Stylesheet.navItemStyle}>
-											My Profile
-										</Text>
-									</View>
-								</Body>
-							</ListItem>
-							<ListItem style={ListStyles.listItemDarkBorder} onPress={() => this.changeScreen('settings')}>
-								<View style={{ width: 30, alignItems: 'center' }}>
-									<Icon type={'MaterialIcons'} name={'settings'} style={{ fontSize: 22 }} />
-								</View>
-								<Body>
-									<View style={Stylesheet.navSectionStyle}>
-										<Text style={Stylesheet.navItemStyle}>
-											Settings
-										</Text>
-									</View>
-								</Body>
-							</ListItem>
+							<SideMenuRow title={ 'Inicio' } iconType={ 'Ionicons' } iconName={ 'ios-home' } onPress={ () => { this.switchTab(0) } }/>
+							<SideMenuRow title={ 'Blogs' } iconType={ 'Ionicons' } iconName={ 'ios-create' } onPress={ () => { this.switchTab(0) } }/>
+							<SideMenuRow title={ 'Mis Condominios' } iconType={ 'FontAwesome' } iconName={ 'building' } onPress={ () => { this.changeScreen('condominiums') } }/>
+							<SideMenuRow title={ 'Estado de Cuenta' } iconType={ 'Ionicons' } iconName={ 'logo-usd' } onPress={ () => { this.switchTab(0) } }/>
+							<SideMenuRow title={ 'Notificaciones' } iconType={ 'Ionicons' } iconName={ 'md-notifications' } onPress={ () => { this.switchTab(0) } }/>
+							<SideMenuRow title={ 'Perfil' } iconType={ 'Ionicons' } iconName={ 'ios-contact' } onPress={ () => { this.switchTab(0) } }/>
+							<SideMenuRow title={ 'Reportes' } iconType={ 'Ionicons' } iconName={ 'ios-settings' } onPress={ () => { this.switchTab(0) } }/>
+							<SideMenuRow title={ 'Panel de Administración' } iconType={ 'Ionicons' } iconName={ 'ios-briefcase' } onPress={ () => { this.switchTab(0) } }/>
+							<SideMenuRow title={ 'Salir' } iconType={ 'Ionicons' } iconName={ 'ios-log-out' } onPress={ () => { this.logOut() } } shouldShowArrow={ false }/>
 						</List>
 					</ScrollView>
 				</View>
-				<View style = {[ Stylesheet.footerContainer, localStyles.footer ]}/>
+				<View style = { Stylesheet.footerContainer }>
+					<Image
+						source={appImages.LogoChar.uri}
+						style={ { width: 115, height: 35 } }
+						resizeMode='contain' 
+					/>
+				</View>
 			</View>
 		);
 	}
 }
 
-// Stylesheet
-const localStyles = StyleSheet.create({
-	footer: {
-		position: 'absolute',
-		right: 0,
-		left: 0,
-		bottom: 0,
-		zIndex: 1
-	}
-});
-
 // Maps redux's state variables to this class' props
 const mapStateToProps = state => {
 	return {
-		company: state.session.company
-	};
+        state: state,
+        condos: state.session.condos,
+        currentCondo: state.session.currentCondo,
+        user: state.session.user
+    };
 };
 
 // Connects redux actions to this class' props
 export default connect(mapStateToProps, {
-	changeActiveScreen
+	changeActiveScreen, 
+    changeSessionToken, 
+    changeUser, 
+    changeCurrentCondo,
+    changeCondos
 })(SideMenu);

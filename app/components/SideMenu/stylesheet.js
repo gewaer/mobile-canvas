@@ -45,16 +45,18 @@ export default StyleSheet.create({
     // fontFamily: "Akkurat-Bold",
   },
   navSectionStyle: {
-    backgroundColor: colors.brandWhite
+    backgroundColor: colors.normalWhite
   },
   sectionHeadingStyle: {
     paddingVertical: 10,
     paddingHorizontal: 5
   },
   footerContainer: {
-    padding: 20,
     alignItems: "center",
-    backgroundColor: colors.brandDarkGrey
+    backgroundColor: colors.normalWhite,
+    justifyContent: 'flex-end',
+    flex: 1,
+    paddingBottom: 20
   },
   // header Style
   userImage: {
