@@ -120,7 +120,7 @@ class Condominios extends Component {
     }
 
     validateCondos(){
-        if(this.props.condos.length == 1){
+        if(this.props.condos.length == 1 && !this.props.currentCondo.CondoName){
             this.setCurrentCondo(this.props.condos[0])
         }
     }
@@ -128,8 +128,8 @@ class Condominios extends Component {
     setCurrentCondo(condo){
         if(this.props.currentCondo != condo){
             this.props.changeCurrentCondo({ currentCondo: condo });
-            this.changeScreen('dashboard');
         }
+        this.changeScreen('dashboard');
     }
 
     render() {

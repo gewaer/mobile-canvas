@@ -53,7 +53,8 @@ import {
     changeActiveScreen, 
     changeSessionToken, 
     changeUser, 
-    changeActiveCompany 
+    changeCurrentCondo,
+    changeCondos
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/';
@@ -132,10 +133,10 @@ class Home extends Component {
             content: (
                 <View style={[Stylesheet.titleBarContent, { width: '105%' }]}>
                     <Text style={[Stylesheet.titleBarContent, { fontSize: 20 }]}>
-                        Sarai Ramirez Rodriguez
+                        { this.props.user.UserName }
                     </Text>
                     <Text style={[Stylesheet.titleBarContent, { fontSize: 14 }]}>
-                        Itera Intranet
+                        { this.props.currentCondo && this.props.currentCondo.CondoName }
                     </Text>
                 </View>
             )
@@ -202,7 +203,12 @@ class Home extends Component {
   
 // Maps redux's state variables to this class' props
 const mapStateToProps = state => {
-    return {};
+    return {
+        state: state,
+        condos: state.session.condos,
+        currentCondo: state.session.currentCondo,
+        user: state.session.user
+    };
 };
 
 // Connects redux actions to this class' props
@@ -210,5 +216,6 @@ export default connect(mapStateToProps, {
     changeActiveScreen, 
     changeSessionToken, 
     changeUser, 
-    changeActiveCompany
+    changeCurrentCondo,
+    changeCondos
 })(Home);
