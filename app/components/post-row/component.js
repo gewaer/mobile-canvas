@@ -37,9 +37,9 @@ class PostRow extends Component {
 		subTitle: '20 nov. 2018 a las 11:00 AM',
 		content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna...',
 		isSelected: false,
-		intImage: 1,
-		intMsg: 0,
-		intClip: 1
+		imagesCount: 1,
+		commentsCount: 0,
+		atchCount: 1
 	} 
 	
 	render() {
@@ -50,14 +50,14 @@ class PostRow extends Component {
 			subTitle,
 			isSelected,
 			onPress,
-			intImage,
-			intMsg,
-			intClip
+			imagesCount,
+			commentsCount,
+			atchCount
 		} = this.props;
 
 		return (
-			<TouchableOpacity style={ Stylesheet.itemContainer }>
-				<View style={ Stylesheet.topContainer } onPress={() => console.log("p")}>
+			<TouchableOpacity style={ Stylesheet.itemContainer } onPress={ this.props.onPress }>
+				<View style={ Stylesheet.topContainer }>
 					<Image
 						source={this.props.source}
 						style={ Stylesheet.thumbnail }
@@ -69,9 +69,9 @@ class PostRow extends Component {
 				</View>
 				<Text numberOfLines={ 2 } style={ Stylesheet.content }>{ this.props.content }</Text>
 				<View style={ { flexDirection: 'row', justifyContent: 'flex-end' } }>
-					<ItemCount count={ this.props.intImage } iconType={ 'Ionicons' } iconName={ 'md-image' }/>
-					<ItemCount count={ this.props.intMsg } iconType={ 'MaterialIcons' } iconName={ 'chat-bubble' } iconStyle={ { transform: [{ rotateY:'180deg' }] } } containerStyle={ {marginLeft: 5} }/>
-					<ItemCount count={ this.props.intClip } iconType={ 'MaterialCommunityIcons' } iconName={ 'paperclip' } containerStyle={ {marginLeft: 5} }/>
+					<ItemCount count={ this.props.imagesCount } iconType={ 'Ionicons' } iconName={ 'md-image' }/>
+					<ItemCount count={ this.props.commentsCount } iconType={ 'MaterialIcons' } iconName={ 'chat-bubble' } iconStyle={ { transform: [{ rotateY:'180deg' }] } } containerStyle={ {marginLeft: 5} }/>
+					<ItemCount count={ this.props.atchCount } iconType={ 'MaterialCommunityIcons' } iconName={ 'paperclip' } containerStyle={ {marginLeft: 5} }/>
 				</View>
 			</TouchableOpacity>
 			
