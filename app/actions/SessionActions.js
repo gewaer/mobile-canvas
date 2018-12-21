@@ -32,3 +32,17 @@ export const changeCondos = (type) => {
         payload: type
     };
 };
+
+export const changeIsAdmin = (type) => {
+    return {
+        type: 'CHANGE_IS_ADMIN',
+        payload: type
+    };
+};
+
+export const changePosts = (type) => {
+    return {
+        type: 'CHANGE_POSTS',
+        payload: type
+    };
+};
