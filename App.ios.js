@@ -68,6 +68,18 @@ export default class App extends Component {
 						navBarHidden: true,
 					},
 				},
+				drawer: {
+					left: {
+						screen: 'dac.SideMenu',
+					},
+					style: {
+						drawerShadow: false,
+						contentOverlayColor: 'rgba(0,0,0,0.25)',
+						leftDrawerWidth: 75,
+						rightDrawerWidth: 30,
+						shouldStretchDrawer: false
+					},
+				}
 			});
 				break;
 			case 'welcome':
@@ -117,7 +129,7 @@ export default class App extends Component {
 						navigatorButtons: {} // override the nav buttons for the tab screen, see "Adding buttons to the navigator" below (optional)
 					},
 					{
-						screen: 'dac.Dashboard', // unique ID registered with Navigation.registerScreen
+						screen: 'vv.AddPost', // unique ID registered with Navigation.registerScreen
 						icon: require('./app/assets/images/icons/bills.png'), // local image asset for the tab icon unselected state (optional on iOS)
 						iconInsets: { // add this to change icon position (optional, iOS only).
 							top: 6, // optional, default is 0.
@@ -134,7 +146,7 @@ export default class App extends Component {
 						navigatorButtons: {} // override the nav buttons for the tab screen, see "Adding buttons to the navigator" below (optional)
 					},
 					{
-						screen: 'dac.Companies', // unique ID registered with Navigation.registerScreen
+						screen: 'vv.AddPost', // unique ID registered with Navigation.registerScreen
 						icon: require('./app/assets/images/icons/notifications.png'), // local image asset for the tab icon unselected state (optional on iOS)
 						iconInsets: { // add this to change icon position (optional, iOS only).
 							top: 6, // optional, default is 0.

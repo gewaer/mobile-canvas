@@ -57,6 +57,18 @@ startApp = (root) => {
                     navBarHidden: true,
                 },
             },
+            drawer: {
+                left: {
+                    screen: 'dac.SideMenu',
+                },
+                style: {
+                    drawerShadow: false,
+                    contentOverlayColor: 'rgba(0,0,0,0.25)',
+                    leftDrawerWidth: 75,
+                    rightDrawerWidth: 30,
+                    shouldStretchDrawer: false
+                },
+            }
         });
             return;
         case 'welcome':
