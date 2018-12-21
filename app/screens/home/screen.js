@@ -9,7 +9,9 @@ import {
     AsyncStorage,
     Platform,
     TouchableOpacity,
-    BackHandler
+    BackHandler,
+    FlatList,
+    List
 } from "react-native";
 
 import {
@@ -26,7 +28,6 @@ import {
     Icon,
     Root,
     Toast,
-    List,
     ListItem,
     Body,
     Left,
@@ -35,7 +36,6 @@ import {
 } from "native-base";
 
 import { connect } from 'react-redux';
-import * as axios from 'axios'
 
 // Importing local assets and components.
 import { appImages } from "../../config/imagesRoutes";
@@ -54,11 +54,15 @@ import {
     changeSessionToken, 
     changeUser, 
     changeCurrentCondo,
-    changeCondos
+    changeCondos,
+    changePosts
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/';
 import PostRow from '../../components/post-row';
+import moment from 'moment';
+
+const axios = require('../../config/axios')
 
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
@@ -77,7 +81,11 @@ class Home extends Component {
             passwordError: '',
             isLoading: false,
             pickerSelection1: undefined,
-            shouldShowPostBtn: false
+            shouldShowPostBtn: false,
+            postsPage: 1,
+            isLoadingFooter: false,
+            postsLimitReached: false,
+            totalPages: null
         };
     }
 
@@ -85,6 +93,11 @@ class Home extends Component {
         this.setState({
             pickerSelection1: value
         });
+    }
+
+    momentTest(date){
+        let format = moment(date, "YYYY-MM-DD HH:mm")
+        console.log(format)
     }
 
     // Handles Android's back button's action
@@ -96,6 +109,8 @@ class Home extends Component {
     componentDidMount() {
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
+        this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage);
+        this.momentTest("2011-01-04 16:01:35")
     }
 
     // Changes the active screen using redux.
@@ -119,7 +134,8 @@ class Home extends Component {
         return {
             content: (
                 <View>
-                    <TouchableOpacity transparent onPress={() => this.props.navigator.toggleDrawer({ side: 'left', animated: true, to: 'open' })}>
+                    <TouchableOpacity transparent onPress={() => console.log(this.props.posts)}>
+                    {/* <TouchableOpacity transparent onPress={() => this.props.navigator.toggleDrawer({ side: 'left', animated: true, to: 'open' })}> */}
                         <Icon type={'Ionicons'} name={'ios-menu'} style={{ color: 'white', width: 22 }} />
                     </TouchableOpacity>
                 </View>
@@ -141,6 +157,53 @@ class Home extends Component {
                 </View>
             )
         };
+    }
+
+    getPosts(condoId, page) {
+        if (!this.state.isLoadingFooter) {
+            this.setState({ isLoading: true });
+        }
+        axios.get(`/blogs/?q=(condoid:${condoId})&relationships=comments,user,files,images,appOptions&page=${page}&sort=BlogCreatedDate|desc&format=true`)
+        .then((response) => {
+            this.props.changePosts(response.data.data)
+            this.setState({ isLoading: false, isLoadingFooter: false, totalPages: response.total_pages });
+        })
+        .catch((error) => {
+            console.log(error);
+        }).then(() => {
+            this.setState({ isLoading: false });
+        })
+    }
+
+    renderFooter = () => {
+        if (!this.state.isLoadingFooter) return null;
+        return (
+            <View
+                style={{
+                    paddingVertical: 20,
+                    borderTopWidth: 1,
+                    borderColor: "#CED0CE"
+                }}
+            >
+                <Spinner color={colors.brandLightBlack} />
+            </View>
+        );
+    };
+
+    handleLoadMore = () => {
+        if (this.state.postsLimitReached) {
+            this.setState({ isLoading: false });
+            return;
+        } else if (this.state.isLoadingFooter) {
+            return;
+        } else {
+            this.setState({
+                postsPage: this.state.postsPage + 1,
+                isLoadingFooter: true
+            }, () => {
+                this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage);
+            })
+        }
     }
 
     render() {
@@ -188,10 +251,27 @@ class Home extends Component {
                                         : null }
                                     </View>
                                     <View style={ Stylesheet.divisionLine }></View>
-                                    <PostRow/>
-                                    <PostRow/>
-                                    <PostRow/>
-                                    <PostRow/>
+                                    <FlatList
+                                        initialNumberToRender={4}
+                                        keyExtractor={item => item.BlogId}
+                                        data={ this.props.posts }
+                                        renderItem={({ item }) => (
+                                            <PostRow
+                                                title={ item.BlogTitle }
+                                                content={ item.BlogText }
+                                                imagesCount={ item.images.length }
+                                                commentsCount={ item.comments.length }
+                                                atchCount={ item.files.length }
+                                            />
+                                        )}
+                                        onEndReached={ () => this.handleLoadMore()}
+                                        onEndReachedThreshold = { 0.5 }
+                                        ListFooterComponent={() => this.renderFooter()}
+                                        getItemLayout={(data, index) => (
+                                            { length: 135.5, offset: 135.5 * index, index }
+                                        )}
+                                    />
+                                    
                                 </View>
                         }
                     </Content>
@@ -207,7 +287,8 @@ const mapStateToProps = state => {
         state: state,
         condos: state.session.condos,
         currentCondo: state.session.currentCondo,
-        user: state.session.user
+        user: state.session.user,
+        posts: state.session.posts
     };
 };
 
@@ -217,5 +298,6 @@ export default connect(mapStateToProps, {
     changeSessionToken, 
     changeUser, 
     changeCurrentCondo,
-    changeCondos
+    changeCondos,
+    changePosts
 })(Home);
