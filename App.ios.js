@@ -60,6 +60,16 @@ export default class App extends Component {
 				},
 			});
 				break;
+			case 'post-detail':
+			Navigation.startSingleScreenApp({
+				screen: {
+					screen: 'vv.PostDetail', // unique ID registered with Navigation.registerScreen
+					navigatorStyle: {
+						navBarHidden: true,
+					},
+				},
+			});
+				break;
 			case 'reports':
 			Navigation.startSingleScreenApp({
 				screen: {
