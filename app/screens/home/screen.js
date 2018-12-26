@@ -60,7 +60,7 @@ import {
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/';
 import PostRow from '../../components/post-row';
-import moment from 'moment';
+import { dateFormat } from '../../lib/helpers';
 
 const axios = require('../../config/axios')
 
@@ -85,7 +85,8 @@ class Home extends Component {
             postsPage: 1,
             isLoadingFooter: false,
             postsLimitReached: false,
-            totalPages: null
+            totalPages: null,
+            posts: []
         };
     }
 
@@ -93,11 +94,6 @@ class Home extends Component {
         this.setState({
             pickerSelection1: value
         });
-    }
-
-    momentTest(date){
-        let format = moment(date, "YYYY-MM-DD HH:mm")
-        console.log(format)
     }
 
     // Handles Android's back button's action
@@ -110,7 +106,6 @@ class Home extends Component {
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
         this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage);
-        this.momentTest("2011-01-04 16:01:35")
     }
 
     // Changes the active screen using redux.
@@ -134,8 +129,7 @@ class Home extends Component {
         return {
             content: (
                 <View>
-                    <TouchableOpacity transparent onPress={() => console.log(this.props.posts)}>
-                    {/* <TouchableOpacity transparent onPress={() => this.props.navigator.toggleDrawer({ side: 'left', animated: true, to: 'open' })}> */}
+                    <TouchableOpacity transparent onPress={() => this.props.navigator.toggleDrawer({ side: 'left', animated: true, to: 'open' })}>
                         <Icon type={'Ionicons'} name={'ios-menu'} style={{ color: 'white', width: 22 }} />
                     </TouchableOpacity>
                 </View>
@@ -165,8 +159,7 @@ class Home extends Component {
         }
         axios.get(`/blogs/?q=(condoid:${condoId})&relationships=comments,user,files,images,appOptions&page=${page}&sort=BlogCreatedDate|desc&format=true`)
         .then((response) => {
-            this.props.changePosts(response.data.data)
-            this.setState({ isLoading: false, isLoadingFooter: false, totalPages: response.total_pages });
+            this.setState({ posts: this.state.posts.concat( response.data.data ) }, () => { this.setState({ isLoading: false, isLoadingFooter: false, totalPages: response.total_pages }) });
         })
         .catch((error) => {
             console.log(error);
@@ -254,7 +247,7 @@ class Home extends Component {
                                     <FlatList
                                         initialNumberToRender={4}
                                         keyExtractor={item => item.BlogId}
-                                        data={ this.props.posts }
+                                        data={ this.state.posts }
                                         renderItem={({ item }) => (
                                             <PostRow
                                                 title={ item.BlogTitle }
@@ -262,10 +255,11 @@ class Home extends Component {
                                                 imagesCount={ item.images.length }
                                                 commentsCount={ item.comments.length }
                                                 atchCount={ item.files.length }
+                                                subTitle={ dateFormat(item.BlogCreatedDate ) }
                                             />
                                         )}
                                         onEndReached={ () => this.handleLoadMore()}
-                                        onEndReachedThreshold = { 0.5 }
+                                        onEndReachedThreshold = { 0.1 }
                                         ListFooterComponent={() => this.renderFooter()}
                                         getItemLayout={(data, index) => (
                                             { length: 135.5, offset: 135.5 * index, index }
