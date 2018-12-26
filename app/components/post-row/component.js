@@ -32,7 +32,7 @@ class PostRow extends Component {
 
 	static defaultProps = {
 		colors: ['#68B143', '#E8523F', '#00A1B4', '#F49B48'],
-		source: require('../../assets/images/vivook/logo-vivook.png'),
+		source: null,
 		title: 'Bienvenido(a) a Itera Intranet',
 		subTitle: '20 nov. 2018 a las 11:00 AM',
 		content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna...',
@@ -52,16 +52,20 @@ class PostRow extends Component {
 			onPress,
 			imagesCount,
 			commentsCount,
-			atchCount
+			atchCount,
+			source
 		} = this.props;
 
 		return (
 			<TouchableOpacity style={ Stylesheet.itemContainer } onPress={ this.props.onPress }>
 				<View style={ Stylesheet.topContainer }>
+					{ this.props.source ?
 					<Image
-						source={this.props.source}
+						source={ { uri: this.props.source } }
 						style={ Stylesheet.thumbnail }
-					/>
+					/> :
+						<Icon type={'Ionicons'} name={'ios-contact'} style={ { color: '#B5B5B5',  fontSize: 48, marginRight: 12, marginBottom: -9} } /> 
+					}
 					<View style={ { justifyContent: 'center' } }>
 						<Text style={ Stylesheet.title }>{ this.props.title }</Text>
 						<Text style={ Stylesheet.subTitle }>{ this.props.subTitle }</Text>
