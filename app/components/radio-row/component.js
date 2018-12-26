@@ -28,7 +28,7 @@ import {
 
 import Stylesheet from "./stylesheet";
 
-class MulticolorBar extends Component {
+class RadioRow extends Component {
 
 	static defaultProps = {
 		source: null,
@@ -71,4 +71,4 @@ class MulticolorBar extends Component {
 	}
 }
 
-export default MulticolorBar;
+export default RadioRow;
