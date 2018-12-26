@@ -256,6 +256,7 @@ class Home extends Component {
                                                 commentsCount={ item.comments.length }
                                                 atchCount={ item.files.length }
                                                 subTitle={ dateFormat(item.BlogCreatedDate ) }
+                                                onPress={ () => { this.changeScreen('post-detail') } }
                                             />
                                         )}
                                         onEndReached={ () => this.handleLoadMore()}
