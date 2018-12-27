@@ -110,9 +110,9 @@ class Login extends Component {
         return {
             content: (
                 <View>
-                    {/* <TouchableOpacity transparent onPress={() => this.pushScreen('dac.Welcome')}>
-                        <Icon type={'MaterialIcons'} name={'chevron-left'} style={{ color: '#fff', fontSize: platform === "ios" ? 22 : 24 }} />
-                    </TouchableOpacity> */}
+                    <TouchableOpacity transparent onPress={() => this.pushScreen('vv.Login')}>
+                        <Icon type={'MaterialIcons'} name={'chevron-left'} style={{ color: 'black', fontSize: 40 }} />
+                    </TouchableOpacity>
                 </View>
             )
         };
