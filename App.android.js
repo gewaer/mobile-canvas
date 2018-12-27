@@ -49,6 +49,16 @@ startApp = (root) => {
             },
         });
             return;
+        case 'post-detail':
+        Navigation.startSingleScreenApp({
+            screen: {
+                screen: 'vv.PostDetail', // unique ID registered with Navigation.registerScreen
+                navigatorStyle: {
+                    navBarHidden: true,
+                },
+            },
+        });
+            break;
         case 'reports':
         Navigation.startSingleScreenApp({
             screen: {
@@ -57,6 +67,18 @@ startApp = (root) => {
                     navBarHidden: true,
                 },
             },
+            drawer: {
+                left: {
+                    screen: 'dac.SideMenu',
+                },
+                style: {
+                    drawerShadow: false,
+                    contentOverlayColor: 'rgba(0,0,0,0.25)',
+                    leftDrawerWidth: 75,
+                    rightDrawerWidth: 30,
+                    shouldStretchDrawer: false
+                },
+            }
         });
             return;
         case 'welcome':

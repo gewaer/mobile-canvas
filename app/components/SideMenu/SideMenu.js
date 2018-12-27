@@ -81,6 +81,7 @@ class SideMenu extends Component {
 		try {
 			AsyncStorage.removeItem('sessionData', () => {
 			this.props.changeActiveScreen({ activeScreen: 'login' });
+			this.props.changeCurrentCondo({ currentCondo: {} });
 			})
 		} catch (error) {
 			console.error(error);
@@ -105,13 +106,13 @@ class SideMenu extends Component {
 					<ScrollView style={{paddingTop:paddingHelpers.XS}}>
 						<List>
 							<SideMenuRow title={ 'Inicio' } iconType={ 'Ionicons' } iconName={ 'ios-home' } onPress={ () => { this.switchTab(0) } }/>
-							<SideMenuRow title={ 'Blogs' } iconType={ 'Ionicons' } iconName={ 'ios-create' } onPress={ () => { this.switchTab(0) } }/>
+							<SideMenuRow title={ 'Blogs' } iconType={ 'Ionicons' } iconName={ 'ios-create' } onPress={ () => { this.switchTab(1) } }/>
 							<SideMenuRow title={ 'Mis Condominios' } iconType={ 'FontAwesome' } iconName={ 'building' } onPress={ () => { this.changeScreen('condominiums') } }/>
-							<SideMenuRow title={ 'Estado de Cuenta' } iconType={ 'Ionicons' } iconName={ 'logo-usd' } onPress={ () => { this.switchTab(0) } }/>
-							<SideMenuRow title={ 'Notificaciones' } iconType={ 'Ionicons' } iconName={ 'md-notifications' } onPress={ () => { this.switchTab(0) } }/>
+							<SideMenuRow title={ 'Estado de Cuenta' } iconType={ 'Ionicons' } iconName={ 'logo-usd' } onPress={ () => { this.switchTab(2) } }/>
+							<SideMenuRow title={ 'Notificaciones' } iconType={ 'Ionicons' } iconName={ 'md-notifications' } onPress={ () => { this.switchTab(3) } }/>
 							<SideMenuRow title={ 'Perfil' } iconType={ 'Ionicons' } iconName={ 'ios-contact' } onPress={ () => { this.switchTab(0) } }/>
-							<SideMenuRow title={ 'Reportes' } iconType={ 'Ionicons' } iconName={ 'ios-settings' } onPress={ () => { this.switchTab(0) } }/>
-							<SideMenuRow title={ 'Panel de Administración' } iconType={ 'Ionicons' } iconName={ 'ios-briefcase' } onPress={ () => { this.switchTab(0) } }/>
+							<SideMenuRow title={ 'Reportes' } iconType={ 'Ionicons' } iconName={ 'ios-settings' } onPress={ () => { this.changeScreen('reports') } }/>
+							{ this.props.isAdmin && <SideMenuRow title={ 'Panel de Administración' } iconType={ 'Ionicons' } iconName={ 'ios-briefcase' } onPress={ () => { this.switchTab(0) } }/>}
 							<SideMenuRow title={ 'Salir' } iconType={ 'Ionicons' } iconName={ 'ios-log-out' } onPress={ () => { this.logOut() } } shouldShowArrow={ false }/>
 						</List>
 					</ScrollView>
@@ -134,7 +135,8 @@ const mapStateToProps = state => {
         state: state,
         condos: state.session.condos,
         currentCondo: state.session.currentCondo,
-        user: state.session.user
+		user: state.session.user,
+		isAdmin: state.session.isAdmin
     };
 };
 

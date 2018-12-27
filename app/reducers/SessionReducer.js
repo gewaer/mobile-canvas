@@ -3,7 +3,9 @@ const initialState = {
     token: '',
     user: {},
     condos: [],
-    currentCondo: {}
+    currentCondo: {},
+    isAdmin: null,
+    posts: []
 };
 
 const SessionReducer = (state = initialState, action) => {
@@ -18,6 +20,10 @@ const SessionReducer = (state = initialState, action) => {
             return { ...state, currentCondo: action.payload.currentCondo };
         case 'CHANGE_CONDOS':
             return { ...state, condos: action.payload.condos };
+        case 'CHANGE_IS_ADMIN':
+            return { ...state, isAdmin: action.payload.isAdmin };
+        case 'CHANGE_POSTS':
+            return { ...state, posts: state.posts.concat( action.payload ) };
         default:
             return state;
     }

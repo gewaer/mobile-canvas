@@ -53,7 +53,8 @@ import {
     changeSessionToken, 
     changeUser, 
     changeCurrentCondo,
-    changeCondos
+    changeCondos,
+    changeIsAdmin
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/'
@@ -128,6 +129,7 @@ class Condominios extends Component {
     setCurrentCondo(condo){
         if(this.props.currentCondo != condo){
             this.props.changeCurrentCondo({ currentCondo: condo });
+            this.props.changeIsAdmin({ isAdmin: condo.CondoAdminId == this.props.user.UserId })
         }
         this.changeScreen('dashboard');
     }
@@ -181,5 +183,6 @@ export default connect(mapStateToProps, {
     changeSessionToken, 
     changeUser, 
     changeCurrentCondo,
-    changeCondos
+    changeCondos,
+    changeIsAdmin
 })(Condominios);

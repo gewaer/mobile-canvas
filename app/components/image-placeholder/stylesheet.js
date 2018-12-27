@@ -1,14 +1,23 @@
-import { StyleSheet, Platform, Dimensions } from "react-native";
+import { StyleSheet, Platform, Dimensions, PixelRatio } from "react-native";
 import { colors } from "../../config/styles";
 // Responsive Const
 const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 const platform = Platform.OS;
+const platformStyle = undefined;
 const isIphoneX =
   platform === "ios" && deviceHeight === 812 && deviceWidth === 375;
 export default StyleSheet.create({
   container: {
-    flexDirection: 'row'
+    backgroundColor: '#68B143',
+    height: 74,
+    width: 59,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  singleBox: {
+    width: '25%',
+    height: 5
   },
   drawerCover: {
     alignSelf: "stretch",
@@ -86,39 +95,8 @@ export default StyleSheet.create({
   darkerColor: {
     backgroundColor: "#1E2A39"
   },
-  thumbnail: {
-    width: 40,
-    height: 40,
-    borderColor: colors.brandLightGray,
-    borderWidth: 1,
-    borderRadius: 20,
-    marginRight: 12
-  },
-  itemContainer: {
-    borderBottomWidth: 0.6,
-    borderBottomColor: "#707070",
-    paddingVertical: 12,
-    paddingHorizontal: 12
-  },
-  topContainer: {
-    flexDirection: 'row',
-  },
-  title: {
-    fontWeight: "bold",
-    fontSize: 14,
-    marginBottom: 2
-  },
-  subTitle: {
-    fontSize: 12,
-     color: colors.brandLightGray
-  },
-  content: {
-    fontSize: 12,
-    marginVertical: 12
-  },
-  bottomText: {
-    color: '#00A1B4',
-    fontSize: 15,
-    marginLeft: 5
+  buttonIcon: {
+    color: 'white',
+    fontSize: 45
   }
 });

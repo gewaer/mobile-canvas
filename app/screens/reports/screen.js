@@ -130,7 +130,7 @@ class Reports extends Component {
         return {
             content: (
                 <View>
-                    <TouchableOpacity transparent onPress={() => this.pushScreen('dac.Welcome')}>
+                    <TouchableOpacity transparent onPress={() => this.props.navigator.toggleDrawer({ side: 'left', animated: true, to: 'open' })}>
                         <Icon type={'Ionicons'} name={'ios-menu'} style={{ color: 'white', width: 22 }} />
                     </TouchableOpacity>
                 </View>
