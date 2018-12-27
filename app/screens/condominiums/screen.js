@@ -129,11 +129,7 @@ class Condominios extends Component {
     setCurrentCondo(condo){
         if(this.props.currentCondo != condo){
             this.props.changeCurrentCondo({ currentCondo: condo });
-            if(condo.CondoAdminId == this.props.user.UserId){
-                this.props.changeIsAdmin({ isAdmin: true })
-            } else {
-                this.props.changeIsAdmin({ isAdmin: false })
-            }
+            this.props.changeIsAdmin({ isAdmin: condo.CondoAdminId == this.props.user.UserId })
         }
         this.changeScreen('dashboard');
     }

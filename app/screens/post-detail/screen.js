@@ -76,16 +76,7 @@ class PostDetail extends Component {
         super(props);
 
         this.state = {
-            emailError: '',
-            passwordError: '',
             isLoading: false,
-            pickerSelection1: undefined,
-            shouldShowPostBtn: false,
-            postsPage: 1,
-            isLoadingFooter: false,
-            postsLimitReached: false,
-            totalPages: null,
-            posts: []
         };
     }
 
@@ -104,6 +95,10 @@ class PostDetail extends Component {
     componentDidMount() {
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener();
     }
 
     // Changes the active screen using redux.

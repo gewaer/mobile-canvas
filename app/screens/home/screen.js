@@ -159,7 +159,7 @@ class Home extends Component {
         }
         axios.get(`/blogs/?q=(condoid:${condoId})&relationships=comments,user,files,images,appOptions&page=${page}&sort=BlogCreatedDate|desc&format=true`)
         .then((response) => {
-            this.setState({ posts: this.state.posts.concat( response.data.data ) }, () => { this.setState({ isLoading: false, isLoadingFooter: false, totalPages: response.total_pages }) });
+            this.setState({ posts: this.state.posts.concat( response.data.data ) }, () => { this.setState({ isLoading: false, isLoadingFooter: false, totalPages: response.data.total_pages }) });
         })
         .catch((error) => {
             console.log(error);
