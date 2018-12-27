@@ -77,6 +77,8 @@ class PostDetail extends Component {
 
         this.state = {
             isLoading: false,
+            post: this.props.params.post,
+            date: this.props.params.date
         };
     }
 
@@ -95,10 +97,11 @@ class PostDetail extends Component {
     componentDidMount() {
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
+        console.log(this.state.post)
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener();
+        BackHandler.removeEventListener('hardwareBackPress');
     }
 
     // Changes the active screen using redux.
@@ -122,7 +125,17 @@ class PostDetail extends Component {
         return {
             content: (
                 <View>
-                    <TouchableOpacity transparent onPress={() => this.changeScreen('dashboard')}>
+                    <TouchableOpacity
+                        transparent
+                        onPress={ 
+                            () => this.props.navigator.push({
+                            screen: 'vv.Home',
+                            navigatorStyle: {
+                                navBarHidden: true,
+                                tabBarHidden: false,
+                            },
+                        })}
+                    >
                         <Icon type={'MaterialIcons'} name={'chevron-left'} style={{ color: 'black', fontSize: 40, marginHorizontal: -10 }} />
                     </TouchableOpacity>
                 </View>
@@ -138,10 +151,10 @@ class PostDetail extends Component {
                     <Icon type={'Ionicons'} name={'ios-contact'} style={ { color: '#B5B5B5',  fontSize: 48, marginRight: 12, marginTop: -5} } /> 
                     <View style = { { justifyContent: 'center' } }>
                         <Text style={[Stylesheet.titleBarContent, { fontSize: 15 }]}>
-                            { this.props.user.UserName }
+                            { this.state.post.BlogTitle }
                         </Text>
                         <Text style={[Stylesheet.titleBarContent, { fontSize: 10, color: colors.brandLightGray }]}>
-                            { this.props.currentCondo && this.props.currentCondo.CondoName }
+                            { this.state.date }
                         </Text>
                     </View>
                 </View>
@@ -181,7 +194,7 @@ class PostDetail extends Component {
                                         </View>
                                         <ImagePlaceholder/>
                                         <View style={ Stylesheet.descriptionContainer }>
-                                            <Text style={ { fontSize: 12 } }>Lorem ipsum</Text>
+                                            <Text style={ { fontSize: 12 } }>{ this.state.post.BlogText }</Text>
                                         </View>
                                     </View>
                                     <View style={ Stylesheet.divisionLine }></View>
