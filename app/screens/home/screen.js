@@ -55,7 +55,7 @@ import {
     changeUser, 
     changeCurrentCondo,
     changeCondos,
-    changePosts
+    changeSections
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/';
@@ -87,18 +87,18 @@ class Home extends Component {
             postsLimitReached: false,
             totalPages: null,
             posts: [],
-            sections: []
+            sections: [],
+            isRefreshing: false
         };
     }
 
     onValueChange(value) {
-        console.log(value)
         this.setState({
             pickerSelection: value,
             postsPage: 1,
             posts: []
         }, () => {
-            this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage, this.state.sections[this.state.pickerSelection].SectId);
+            this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage, this.props.sections[value].SectId);
         });
     }
 
@@ -168,17 +168,17 @@ class Home extends Component {
     }
 
     getPosts(condoId, page, sectId) {
-        if (!this.state.isLoadingFooter) {
+        if (!this.state.isLoadingFooter && !this.state.isRefreshing) {
             this.setState({ isLoading: true });
         }
         axios.get(`/blogs/?q=(condoid:${condoId},sectid:${sectId})&relationships=comments,user,files,images,appOptions&page=${page}&sort=BlogCreatedDate|desc&format=true`)
         .then((response) => {
-            this.setState({ posts:  this.state.posts.concat( response.data.data ) }, () => { this.setState({ isLoading: false, isLoadingFooter: false, totalPages: response.data.total_pages }) });
+            this.setState({ posts:  this.state.posts.concat( response.data.data ) }, () => { this.setState({ isLoading: false, isLoadingFooter: false, isRefreshing: false, totalPages: response.data.total_pages }) });
         })
         .catch((error) => {
             console.log(error);
         }).then(() => {
-            this.setState({ isLoading: false });
+            this.setState({ isLoading: false, isRefreshing: false });
         })
     }
 
@@ -194,6 +194,7 @@ class Home extends Component {
                 SectId: ''
             })
             this.setState({ sections: response.data });
+            this.props.changeSections({ sections: response.data });
         })
         .catch((error) => {
             console.log(error);
@@ -226,9 +227,17 @@ class Home extends Component {
                 postsPage: this.state.postsPage + 1,
                 isLoadingFooter: true
             }, () => {
-                this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage, this.state.sections[this.state.pickerSelection].SectId);
+                if(this.state.totalPages < this.state.postsPage){
+                    this.setState({ isLoadingFooter: false });
+                } else {
+                    this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage, this.props.sections[this.state.pickerSelection].SectId);
+                } 
             })
         }
+    }
+
+    onRefresh = () => {
+        this.setState({ isRefreshing: true }, () => { this.onValueChange(this.state.pickerSelection) });
     }
 
     render() {
@@ -245,6 +254,7 @@ class Home extends Component {
                                     <View style={ Stylesheet.topContainer }>
                                         <Item picker style={ [Stylesheet.formItem, { flex: 1 }] }>
                                             <Picker
+                                                textStyle={{ fontSize: 12 }}
                                                 mode="dropdown"
                                                 style={{ width: this.state.shouldShowPostBtn ? 250 : 350 }}
                                                 iosIcon={<Icon name="ios-arrow-down-outline" />}
@@ -252,10 +262,10 @@ class Home extends Component {
                                                 placeholderStyle={{ color: 'black', fontSize: 12 }}
                                                 placeholderIconColor="#007aff"
                                                 selectedValue={this.state.pickerSelection}
-                                                onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue)}
+                                                onValueChange={(itemValue) => this.onValueChange(itemValue)}
                                             >
                                                 {
-                                                    this.state.sections && this.state.sections.map((section, index) => {
+                                                    this.props.sections && this.props.sections.map((section, index) => {
                                                         return(
                                                             <Picker.Item
                                                                 key={ index }
@@ -286,6 +296,8 @@ class Home extends Component {
                         }
                     </View>
                     <FlatList
+                        onRefresh={() => this.onRefresh()}
+                        refreshing={this.state.isRefreshing}
                         initialNumberToRender={4}
                         keyExtractor={item => item.BlogId}
                         data={ this.state.posts }
@@ -320,7 +332,7 @@ const mapStateToProps = state => {
         condos: state.session.condos,
         currentCondo: state.session.currentCondo,
         user: state.session.user,
-        posts: state.session.posts
+        sections: state.session.sections
     };
 };
 
@@ -331,5 +343,5 @@ export default connect(mapStateToProps, {
     changeUser, 
     changeCurrentCondo,
     changeCondos,
-    changePosts
+    changeSections
 })(Home);
