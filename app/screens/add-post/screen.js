@@ -7,7 +7,8 @@ import {
     AsyncStorage,
     Platform,
     TouchableOpacity,
-    BackHandler
+    BackHandler,
+    Alert
 } from "react-native";
 
 import {
@@ -26,7 +27,6 @@ import {
 } from "native-base";
 
 import { connect } from 'react-redux';
-import * as axios from 'axios'
 
 // Importing local assets and components.
 import { appImages } from "../../config/imagesRoutes";
@@ -48,8 +48,10 @@ import {
     changeCondos
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
-import MulticolorBar from '../../components/multicolor-bar/'
-import AddFileButton from '../../components/add-file-button'
+import MulticolorBar from '../../components/multicolor-bar/';
+import AddFileButton from '../../components/add-file-button';
+
+const axios = require('../../config/axios');
 
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
@@ -65,20 +67,15 @@ class AddPost extends Component {
 
         this.state = {
             isLoading: false,
-            pickerSelection1: undefined,
-            pickerSelection2: undefined
+            pickerSelection: undefined,
+            title: undefined,
+            content: undefined
         };
     }
 
-    onValueChange1(value) {
+    onValueChange(value) {
         this.setState({
-            pickerSelection1: value
-        });
-    }
-
-    onValueChange2(value) {
-        this.setState({
-            pickerSelection2: value
+            pickerSelection: value
         });
     }
 
@@ -109,6 +106,56 @@ class AddPost extends Component {
         });
     }
 
+    createPost = () => {
+        if (this.state.title && this.state.content && this.state.pickerSelection+1) {
+            const data = new FormData();
+            data.append('CondoId', this.props.currentCondo.CondoId);
+            data.append('SectId', this.props.sections[this.state.pickerSelection+1].SectId);
+            data.append('BlogTitle', this.state.title);
+            data.append('BlogText', this.state.content);
+
+            axios({
+            url: `/blogs`,
+            method: "POST",
+            data
+            }).then(() => {
+                this.setState({ title: '', content: ''})
+                Alert.alert(
+                    "Crear Post",
+                    "El post se ha creado exitosamente.", [
+                        {
+                            text: "OK",
+                        }
+                    ], {
+                        cancelable: false
+                    }
+                );
+            }).catch((error) => {
+                Alert.alert(
+                    "Crear Post",
+                    "Se ha producido un error, no se se ha creado el post.", [
+                        {
+                            text: "OK",
+                        }
+                    ], {
+                        cancelable: false
+                    }
+                );
+            })
+        } else {
+            Alert.alert(
+                "Campos requeridos",
+                "No debe dejar campos vacíos", [
+                    {
+                        text: "OK",
+                    }
+                ], {
+                    cancelable: false
+                }
+            );
+        }
+    }
+
     // Defines title bar's left content
     titleBarLeft() {
         return {
@@ -137,6 +184,18 @@ class AddPost extends Component {
             )
         };
     }
+    
+    sectionItems() {
+        return this.props.sections.filter(section => section.SectCode).map((section, index) => {
+            return(
+                <Picker.Item
+                    key={ index }
+                    value={ index }
+                    label={ section.SectName }
+                />
+            );
+        }) 
+    }
 
     render() {
         return (
@@ -156,26 +215,37 @@ class AddPost extends Component {
                                             <Text style={ Stylesheet.labelText }>Sección del blog:</Text>
                                             <Item picker style={ Stylesheet.formItem }>
                                                 <Picker
+                                                    textStyle={{ fontSize: 12 }}
                                                     mode="dropdown"
                                                     iosIcon={<Icon name="ios-arrow-down-outline" />}
                                                     style={{ width: 350 }}
                                                     placeholder="Selecciona una sección..."
                                                     placeholderStyle={{ color: colors.brandLightGray, fontSize: 12 }}
                                                     placeholderIconColor="#007aff"
-                                                    selectedValue={this.state.selected1}
-                                                    onValueChange={(itemValue, itemIndex) => this.setState({selected1: itemValue})}
+                                                    selectedValue={this.state.pickerSelection}
+                                                    onValueChange={(itemValue) => this.onValueChange(itemValue)}
                                                 >
-                                                    <Picker.Item label="Wallet" value="key0" />
-                                                    <Picker.Item label="ATM Card" value="key1" />
-                                                    <Picker.Item label="Debit Card" value="key2" />
-                                                    <Picker.Item label="Credit Card" value="key3" />
-                                                    <Picker.Item label="Net Banking" value="key4" />
+                                                    {
+                                                        this.sectionItems()
+                                                    }
                                                 </Picker>
                                             </Item>
                                             <Text style={ Stylesheet.labelText }>Título:</Text>
-                                            <Input placeholderTextColor={ colors.brandLightGray } style={ [Stylesheet.formInput, { height: 29.5 }] } placeholder="Escribe el título..." />
+                                            <Input
+                                                value={ this.state.title }
+                                                placeholderTextColor={ colors.brandLightGray }
+                                                style={ [Stylesheet.formInput, { height: 29.5 }] }
+                                                placeholder="Escribe el título..."
+                                                onChangeText={(title) => this.setState({ title: title })}
+                                            />
                                             <Text style={ Stylesheet.labelText }>Contenido:</Text>
-                                            <Input placeholderTextColor={ colors.brandLightGray } style={ [Stylesheet.formInput, { height: 142.5 }] } multiline={ true } placeholder="Agrega contenido..." />                                   
+                                            <Input
+                                                value={ this.state.content }
+                                                placeholderTextColor={ colors.brandLightGray }
+                                                style={ [Stylesheet.formInput, { height: 142.5 }] }
+                                                multiline={ true } placeholder="Agrega contenido..."
+                                                onChangeText={(content) => this.setState({ content: content })}
+                                            />                                   
                                         </Form>
                                         <Text style={ [Stylesheet.labelText, { marginBottom: 8 }] }>Adjuntar imagen o archivo:</Text>
                                         <AddFileButton/>
@@ -184,7 +254,7 @@ class AddPost extends Component {
                                     <Button
                                         block
                                         primary
-                                        onPress={() => { console.log('button pressed') }}
+                                        onPress={() => { this.createPost() }}
                                         style={[Stylesheet.submitBtn, { marginTop: 20 }]}>
                                         <Text style={{ color: colors.normalWhite, fontSize: 12, paddingRight: 10 }}>
                                             Crear
@@ -206,7 +276,8 @@ const mapStateToProps = state => {
         state: state,
         condos: state.session.condos,
         currentCondo: state.session.currentCondo,
-        user: state.session.user
+        user: state.session.user,
+        sections: state.session.sections
     };
 };
 
