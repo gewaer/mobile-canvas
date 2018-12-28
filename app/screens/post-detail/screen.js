@@ -54,12 +54,12 @@ import {
     changeSessionToken, 
     changeUser, 
     changeCurrentCondo,
-    changeCondos,
-    changePosts
+    changeCondos
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
 import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 import ImagePlaceholder from '../../components/image-placeholder';
+import CommentRow from '../../components/comment-row';
 
 const axios = require('../../config/axios')
 
@@ -127,14 +127,7 @@ class PostDetail extends Component {
                 <View>
                     <TouchableOpacity
                         transparent
-                        onPress={ 
-                            () => this.props.navigator.push({
-                            screen: 'vv.Home',
-                            navigatorStyle: {
-                                navBarHidden: true,
-                                tabBarHidden: false,
-                            },
-                        })}
+                        onPress={ () => this.props.navigator.pop() }
                     >
                         <Icon type={'MaterialIcons'} name={'chevron-left'} style={{ color: 'black', fontSize: 40, marginHorizontal: -10 }} />
                     </TouchableOpacity>
@@ -190,7 +183,7 @@ class PostDetail extends Component {
                                     <View style={ Stylesheet.topContainer }>
                                         <View style={ Stylesheet.titleContainer }>
                                             <Text style={ Stylesheet.titleText }>ITERA - MEXICO, RECURSOS HUMANOS</Text>
-                                            <Text style={ { fontSize: 14, color: colors.brandLightGray } }>Maria Esther Ramos Tafoya</Text>
+                                            <Text style={ { fontSize: 14, color: colors.brandLightGray } }>{ this.state.post.user.UserName }</Text>
                                         </View>
                                         <ImagePlaceholder/>
                                         <View style={ Stylesheet.descriptionContainer }>
@@ -221,6 +214,16 @@ class PostDetail extends Component {
                                         </View>
                                     </View>
                                     <View style={ Stylesheet.divisionLine }></View>
+                                    {
+                                        this.state.post.comments && this.state.post.comments.map((comment, index) => {
+                                            return(
+                                                <CommentRow
+                                                    key={ index }
+                                                    content={ comment.CmmtText }
+                                                />
+                                            );
+                                        })
+                                    }
                                 </View>
                         }
                     </Content>
@@ -247,6 +250,5 @@ export default connect(mapStateToProps, {
     changeSessionToken, 
     changeUser, 
     changeCurrentCondo,
-    changeCondos,
-    changePosts
+    changeCondos
 })(PostDetail);
