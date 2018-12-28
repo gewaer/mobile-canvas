@@ -330,7 +330,7 @@ class Login extends Component {
                                                     <Button transparent block>
                                                         <Text
                                                             style={Stylesheet.linkBTN}
-                                                            onPress={() => this.changeScreen('forgot-password')}>
+                                                            onPress={() => this.pushScreen('vv.ForgotPassword')}>
                                                             ¿Olvidaste tu contraseña?
                                                     </Text>
                                                     </Button>
