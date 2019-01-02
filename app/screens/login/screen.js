@@ -164,7 +164,7 @@ class Login extends Component {
             });
         } else {
             Toast.show({
-                text: 'Email and password are required!',
+                text: 'Email y contraseña requeridos.',
                 buttonText: 'Ok',
                 duration: 3000,
                 type: 'danger'
@@ -330,7 +330,7 @@ class Login extends Component {
                                                     <Button transparent block>
                                                         <Text
                                                             style={Stylesheet.linkBTN}
-                                                            onPress={() => this.changeScreen('forgot-password')}>
+                                                            onPress={() => this.pushScreen('vv.ForgotPassword')}>
                                                             ¿Olvidaste tu contraseña?
                                                     </Text>
                                                     </Button>

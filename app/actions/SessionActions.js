@@ -40,9 +40,9 @@ export const changeIsAdmin = (type) => {
     };
 };
 
-export const changePosts = (type) => {
+export const changeSections = (type) => {
     return {
-        type: 'CHANGE_POSTS',
+        type: 'CHANGE_SECTIONS',
         payload: type
     };
 };

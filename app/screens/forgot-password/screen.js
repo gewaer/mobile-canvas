@@ -9,7 +9,8 @@ import {
     AsyncStorage,
     Platform,
     TouchableOpacity,
-    BackHandler
+    BackHandler,
+    Alert
 } from "react-native";
 
 import {
@@ -30,7 +31,6 @@ import {
 //import Icon from "react-native-vector-icons/FontAwesome"
 
 import { connect } from 'react-redux';
-import * as axios from 'axios'
 
 // Importing local assets and components.
 import { appImages } from "../../config/imagesRoutes";
@@ -53,6 +53,8 @@ import {
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/index'
 
+const axios = require('../../config/axios');
+
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
 
@@ -74,7 +76,8 @@ class Login extends Component {
             error: null,
             loggedIn: false,
             isLoading: false,
-            isLoginIn: false
+            isLoginIn: false,
+            email: ''
         };
     }
 
@@ -110,9 +113,9 @@ class Login extends Component {
         return {
             content: (
                 <View>
-                    {/* <TouchableOpacity transparent onPress={() => this.pushScreen('dac.Welcome')}>
-                        <Icon type={'MaterialIcons'} name={'chevron-left'} style={{ color: '#fff', fontSize: platform === "ios" ? 22 : 24 }} />
-                    </TouchableOpacity> */}
+                    <TouchableOpacity transparent onPress={() => this.props.navigator.pop()}>
+                        <Icon type={'MaterialIcons'} name={'chevron-left'} style={{ color: 'black', fontSize: 40 }} />
+                    </TouchableOpacity>
                 </View>
             )
         };
@@ -158,7 +161,7 @@ class Login extends Component {
             });
         } else {
             Toast.show({
-                text: 'Email and password are required!',
+                text: 'Ingrese el email.',
                 buttonText: 'Ok',
                 duration: 3000,
                 type: 'danger'
@@ -166,87 +169,46 @@ class Login extends Component {
         }
     }
 
-    // Saves user's session data in the local storage.
-    async saveSessionData(item, value) {
-        try {
-            await AsyncStorage.setItem(item, value);
-            let data = JSON.parse(await AsyncStorage.getItem(item));
-            if (data) {
-                return data;
-            }
-
-        } catch (error) {
-            console.log(error)
+    sendEmail = () => {
+        if (this.state.email) {
+            const data = new FormData();
+            data.append('email', this.state.email);
+            axios({
+                url: `/auth/forgot`,
+                method: "POST",
+                data
+            }).then((response) => {
+                Alert.alert(
+                    "Recuperar contraseña",
+                    "El email para recuperar la contraseña ha sido enviado.", [
+                        {
+                            text: "OK",
+                        }
+                    ], {
+                        cancelable: false
+                    }
+                );
+                this.setState({ email: '' })
+            }).catch((error) => {
+                Alert.alert(
+                    "Recuperar contraseña",
+                    "Email inválido.", [
+                        {
+                            text: "OK",
+                        }
+                    ], {
+                        cancelable: false
+                    }
+                );
+            })
+        } else {
+            Toast.show({
+                text: 'Ingrese el email.',
+                buttonText: 'Ok',
+                duration: 3000,
+                type: 'danger'
+            });
         }
-    }
-
-    // Logs user in dev mode
-    logInDevMode() {
-        this.setState({ isLoginIn: true });
-        let formData = new FormData();
-        formData.append('email', 'rogelio@mctekk.com');
-        formData.append('password', 'nosenose');
-
-        axios.post(`${VUE_APP_BASE_API_URL}/auth`, formData)
-        .then((response) => {
-            this.saveSessionData('sessionData', JSON.stringify(response.data));
-            this.props.changeSessionToken({ token: response.data.token });
-            //this.changeScreen('dashboard');
-            this.getUserInfo(response.data.id, response.data.token);
-        })
-        .catch((error) => {
-            console.log(error);
-            this.setState({ isLoginIn: false });
-            Toast.show({
-                text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
-                buttonText: 'Ok',
-                duration: 3000,
-                type: 'danger'
-            });
-        });
-    }
-
-    // Tries to get the user's information using the stored token.
-	// If the response is an error then the token is expired and removes the session data.
-    getUserInfo(userId, token) {
-        const data = {
-            'Authorization': token,
-        };
-        axios.get(`${VUE_APP_BASE_API_URL}/users/${userId}`, { headers: data })
-        .then((response) => {
-            this.props.changeUser({ user: response.data });
-            this.getUserDefaultCompany(response.data.default_company, token);
-        })
-        .catch((error) => {
-            this.setState({ isLoginIn: false });
-            Toast.show({
-                text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
-                buttonText: 'Ok',
-                duration: 3000,
-                type: 'danger'
-            });
-        })
-    }
-
-    // Gets user's default company.
-    getUserDefaultCompany(companyId, token) {
-        const data = {
-            'Authorization': token,
-        };
-        axios.get(`${VUE_APP_BASE_API_URL}/companies?q=(id:${companyId})`, { headers: data })
-        .then((response) => {
-            this.props.changeActiveCompany({ company: response.data[0] });
-            this.changeScreen('dashboard');
-        })
-        .catch((error) => {
-            this.setState({ isLoginIn: false });
-            Toast.show({
-                text: error.response.data.errors.message ? error.response.data.errors.message : 'Error',
-                buttonText: 'Ok',
-                duration: 3000,
-                type: 'danger'
-            });
-        })
     }
 
     render() {
@@ -275,7 +237,8 @@ class Login extends Component {
                                                         Email
                                                     </Label>
                                                     <Input
-                                                        onChangeText={(userName) => this.setState({ username: userName })}
+                                                        value={ this.state.email }
+                                                        onChangeText={(email) => this.setState({ email })}
                                                         style={globalStyle.formInput}
                                                         keyboardType={'email-address'} 
                                                         autoCapitalize={'none'}
@@ -285,7 +248,7 @@ class Login extends Component {
                                                 <Button
                                                     block
                                                     primary
-                                                    onPress={() => this.logIn()}
+                                                    onPress={() => this.sendEmail()}
                                                     style={[Stylesheet.submitBtn, { marginTop: 30 }]}>
                                                     <Text style={{ color: colors.normalWhite }}>
                                                         Enviar

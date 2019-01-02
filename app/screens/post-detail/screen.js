@@ -54,12 +54,12 @@ import {
     changeSessionToken, 
     changeUser, 
     changeCurrentCondo,
-    changeCondos,
-    changePosts
+    changeCondos
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
 import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 import ImagePlaceholder from '../../components/image-placeholder';
+import CommentRow from '../../components/comment-row';
 
 const axios = require('../../config/axios')
 
@@ -77,6 +77,8 @@ class PostDetail extends Component {
 
         this.state = {
             isLoading: false,
+            post: this.props.params.post,
+            date: this.props.params.date
         };
     }
 
@@ -98,7 +100,7 @@ class PostDetail extends Component {
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener();
+        BackHandler.removeEventListener('hardwareBackPress');
     }
 
     // Changes the active screen using redux.
@@ -122,7 +124,10 @@ class PostDetail extends Component {
         return {
             content: (
                 <View>
-                    <TouchableOpacity transparent onPress={() => this.changeScreen('dashboard')}>
+                    <TouchableOpacity
+                        transparent
+                        onPress={ () => this.props.navigator.pop() }
+                    >
                         <Icon type={'MaterialIcons'} name={'chevron-left'} style={{ color: 'black', fontSize: 40, marginHorizontal: -10 }} />
                     </TouchableOpacity>
                 </View>
@@ -138,10 +143,10 @@ class PostDetail extends Component {
                     <Icon type={'Ionicons'} name={'ios-contact'} style={ { color: '#B5B5B5',  fontSize: 48, marginRight: 12, marginTop: -5} } /> 
                     <View style = { { justifyContent: 'center' } }>
                         <Text style={[Stylesheet.titleBarContent, { fontSize: 15 }]}>
-                            { this.props.user.UserName }
+                            { this.state.post.BlogTitle }
                         </Text>
                         <Text style={[Stylesheet.titleBarContent, { fontSize: 10, color: colors.brandLightGray }]}>
-                            { this.props.currentCondo && this.props.currentCondo.CondoName }
+                            { this.state.date }
                         </Text>
                     </View>
                 </View>
@@ -177,11 +182,11 @@ class PostDetail extends Component {
                                     <View style={ Stylesheet.topContainer }>
                                         <View style={ Stylesheet.titleContainer }>
                                             <Text style={ Stylesheet.titleText }>ITERA - MEXICO, RECURSOS HUMANOS</Text>
-                                            <Text style={ { fontSize: 14, color: colors.brandLightGray } }>Maria Esther Ramos Tafoya</Text>
+                                            <Text style={ { fontSize: 14, color: colors.brandLightGray } }>{ this.state.post.user.UserName }</Text>
                                         </View>
                                         <ImagePlaceholder/>
                                         <View style={ Stylesheet.descriptionContainer }>
-                                            <Text style={ { fontSize: 12 } }>Lorem ipsum</Text>
+                                            <Text style={ { fontSize: 12 } }>{ this.state.post.BlogText }</Text>
                                         </View>
                                     </View>
                                     <View style={ Stylesheet.divisionLine }></View>
@@ -208,6 +213,16 @@ class PostDetail extends Component {
                                         </View>
                                     </View>
                                     <View style={ Stylesheet.divisionLine }></View>
+                                    {
+                                        this.state.post.comments && this.state.post.comments.map((comment, index) => {
+                                            return(
+                                                <CommentRow
+                                                    key={ index }
+                                                    content={ comment.CmmtText }
+                                                />
+                                            );
+                                        })
+                                    }
                                 </View>
                         }
                     </Content>
@@ -234,6 +249,5 @@ export default connect(mapStateToProps, {
     changeSessionToken, 
     changeUser, 
     changeCurrentCondo,
-    changeCondos,
-    changePosts
+    changeCondos
 })(PostDetail);

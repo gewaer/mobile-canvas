@@ -55,7 +55,7 @@ import {
     changeUser, 
     changeCurrentCondo,
     changeCondos,
-    changePosts
+    changeSections
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/';
@@ -80,32 +80,38 @@ class Home extends Component {
             emailError: '',
             passwordError: '',
             isLoading: false,
-            pickerSelection1: undefined,
+            pickerSelection: 0,
             shouldShowPostBtn: false,
             postsPage: 1,
             isLoadingFooter: false,
             postsLimitReached: false,
             totalPages: null,
-            posts: []
+            posts: [],
+            isRefreshing: false
         };
     }
 
     onValueChange(value) {
         this.setState({
-            pickerSelection1: value
+            pickerSelection: value,
+            postsPage: 1,
+            posts: []
+        }, () => {
+            this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage, this.props.sections[value].SectId);
         });
     }
 
     // Handles Android's back button's action
     backAndroid() {
-        this.pushScreen('dac.Welcome');
+        this.pushScreen({screen: 'vv.Login'});
         return true
     }
 
     componentDidMount() {
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
-        this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage);
+        this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage, '');
+        this.getSections(this.props.currentCondo.CondoId);
     }
 
     // Changes the active screen using redux.
@@ -114,12 +120,19 @@ class Home extends Component {
     }
 
     // Pushes to another screen in the navigator stack.
-    pushScreen(activeScreen) {
+    pushScreen({activeScreen, post, date}) {
+        let params = {
+            post,
+            date
+        };
         this.props.navigator.push({
             screen: activeScreen,
             navigatorStyle: {
                 navBarHidden: true,
                 tabBarHidden: true,
+            },
+            passProps: {
+                params
             },
         });
     }
@@ -153,17 +166,38 @@ class Home extends Component {
         };
     }
 
-    getPosts(condoId, page) {
-        if (!this.state.isLoadingFooter) {
+    getPosts(condoId, page, sectId) {
+        if (!this.state.isLoadingFooter && !this.state.isRefreshing) {
             this.setState({ isLoading: true });
         }
-        axios.get(`/blogs/?q=(condoid:${condoId})&relationships=comments,user,files,images,appOptions&page=${page}&sort=BlogCreatedDate|desc&format=true`)
+        axios.get(`/blogs/?q=(condoid:${condoId},sectid:${sectId})&relationships=comments,user,files,images,appOptions&page=${page}&sort=BlogCreatedDate|desc&format=true`)
         .then((response) => {
-            this.setState({ posts: this.state.posts.concat( response.data.data ) }, () => { this.setState({ isLoading: false, isLoadingFooter: false, totalPages: response.data.total_pages }) });
+            this.setState({ posts:  this.state.posts.concat( response.data.data ) }, () => { this.setState({ isLoading: false, isLoadingFooter: false, isRefreshing: false, totalPages: response.data.total_pages }) });
         })
         .catch((error) => {
             console.log(error);
         }).then(() => {
+            this.setState({ isLoading: false, isRefreshing: false });
+        })
+    }
+
+    getSections(condoId) {
+        if (!this.state.isLoadingFooter) {
+            this.setState({ isLoading: true });
+        }
+        axios.get(`/sections?q=(CondoId:${condoId})&limit=200&sort=SectName`)
+        .then((response) => {
+            response.data.unshift({
+                SectName: 'Todas',
+                SectCode: '',
+                SectId: ''
+            })
+            this.props.changeSections({ sections: response.data });
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .then(() => {
             this.setState({ isLoading: false });
         })
     }
@@ -194,18 +228,26 @@ class Home extends Component {
                 postsPage: this.state.postsPage + 1,
                 isLoadingFooter: true
             }, () => {
-                this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage);
+                if(this.state.totalPages < this.state.postsPage){
+                    this.setState({ isLoadingFooter: false });
+                } else {
+                    this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage, this.props.sections[this.state.pickerSelection].SectId);
+                } 
             })
         }
+    }
+
+    onRefresh = () => {
+        this.setState({ isRefreshing: true }, () => { this.onValueChange(this.state.pickerSelection) });
     }
 
     render() {
         return (
             <Root>
-                <Container style={{ backgroundColor: colors.normalWhite }}>
+                <Container style={{ backgroundColor: colors.normalWhite, flex: 1 }}>
                     <TitleBar noShadow left={this.titleBarLeft()} body={this.titleBarBody()} bgColor={colors.brandLightBlack} />
                     <MulticolorBar/>
-                    <Content style={{ backgroundColor: colors.normalWhite }}>
+                    <View style={{ backgroundColor: colors.normalWhite }}>
                         {
                             this.state.isLoading ?
                                 <Spinner color={colors.brandLightBlack} /> :
@@ -213,20 +255,27 @@ class Home extends Component {
                                     <View style={ Stylesheet.topContainer }>
                                         <Item picker style={ [Stylesheet.formItem, { flex: 1 }] }>
                                             <Picker
+                                                textStyle={{ fontSize: 12 }}
                                                 mode="dropdown"
                                                 style={{ width: this.state.shouldShowPostBtn ? 250 : 350 }}
                                                 iosIcon={<Icon name="ios-arrow-down-outline" />}
                                                 placeholder="Todas"
                                                 placeholderStyle={{ color: 'black', fontSize: 12 }}
                                                 placeholderIconColor="#007aff"
-                                                selectedValue={this.state.pickerSelection1}
-                                                onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue)}
+                                                selectedValue={this.state.pickerSelection}
+                                                onValueChange={(itemValue) => this.onValueChange(itemValue)}
                                             >
-                                                <Picker.Item label="Wallet" value="key0" />
-                                                <Picker.Item label="ATM Card" value="key1" />
-                                                <Picker.Item label="Debit Card" value="key2" />
-                                                <Picker.Item label="Credit Card" value="key3" />
-                                                <Picker.Item label="Net Banking" value="key4" />
+                                                {
+                                                    this.props.sections && this.props.sections.map((section, index) => {
+                                                        return(
+                                                            <Picker.Item
+                                                                key={ index }
+                                                                value={ index }
+                                                                label={ section.SectName }
+                                                            />
+                                                        );
+                                                    })
+                                                }
                                             </Picker>
                                             {/* <Icon style={ {alignSelf: 'flex-end'} } name="ios-arrow-down-outline" /> */}
                                         </Item>
@@ -244,32 +293,33 @@ class Home extends Component {
                                         : null }
                                     </View>
                                     <View style={ Stylesheet.divisionLine }></View>
-                                    <FlatList
-                                        initialNumberToRender={4}
-                                        keyExtractor={item => item.BlogId}
-                                        data={ this.state.posts }
-                                        renderItem={({ item }) => (
-                                            <PostRow
-                                                title={ item.BlogTitle }
-                                                content={ item.BlogText }
-                                                imagesCount={ item.images.length }
-                                                commentsCount={ item.comments.length }
-                                                atchCount={ item.files.length }
-                                                subTitle={ dateFormat(item.BlogCreatedDate ) }
-                                                onPress={ () => { this.changeScreen('post-detail') } }
-                                            />
-                                        )}
-                                        onEndReached={ () => this.handleLoadMore()}
-                                        onEndReachedThreshold = { 0.1 }
-                                        ListFooterComponent={() => this.renderFooter()}
-                                        getItemLayout={(data, index) => (
-                                            { length: 135.5, offset: 135.5 * index, index }
-                                        )}
-                                    />
-                                    
                                 </View>
                         }
-                    </Content>
+                    </View>
+                    <FlatList
+                        onRefresh={() => this.onRefresh()}
+                        refreshing={this.state.isRefreshing}
+                        initialNumberToRender={4}
+                        keyExtractor={item => item.BlogId}
+                        data={ this.state.posts }
+                        renderItem={({ item }) => (
+                            <PostRow
+                                title={ item.BlogTitle }
+                                content={ item.BlogText }
+                                imagesCount={ item.images.length }
+                                commentsCount={ item.comments.length }
+                                atchCount={ item.files.length }
+                                subTitle={ dateFormat(item.BlogCreatedDate ) }
+                                onPress={ () => { this.pushScreen({ activeScreen: 'vv.PostDetail', post: item, date: dateFormat(item.BlogCreatedDate ) }) } }
+                            />
+                        )}
+                        onEndReached={ () => this.handleLoadMore()}
+                        onEndReachedThreshold = { 0.5 }
+                        ListFooterComponent={() => this.renderFooter()}
+                        getItemLayout={(data, index) => (
+                            { length: 135.5, offset: 135.5 * index, index }
+                        )}
+                    />
                 </Container>
             </Root>
         );
@@ -283,7 +333,7 @@ const mapStateToProps = state => {
         condos: state.session.condos,
         currentCondo: state.session.currentCondo,
         user: state.session.user,
-        posts: state.session.posts
+        sections: state.session.sections
     };
 };
 
@@ -294,5 +344,5 @@ export default connect(mapStateToProps, {
     changeUser, 
     changeCurrentCondo,
     changeCondos,
-    changePosts
+    changeSections
 })(Home);
