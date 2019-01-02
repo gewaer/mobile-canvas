@@ -67,9 +67,9 @@ class AddPost extends Component {
 
         this.state = {
             isLoading: false,
-            pickerSelection: undefined,
-            title: undefined,
-            content: undefined
+            pickerSelection: '',
+            title: '',
+            content: ''
         };
     }
 
