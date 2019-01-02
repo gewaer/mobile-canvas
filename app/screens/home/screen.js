@@ -123,7 +123,8 @@ class Home extends Component {
     pushScreen({activeScreen, post, date}) {
         let params = {
             post,
-            date
+            date,
+            refresh: this.onRefresh.bind(this)
         };
         this.props.navigator.push({
             screen: activeScreen,
@@ -196,8 +197,6 @@ class Home extends Component {
         })
         .catch((error) => {
             console.log(error);
-        })
-        .then(() => {
             this.setState({ isLoading: false });
         })
     }
