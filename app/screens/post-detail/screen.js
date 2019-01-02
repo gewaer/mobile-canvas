@@ -37,6 +37,7 @@ import {
 
 import { connect } from 'react-redux';
 
+import cloneDeep  from "lodash/cloneDeep";
 // Importing local assets and components.
 import { appImages } from "../../config/imagesRoutes";
 import TitleBar from '../../components/TitleBar';
@@ -77,8 +78,10 @@ class PostDetail extends Component {
 
         this.state = {
             isLoading: false,
+            comments: this.props.params.post.comments,
             post: this.props.params.post,
-            date: this.props.params.date
+            date: this.props.params.date,
+            comment: ''
         };
     }
 
@@ -119,6 +122,24 @@ class PostDetail extends Component {
         });
     }
 
+    createComment = () => {
+        if (this.state.comment) {
+            const data = new FormData();
+            data.append('CondoId', this.props.currentCondo.CondoId);
+            data.append('CmmtText', this.state.comment);
+
+            axios({
+            url: `/blogs/${this.state.post.BlogId}/comments`,
+            method: "POST",
+            data
+            }).then((response) => {
+                this.setState({ comment: '' }),
+                this.setState({ comments: this.state.comments.concat(response.data) })
+            }).catch(() => {
+            })
+        }
+    }
+
     // Defines title bar's left content
     titleBarLeft() {
         return {
@@ -126,13 +147,18 @@ class PostDetail extends Component {
                 <View>
                     <TouchableOpacity
                         transparent
-                        onPress={ () => this.props.navigator.pop() }
+                        onPress={ () => this.popScreen() }
                     >
                         <Icon type={'MaterialIcons'} name={'chevron-left'} style={{ color: 'black', fontSize: 40, marginHorizontal: -10 }} />
                     </TouchableOpacity>
                 </View>
             )
         };
+    }
+
+    popScreen() {
+        this.props.navigator.pop();
+        this.props.params.refresh();
     }
 
     // Defines title bar's body content
@@ -169,6 +195,21 @@ class PostDetail extends Component {
         );
     };
 
+    renderComments = () => {
+        let comments = cloneDeep(this.state.comments)
+        comments.sort((a, b) => a.CmmtCreatedDate < b.CmmtCreatedDate);
+        return (
+            comments && comments.map((comment, index) => {
+                return(
+                    <CommentRow
+                        key={ index }
+                        content={ comment.CmmtText }
+                    />
+                );
+            })
+        );
+    }
+
     render() {
         return (
             <Root>
@@ -202,27 +243,20 @@ class PostDetail extends Component {
                                                 style={ [Stylesheet.formInput, { fontSize: 12, paddingLeft: 16, paddingRight: 16, paddingBottom: 5, width: 266 }] }
                                                 placeholder="Escribe un comentario..."
                                                 multiline={ true }
+                                                onChangeText={(comment) => this.setState({ comment: comment })}
+                                                value={ this.state.comment }
                                             />
                                             <Button
                                             rounded
                                             primary
-                                            onPress={() => { console.log('button pressed') }}
+                                            onPress={() => { this.createComment() }}
                                             style={ Stylesheet.submitBtn }>
                                                 <Icon type="Ionicons"  name="ios-send"  color={colors.normalWhite} style={ { fontSize: 15, marginLeft: 0, marginRight: 0 } }/>
                                             </Button>
                                         </View>
                                     </View>
                                     <View style={ Stylesheet.divisionLine }></View>
-                                    {
-                                        this.state.post.comments && this.state.post.comments.map((comment, index) => {
-                                            return(
-                                                <CommentRow
-                                                    key={ index }
-                                                    content={ comment.CmmtText }
-                                                />
-                                            );
-                                        })
-                                    }
+                                    {this.renderComments()}
                                 </View>
                         }
                     </Content>
