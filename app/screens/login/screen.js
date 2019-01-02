@@ -49,7 +49,7 @@ import {
     changeCondos 
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
-import MulticolorBar from '../../components/multicolor-bar/index'
+import MulticolorBar from '../../components/multicolor-bar/index';
 
 const axios = require('../../config/axios')
 
