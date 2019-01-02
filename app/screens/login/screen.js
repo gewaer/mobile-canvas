@@ -164,7 +164,7 @@ class Login extends Component {
             });
         } else {
             Toast.show({
-                text: 'Email and password are required!',
+                text: 'Email y contraseña requeridos.',
                 buttonText: 'Ok',
                 duration: 3000,
                 type: 'danger'

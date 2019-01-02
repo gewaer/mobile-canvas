@@ -87,7 +87,6 @@ class Home extends Component {
             postsLimitReached: false,
             totalPages: null,
             posts: [],
-            sections: [],
             isRefreshing: false
         };
     }
@@ -193,7 +192,6 @@ class Home extends Component {
                 SectCode: '',
                 SectId: ''
             })
-            this.setState({ sections: response.data });
             this.props.changeSections({ sections: response.data });
         })
         .catch((error) => {

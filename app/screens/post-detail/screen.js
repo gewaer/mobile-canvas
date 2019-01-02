@@ -97,7 +97,6 @@ class PostDetail extends Component {
     componentDidMount() {
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
-        console.log(this.state.post)
     }
 
     componentWillUnmount() {
