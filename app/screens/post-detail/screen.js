@@ -203,7 +203,7 @@ class PostDetail extends Component {
                 return(
                     <CommentRow
                         key={ index }
-                        content={ comment.CmmtText }
+                        comment={ comment }
                     />
                 );
             })
