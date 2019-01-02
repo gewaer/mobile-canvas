@@ -173,13 +173,11 @@ class Login extends Component {
         if (this.state.email) {
             const data = new FormData();
             data.append('email', this.state.email);
-            console.log('send')
             axios({
-            url: `/auth/forgot`,
-            method: "POST",
-            data
+                url: `/auth/forgot`,
+                method: "POST",
+                data
             }).then((response) => {
-                console.log(response.data)
                 Alert.alert(
                     "Recuperar contraseña",
                     "El email para recuperar la contraseña ha sido enviado.", [
@@ -192,7 +190,6 @@ class Login extends Component {
                 );
                 this.setState({ email: '' })
             }).catch((error) => {
-                console.log(error.response.data.errors.data.message)
                 Alert.alert(
                     "Recuperar contraseña",
                     "Email inválido.", [
@@ -241,7 +238,7 @@ class Login extends Component {
                                                     </Label>
                                                     <Input
                                                         value={ this.state.email }
-                                                        onChangeText={(email) => this.setState({ email: email })}
+                                                        onChangeText={(email) => this.setState({ email })}
                                                         style={globalStyle.formInput}
                                                         keyboardType={'email-address'} 
                                                         autoCapitalize={'none'}

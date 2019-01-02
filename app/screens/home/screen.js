@@ -197,6 +197,9 @@ class Home extends Component {
         .catch((error) => {
             console.log(error);
         })
+        .then(() => {
+            this.setState({ isLoading: false });
+        })
     }
 
     renderFooter = () => {
