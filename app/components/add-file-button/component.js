@@ -21,15 +21,20 @@ import {
 import {
 	ListStyles,
 	paddingHelpers,
-	colors,
+	colors
 } from "../../config/styles";
 
 import Stylesheet from "./stylesheet";
 
 class AddFileButton extends Component {
+	
 	render() {
+		const {
+			onPress
+		} = this.props;
+
 		return (
-			<TouchableOpacity style={ Stylesheet.container }>
+			<TouchableOpacity style={ Stylesheet.container } onPress={ onPress }>
 				<Icon type="Ionicons" name="ios-add"  style={ Stylesheet.buttonIcon }/>
 			</TouchableOpacity>
 		);
