@@ -123,10 +123,12 @@ class PostDetail extends Component {
     }
 
     createComment = () => {
-        if (this.state.comment) {
+        let comment = this.state.comment;
+        comment = comment.trim();
+        if (comment) {
             const data = new FormData();
             data.append('CondoId', this.props.currentCondo.CondoId);
-            data.append('CmmtText', this.state.comment);
+            data.append('CmmtText', comment);
 
             axios({
             url: `/blogs/${this.state.post.BlogId}/comments`,
