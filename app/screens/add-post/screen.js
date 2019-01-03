@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import {
     View,
     Image,
+    ScrollView,
     AsyncStorage,
     Platform,
     TouchableOpacity,
@@ -50,6 +51,9 @@ import {
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/';
 import AddFileButton from '../../components/add-file-button';
+import FilePlaceholder from '../../components/file-placeholder';
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+import * as mime from 'react-native-mime-types';
 
 const axios = require('../../config/axios');
 
@@ -69,7 +73,8 @@ class AddPost extends Component {
             isLoading: false,
             pickerSelection: '',
             title: '',
-            content: ''
+            content: '',
+            files: []
         };
     }
 
@@ -197,6 +202,20 @@ class AddPost extends Component {
         }) 
     }
 
+     showFilePicker() {
+        DocumentPicker.show({
+            filetype: [DocumentPickerUtil.allFiles()],
+          },
+            (error, file) => {
+                this.setState({ files: this.state.files.concat(file) }, () => { console.log(this.state.files) });
+                console.log(file);
+                const fileData = new FormData();
+                fileData.append("uri", file.uri);
+                fileData.append("fileSize", file.fileSize);
+                fileData.append("fileName", file.fileName);
+          })
+    }
+
     render() {
         return (
             <Root>
@@ -248,7 +267,15 @@ class AddPost extends Component {
                                             />                                   
                                         </Form>
                                         <Text style={ [Stylesheet.labelText, { marginBottom: 8 }] }>Adjuntar imagen o archivo:</Text>
-                                        <AddFileButton/>
+                                        <View style={ { flexDirection: 'row' } }>
+                                            <AddFileButton onPress = { () => { this.showFilePicker() } }/>
+                                            { this.state.files.map((file, index) => {
+                                                    return(
+                                                        <FilePlaceholder key = { index } style={ { marginLeft: 8 } } isImage = { mime.lookup(file.uri).includes('image') } source = { file.uri }/>
+                                                    );
+                                                })
+                                            }
+                                        </View>
                                     </View>
                                     <View style={ Stylesheet.divisionLine }></View>
                                     <Button
