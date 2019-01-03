@@ -43,18 +43,21 @@ class ExpandButton extends Component {
 			text,
 			isExpanded,
 			color,
-			style
+			style,
+			onPress,
+			isDisabled
 		} = this.props;
 
 		return (
 			<Button
+				disabled = { isDisabled }
 				block
-				onPress={ this.props.onPress }
-				style={ [this.props.style, Stylesheet.submitBtn, this.props.isExpanded ? { borderWidth: 1, borderColor: this.props.color, backgroundColor: 'white'  } : { backgroundColor: this.props.color }] }>
-				<Text style={{ color: this.props.isExpanded ? this.props.color : 'white', fontSize: 14 }}>
-					{ this.props.text }
+				onPress={ onPress }
+				style={ [style, Stylesheet.submitBtn, isExpanded ? { borderWidth: 1, borderColor: color, backgroundColor: 'white'  } : { backgroundColor: isDisabled ? colors.brandLightGray : color }] }>
+				<Text style={{ color: isExpanded ? color : 'white', fontSize: 14 }}>
+					{ text }
 				</Text>
-				<Icon style={{ fontSize: 20, color: this.props.isExpanded ? this.props.color : 'white' }} type="Ionicons" name={ this.props.isExpanded ? "ios-arrow-up-outline" : "ios-arrow-down-outline" }/>
+				<Icon style={{ fontSize: 20, color: isExpanded ? color : 'white' }} type="Ionicons" name={ isExpanded ? "ios-arrow-up-outline" : "ios-arrow-down-outline" }/>
 			</Button>
 		);
 	}
