@@ -186,20 +186,21 @@ class Bills extends Component {
                                     </View>
                                     <View style={ Stylesheet.divisionLine }></View>
                                     <ExpandButton
-                                        isExpanded={ this.state.isDebtsExpanded }
+                                        isExpanded={ this.state.pickerSelection != null ? this.state.isDebtsExpanded : false }
                                         text={ 'Adeudos Pendientes' }
                                         color={ colors.brandRed }
                                         onPress={ () => {this.setState({ isDebtsExpanded: !this.state.isDebtsExpanded })} }
                                         style={{ marginTop: 16 }}
+                                        isDisabled= { this.state.pickerSelection == null ? true : false }
                                     />
                                     <ExpandButton
-                                        isExpanded={ this.state.isPaySummExpanded }
+                                        isExpanded={ this.state.pickerSelection != null ? this.state.isPaySummExpanded : false }
                                         text={ 'Resumen de Pagos' }
                                         color={ '#68B143' }
                                         onPress={ () => {this.setState({ isPaySummExpanded: !this.state.isPaySummExpanded })} }
                                         style={{ marginTop: 16 }}
+                                        isDisabled= { this.state.pickerSelection == null ? true : false }
                                     />
-
                                 </View>
                         }
                     </Content>
