@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 
 import {
     View,
-    Image,
-    AsyncStorage,
     Platform,
     TouchableOpacity,
     BackHandler,
@@ -27,11 +25,7 @@ import {
 } from "native-base";
 
 import { connect } from 'react-redux';
-
-// Importing local assets and components.
-import { appImages } from "../../config/imagesRoutes";
 import TitleBar from '../../components/TitleBar';
-import { VUE_APP_BASE_API_URL, FORGOT_PASSWORD_URL } from '../../config/env'
 
 import {
     globalStyle,
@@ -49,9 +43,7 @@ import {
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/';
-import AddFileButton from '../../components/add-file-button';
 import ExpandButton from '../../components/expand-button';
-
 const axios = require('../../config/axios');
 
 // Gets the operating system's name where the app is running (Android or iOS).
@@ -91,6 +83,10 @@ class Bills extends Component {
     componentDidMount() {
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress');
     }
 
     // Changes the active screen using redux.
