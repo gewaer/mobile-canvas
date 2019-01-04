@@ -2,45 +2,28 @@
 import React, { Component } from 'react';
 
 import {
-    StyleSheet,
     View,
-    Linking,
-    Image,
-    AsyncStorage,
     Platform,
     TouchableOpacity,
     BackHandler,
-    FlatList,
-    List
+    FlatList
 } from "react-native";
 
 import {
     Button,
-    Title,
     Text,
-    Content,
     Container,
-    Form,
     Item,
-    Input,
-    Label,
     Spinner,
     Icon,
     Root,
-    Toast,
-    ListItem,
-    Body,
-    Left,
-    Right,
     Picker
 } from "native-base";
 
 import { connect } from 'react-redux';
 
 // Importing local assets and components.
-import { appImages } from "../../config/imagesRoutes";
 import TitleBar from '../../components/TitleBar';
-import { VUE_APP_BASE_API_URL, FORGOT_PASSWORD_URL } from '../../config/env'
 
 import {
     globalStyle,
@@ -75,7 +58,7 @@ class Home extends Component {
     
     constructor(props) {
         super(props);
-
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this.state = {
             emailError: '',
             passwordError: '',
@@ -91,13 +74,22 @@ class Home extends Component {
         };
     }
 
+    onNavigatorEvent(event) {
+        switch(event.id) {
+          case 'willAppear':
+            this.onRefresh()
+            break;
+        }
+      }
+
     onValueChange(value) {
         this.setState({
             pickerSelection: value,
             postsPage: 1,
             posts: []
         }, () => {
-            this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage, this.props.sections[value].SectId);
+            const sectId = this.props.sections[value] ? this.props.sections[value].SectId : '';
+            this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage, sectId);
         });
     }
 
@@ -110,7 +102,6 @@ class Home extends Component {
     componentDidMount() {
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
-        this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage, '');
         this.getSections(this.props.currentCondo.CondoId);
     }
 
@@ -231,13 +222,15 @@ class Home extends Component {
                     this.setState({ isLoadingFooter: false });
                 } else {
                     this.getPosts(this.props.currentCondo.CondoId, this.state.postsPage, this.props.sections[this.state.pickerSelection].SectId);
-                } 
+                }
             })
         }
     }
 
     onRefresh = () => {
-        this.setState({ isRefreshing: true }, () => { this.onValueChange(this.state.pickerSelection) });
+        this.setState({ isRefreshing: true }, () => {
+            this.onValueChange(this.state.pickerSelection)
+        });
     }
 
     render() {
