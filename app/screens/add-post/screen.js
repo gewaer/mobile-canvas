@@ -3,9 +3,6 @@ import React, { Component } from 'react';
 
 import {
     View,
-    Image,
-    ScrollView,
-    AsyncStorage,
     Platform,
     TouchableOpacity,
     BackHandler,
@@ -23,16 +20,11 @@ import {
     Spinner,
     Icon,
     Root,
-    Toast,
     Picker
 } from "native-base";
 
 import { connect } from 'react-redux';
-
-// Importing local assets and components.
-import { appImages } from "../../config/imagesRoutes";
 import TitleBar from '../../components/TitleBar';
-import { VUE_APP_BASE_API_URL, FORGOT_PASSWORD_URL } from '../../config/env'
 
 import {
     globalStyle,
@@ -112,12 +104,14 @@ class AddPost extends Component {
     }
 
     createPost = () => {
-        if (this.state.title && this.state.content && this.state.pickerSelection+1) {
+        let content = this.state.content.trim();
+        let title = this.state.title.trim();
+        if (title && content && this.state.pickerSelection+1) {
             const data = new FormData();
             data.append('CondoId', this.props.currentCondo.CondoId);
             data.append('SectId', this.props.sections[this.state.pickerSelection+1].SectId);
-            data.append('BlogTitle', this.state.title);
-            data.append('BlogText', this.state.content);
+            data.append('BlogTitle', title);
+            data.append('BlogText', content);
 
             axios({
             url: `/blogs`,
@@ -208,7 +202,6 @@ class AddPost extends Component {
           },
             (error, file) => {
                 this.setState({ files: this.state.files.concat(file) }, () => { console.log(this.state.files) });
-                console.log(file);
                 const fileData = new FormData();
                 fileData.append("uri", file.uri);
                 fileData.append("fileSize", file.fileSize);
@@ -271,7 +264,7 @@ class AddPost extends Component {
                                             <AddFileButton onPress = { () => { this.showFilePicker() } }/>
                                             { this.state.files.map((file, index) => {
                                                     return(
-                                                        <FilePlaceholder key = { index } style={ { marginLeft: 8 } } isImage = { mime.lookup(file.uri).includes('image') } source = { file.uri }/>
+                                                        <FilePlaceholder key = { index } style={ { marginLeft: 8, borderWidth: 1, borderColor: colors.brandLightGray } } isImage = { mime.lookup(file.uri).includes('image') } source = { file.uri }/>
                                                     );
                                                 })
                                             }
