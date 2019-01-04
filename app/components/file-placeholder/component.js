@@ -2,28 +2,13 @@
 import React, { Component } from "react";
 
 import {
-	ScrollView,
 	View,
-	TouchableOpacity,
-	AsyncStorage,
-	StyleSheet,
 	Image
 } from "react-native";
 
 import {
-	Body,
 	Icon,
-	Text,
-	ListItem,
-	List,
-	Right,
 } from "native-base";
-
-import {
-	ListStyles,
-	paddingHelpers,
-	colors
-} from "../../config/styles";
 
 import Stylesheet from "./stylesheet";
 
@@ -54,7 +39,7 @@ class FilePlaceholder extends Component {
 					<View style={ Stylesheet.container } onPress={ onPress }>
 						<Icon type="Ionicons" name="ios-document"  style={ Stylesheet.icon }/>
 					</View>
-					<Icon type="Ionicons" name="ios-close"  style={ { color: 'white', position: 'absolute', alignSelf: 'flex-end', marginVertical: -6, fontSize: 23, paddingRight: 3, paddingTop: 3 } }></Icon>
+					<Icon type="MaterialCommunityIcons" name="close-circle-outline"  style={ { color: 'black', position: 'absolute', alignSelf: 'flex-end', marginVertical: -2, fontSize: 18, paddingRight: 1, paddingTop: 2 } }></Icon>
 				</View>
 				
 		);
