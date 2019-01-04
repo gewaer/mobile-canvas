@@ -2,28 +2,12 @@
 import React, { Component } from "react";
 
 import {
-	ScrollView,
-	View,
-	TouchableOpacity,
-	AsyncStorage,
-	StyleSheet,
-	Image
-} from "react-native";
-
-import {
-	Body,
 	Icon,
 	Text,
-	ListItem,
-	List,
-	Right,
-	Left,
 	Button
 } from "native-base";
 
 import {
-	ListStyles,
-	paddingHelpers,
 	colors,
 } from "../../config/styles";
 
