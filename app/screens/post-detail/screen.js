@@ -2,46 +2,27 @@
 import React, { Component } from 'react';
 
 import {
-    StyleSheet,
     View,
-    Linking,
     Image,
-    AsyncStorage,
     Platform,
     TouchableOpacity,
     BackHandler,
-    FlatList,
-    List
+    FlatList
 } from "react-native";
 
 import {
     Button,
-    Title,
     Text,
-    Content,
     Container,
-    Form,
-    Item,
-    Input,
-    Label,
     Spinner,
     Icon,
-    Root,
-    Toast,
-    ListItem,
-    Body,
-    Left,
-    Right,
-    Picker
+    Root
 } from "native-base";
 
 import { connect } from 'react-redux';
 
 import cloneDeep  from "lodash/cloneDeep";
-// Importing local assets and components.
-import { appImages } from "../../config/imagesRoutes";
 import TitleBar from '../../components/TitleBar';
-import { VUE_APP_BASE_API_URL, FORGOT_PASSWORD_URL } from '../../config/env'
 
 import {
     globalStyle,
@@ -61,11 +42,7 @@ import Stylesheet from './stylesheet';
 import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 import ImagePlaceholder from '../../components/image-placeholder';
 import CommentRow from '../../components/comment-row';
-
 const axios = require('../../config/axios')
-
-// Gets the operating system's name where the app is running (Android or iOS).
-const platform = Platform.OS;
 
 /*
 	Screen Name: Login. 
@@ -81,14 +58,13 @@ class PostDetail extends Component {
             comments: [],
             post: this.props.params.post,
             date: this.props.params.date,
-            comment: ''
+            comment: '',
+            isLoadingFooter: false,
+            isRefreshing: false,
+            totalPages: null,
+            commentsLimitReached: false,
+            commentsPage: 1
         };
-    }
-
-    onValueChange(value) {
-        this.setState({
-            pickerSelection1: value
-        });
     }
 
     // Handles Android's back button's action
@@ -100,7 +76,7 @@ class PostDetail extends Component {
     componentDidMount() {
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
-        this.getComments();
+        this.getComments(this.state.post.BlogId, this.state.postsPage);
     }
 
     componentWillUnmount() {
@@ -134,25 +110,27 @@ class PostDetail extends Component {
                 url: `/blogs/${this.state.post.BlogId}/comments`,
                 method: "POST",
                 data
-            }).then((response) => {
-                this.setState({ comment: '' }),
-                this.setState({ comments: this.state.comments.concat(response.data) })
+            }).then(() => {
+                this.setState({ comment: '' });
+                this.getComments(this.state.post.BlogId, 1);
             }).catch(() => {
             })
         }
     }
 
-    getComments() {
+    getComments(blogId, page) {
         if (!this.state.isLoadingFooter && !this.state.isRefreshing) {
             this.setState({ isLoading: true });
         }
-        axios.get(`/blogs/${this.state.post.BlogId}/comments?relationships=user`)
+        axios.get(`/comments?q=(BlogId:${ blogId })&relationships=user,appOptions&page=${ page }&sort=CmmtCreatedDate|desc&format=true`)
         .then((response) => {
             this.setState({
-                comments:  response.data
+                comments:  this.state.comments.concat(response.data.data)
             }, () => { this.setState({
                 isLoading: false,
-                isRefreshing: false
+                isRefreshing: false,
+                isLoadingFooter: false,
+                totalPages: response.data.total_pages
             }) });
         })
         .catch((error) => {
@@ -178,8 +156,12 @@ class PostDetail extends Component {
     }
 
     popScreen() {
-        this.props.navigator.pop();
-        this.props.params.refresh();
+        this.props.navigator.resetTo({
+            screen: 'vv.Home',
+            navigatorStyle: {
+                navBarHidden: true
+            }
+        });
     }
 
     // Defines title bar's body content
@@ -220,15 +202,55 @@ class PostDetail extends Component {
         let comments = cloneDeep(this.state.comments)
         comments.sort((a, b) => a.CmmtCreatedDate < b.CmmtCreatedDate);
         return (
-            comments && comments.map((comment, index) => {
-                return(
+            comments && 
+            <FlatList
+                onRefresh={() => this.getComments(this.state.post.BlogId, 1)}
+                refreshing={this.state.isRefreshing}
+                initialNumberToRender={4}
+                keyExtractor={item => item.CmmtId}
+                data={ comments }
+                renderItem={({ item }) => (
                     <CommentRow
-                        key={ index }
-                        comment={ comment }
+                        comment={ item }
                     />
-                );
-            })
+                )}
+                onEndReached={ () => this.handleLoadMore()}
+                onEndReachedThreshold = { 0.5 }
+                ListFooterComponent={() => this.renderFooter()}
+                getItemLayout={(data, index) => (
+                    { length: 82, offset: 82 * index, index }
+                )}
+            />
         );
+    }
+
+    handleLoadMore = () => {
+        if (this.state.commentsLimitReached) {
+            this.setState({ isLoading: false });
+            return;
+        } else if (this.state.isLoadingFooter) {
+            return;
+        } else {
+            this.setState({
+                commentsPage: this.state.commentsPage + 1,
+                isLoadingFooter: true
+            }, () => {
+                if(this.state.totalPages < this.state.commentsPage){
+                    this.setState({ isLoadingFooter: false });
+                } else {
+                    this.getComments(this.state.post.BlogId, this.state.commentsPage);
+                } 
+            })
+        }
+    }
+
+    onRefresh() {
+        this.setState({
+            commentsPage: 1,
+            comments: []
+        }, () => {
+            this.getPosts(this.state.post.BlogId, this.state.commentsPage);
+        });
     }
 
     render() {
@@ -236,51 +258,49 @@ class PostDetail extends Component {
             <Root>
                 <Container style={{ backgroundColor: colors.normalWhite }}>
                     <TitleBar noShadow left={this.titleBarLeft()} body={this.titleBarBody()} bgColor={colors.normalWhite} />
-                    <Content style={{ backgroundColor: colors.normalWhite, borderTopWidth: 1, borderTopColor: '#241D1E' }}>
-                        <View>
-                            <View style={ Stylesheet.topContainer }>
-                                <View style={ Stylesheet.titleContainer }>
-                                    <Text style={ Stylesheet.titleText }>ITERA - MEXICO, RECURSOS HUMANOS</Text>
-                                    <Text style={ { fontSize: 14, color: colors.brandLightGray } }>{ this.state.post.user.UserName }</Text>
-                                </View>
-                                <ImagePlaceholder/>
-                                <View style={ Stylesheet.descriptionContainer }>
-                                    <Text style={ { fontSize: 12 } }>{ this.state.post.BlogText }</Text>
-                                </View>
+                    <View style={{ backgroundColor: colors.normalWhite, borderTopWidth: 1, borderTopColor: '#241D1E' }}>
+                        <View style={ Stylesheet.topContainer }>
+                            <View style={ Stylesheet.titleContainer }>
+                                <Text style={ Stylesheet.titleText }>ITERA - MEXICO, RECURSOS HUMANOS</Text>
+                                <Text style={ { fontSize: 14, color: colors.brandLightGray } }>{ this.state.post.user.UserName }</Text>
                             </View>
-                            <View style={ Stylesheet.divisionLine }></View>
-                            <View style={ Stylesheet.commentRow }>
-                                <View style={ Stylesheet.commentRowTop }>
-                                    <Icon type={'Ionicons'} name={'ios-chatboxes'} style={ { color: 'black',  fontSize: 20, marginRight: 12, marginBottom: -12} } />
-                                    <Text style={ { fontWeight: 'bold',  fontSize: 14 } }>Comentarios:</Text>
-                                </View>
-                                <View style={ Stylesheet.commentRowBotom }>
-                                    <Icon type={'Ionicons'} name={'ios-contact'} style={ { color: '#B5B5B5',  fontSize: 32, marginRight: 12, marginTop: -5, marginBottom: -10} } /> 
-                                    <AutoGrowingTextInput
-                                        placeholderTextColor={ colors.brandLightGray }
-                                        style={ [Stylesheet.formInput, { fontSize: 12, paddingLeft: 16, paddingRight: 16, paddingBottom: 5, width: 266 }] }
-                                        placeholder="Escribe un comentario..."
-                                        multiline={ true }
-                                        onChangeText={(comment) => this.setState({ comment: comment })}
-                                        value={ this.state.comment }
-                                    />
-                                    <Button
-                                    rounded
-                                    primary
-                                    onPress={() => { this.createComment() }}
-                                    style={ Stylesheet.submitBtn }>
-                                        <Icon type="Ionicons"  name="ios-send"  color={colors.normalWhite} style={ { fontSize: 15, marginLeft: 0, marginRight: 0 } }/>
-                                    </Button>
-                                </View>
+                            <ImagePlaceholder/>
+                            <View style={ Stylesheet.descriptionContainer }>
+                                <Text style={ { fontSize: 12 } }>{ this.state.post.BlogText }</Text>
                             </View>
-                            <View style={ Stylesheet.divisionLine }></View>
-                            { 
-                                this.state.isLoading ?
-                                <Spinner color={colors.brandLightBlack} /> :
-                                this.renderComments()
-                            }
                         </View>
-                    </Content>
+                        <View style={ Stylesheet.divisionLine }></View>
+                        <View style={ Stylesheet.commentRow }>
+                            <View style={ Stylesheet.commentRowTop }>
+                                <Icon type={'Ionicons'} name={'ios-chatboxes'} style={ { color: 'black',  fontSize: 20, marginRight: 12, marginBottom: -12} } />
+                                <Text style={ { fontWeight: 'bold',  fontSize: 14 } }>Comentarios:</Text>
+                            </View>
+                            <View style={ Stylesheet.commentRowBotom }>
+                                <Icon type={'Ionicons'} name={'ios-contact'} style={ { color: '#B5B5B5',  fontSize: 32, marginRight: 12, marginTop: -5, marginBottom: -10} } /> 
+                                <AutoGrowingTextInput
+                                    placeholderTextColor={ colors.brandLightGray }
+                                    style={ [Stylesheet.formInput, { fontSize: 12, paddingLeft: 16, paddingRight: 16, paddingBottom: 5, width: 266 }] }
+                                    placeholder="Escribe un comentario..."
+                                    multiline={ true }
+                                    onChangeText={(comment) => this.setState({ comment: comment })}
+                                    value={ this.state.comment }
+                                />
+                                <Button
+                                rounded
+                                primary
+                                onPress={() => { this.createComment() }}
+                                style={ Stylesheet.submitBtn }>
+                                    <Icon type="Ionicons"  name="ios-send"  color={colors.normalWhite} style={ { fontSize: 15, marginLeft: 0, marginRight: 0 } }/>
+                                </Button>
+                            </View>
+                        </View>
+                        <View style={ Stylesheet.divisionLine }></View>
+                    </View>
+                    { 
+                        this.state.isLoading ?
+                        <Spinner color={colors.brandLightBlack} /> :
+                        this.renderComments()
+                    }
                 </Container>
             </Root>
         );
