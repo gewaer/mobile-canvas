@@ -25,6 +25,7 @@ import {
 
 import { connect } from 'react-redux';
 import TitleBar from '../../components/TitleBar';
+import cloneDeep  from "lodash/cloneDeep";
 
 import {
     globalStyle,
@@ -209,6 +210,12 @@ class AddPost extends Component {
           })
     }
 
+    removeFile(index) {
+        let files = cloneDeep(this.state.files);
+        files.splice(index, 1);
+        this.setState({ files });
+    }
+
     render() {
         return (
             <Root>
@@ -264,7 +271,13 @@ class AddPost extends Component {
                                             <AddFileButton onPress = { () => { this.showFilePicker() } }/>
                                             { this.state.files.map((file, index) => {
                                                     return(
-                                                        <FilePlaceholder key = { index } style={ { marginLeft: 8, borderWidth: 1, borderColor: colors.brandLightGray } } isImage = { mime.lookup(file.uri).includes('image') } source = { file.uri }/>
+                                                        <FilePlaceholder
+                                                            key = { index }
+                                                            style={ { marginLeft: 8, borderWidth: 1, borderColor: colors.brandLightGray } }
+                                                            isImage = { mime.lookup(file.uri).includes('image') }
+                                                            source = { file.uri }
+                                                            onPress = { () => { this.removeFile(index) } }
+                                                        />
                                                     );
                                                 })
                                             }
