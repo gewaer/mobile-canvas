@@ -3,7 +3,8 @@ import React, { Component } from "react";
 
 import {
 	View,
-	Image
+	Image,
+	TouchableOpacity
 } from "react-native";
 
 import {
@@ -11,6 +12,10 @@ import {
 } from "native-base";
 
 import Stylesheet from "./stylesheet";
+
+import {
+    colors,
+} from "../../config/styles";
 
 class FilePlaceholder extends Component {
 
@@ -33,13 +38,18 @@ class FilePlaceholder extends Component {
 						source={ { uri: source } }
 						style={ Stylesheet.container }
 					/>
+					<TouchableOpacity onPress={ onPress } style={ { position: 'absolute', alignSelf: 'flex-end',  } }>
+						<Icon type="FontAwesome" name="close"  style={ { color: 'gray', fontSize: 16, marginVertical: -2, marginTop: -10, paddingTop: 2, marginRight: -5 } }></Icon>
+					</TouchableOpacity>
 				</View>
 				:
 				<View style={ [ style, { backgroundColor: '#00A1B4' } ] }>
-					<View style={ Stylesheet.container } onPress={ onPress }>
+					<View style={ Stylesheet.container }>
 						<Icon type="Ionicons" name="ios-document"  style={ Stylesheet.icon }/>
 					</View>
-					<Icon type="MaterialCommunityIcons" name="close-circle-outline"  style={ { color: 'black', position: 'absolute', alignSelf: 'flex-end', marginVertical: -2, fontSize: 18, paddingRight: 1, paddingTop: 2 } }></Icon>
+					<TouchableOpacity onPress={ onPress } style={ { position: 'absolute', alignSelf: 'flex-end',  } }>
+						<Icon type="FontAwesome" name="close"  style={ { color: 'gray', fontSize: 16, marginVertical: -2, marginTop: -10, paddingTop: 2, marginRight: -5 } }></Icon>
+					</TouchableOpacity>
 				</View>
 				
 		);
