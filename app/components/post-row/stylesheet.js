@@ -90,7 +90,7 @@ export default StyleSheet.create({
     width: 40,
     height: 40,
     borderColor: colors.brandLightGray,
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 20,
     marginRight: 12
   },

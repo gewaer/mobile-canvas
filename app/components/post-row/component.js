@@ -19,7 +19,7 @@ class PostRow extends Component {
 
 	static defaultProps = {
 		colors: ['#68B143', '#E8523F', '#00A1B4', '#F49B48'],
-		source: null,
+		source: "",
 		title: 'Bienvenido(a) a Itera Intranet',
 		subTitle: '20 nov. 2018 a las 11:00 AM',
 		content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna...',
