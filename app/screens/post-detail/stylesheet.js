@@ -101,5 +101,13 @@ export default StyleSheet.create({
     titleText: {
         fontSize: 14,
         color: 'black'
-    }
+    },
+    thumbnail: {
+        width: 40,
+        height: 40,
+        borderColor: colors.brandLightGray,
+        borderWidth: 2,
+        borderRadius: 20,
+        marginRight: 12
+    },
 });

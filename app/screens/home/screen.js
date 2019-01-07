@@ -162,7 +162,7 @@ class Home extends Component {
         if (!this.state.isLoadingFooter && !this.state.isRefreshing) {
             this.setState({ isLoading: true });
         }
-        axios.get(`/blogs/?q=(condoid:${condoId},sectid:${sectId})&relationships=comments,user,files,images,appOptions&page=${page}&sort=BlogCreatedDate|desc&format=true`)
+        axios.get(`/blogs/?q=(condoid:${condoId},sectid:${sectId})&relationships=comments,user,group,files,images,appOptions&page=${page}&sort=BlogCreatedDate|desc&format=true`)
         .then((response) => {
             this.setState({ posts:  this.state.posts.concat( response.data.data ) }, () => { this.setState({ isLoading: false, isLoadingFooter: false, isRefreshing: false, totalPages: response.data.total_pages }) });
         })
@@ -296,6 +296,7 @@ class Home extends Component {
                         data={ this.state.posts }
                         renderItem={({ item }) => (
                             <PostRow
+                                source={ item.appOptions ? item.appOptions.foto : "" }
                                 title={ item.BlogTitle }
                                 content={ item.BlogText }
                                 imagesCount={ item.images.length }

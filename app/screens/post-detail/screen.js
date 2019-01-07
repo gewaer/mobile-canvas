@@ -169,7 +169,13 @@ class PostDetail extends Component {
         return {
             content: (
                 <View style={[Stylesheet.titleBarContent, { width: '135%', flexDirection: 'row' }]}>
-                    <Icon type={'Ionicons'} name={'ios-contact'} style={ { color: '#B5B5B5',  fontSize: 48, marginRight: 12, marginTop: -5} } /> 
+                    { this.state.post.appOptions && this.state.post.appOptions.foto ?
+                        <Image
+                            source={ { uri: this.state.post.appOptions.foto } }
+                            style={ Stylesheet.thumbnail }
+                        /> :
+                        <Icon type={'Ionicons'} name={'ios-contact'} style={ { color: '#B5B5B5',  fontSize: 48, marginRight: 12, marginTop: -6} } />
+                    }
                     <View style = { { justifyContent: 'center' } }>
                         <Text style={[Stylesheet.titleBarContent, { fontSize: 15 }]}>
                             { this.state.post.BlogTitle }
@@ -261,7 +267,7 @@ class PostDetail extends Component {
                     <View style={{ backgroundColor: colors.normalWhite, borderTopWidth: 1, borderTopColor: '#241D1E' }}>
                         <View style={ Stylesheet.topContainer }>
                             <View style={ Stylesheet.titleContainer }>
-                                <Text style={ Stylesheet.titleText }>ITERA - MEXICO, RECURSOS HUMANOS</Text>
+                                <Text style={ Stylesheet.titleText }>{ this.state.post.group.Nombre }</Text>
                                 <Text style={ { fontSize: 14, color: colors.brandLightGray } }>{ this.state.post.user.UserName }</Text>
                             </View>
                             <ImagePlaceholder/>
