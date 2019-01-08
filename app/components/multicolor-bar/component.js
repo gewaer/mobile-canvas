@@ -2,27 +2,8 @@
 import React, { Component } from "react";
 
 import {
-	ScrollView,
-	View,
-	TouchableOpacity,
-	AsyncStorage,
-	StyleSheet
+	View
 } from "react-native";
-
-import {
-	Body,
-	Icon,
-	Text,
-	ListItem,
-	List,
-	Right,
-} from "native-base";
-
-import {
-	ListStyles,
-	paddingHelpers,
-	colors,
-} from "../../config/styles";
 
 import Stylesheet from "./stylesheet";
 
@@ -40,7 +21,7 @@ class MulticolorBar extends Component {
 
 		return (
 			<View style={ Stylesheet.container }>
-				{ this.props.colors.map((color, index) => {
+				{ colors.map((color, index) => {
 					return(
 						<View key={ index } style={ [Stylesheet.singleBox, { backgroundColor: color }] }></View>
 					);

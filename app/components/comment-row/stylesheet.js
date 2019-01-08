@@ -69,10 +69,12 @@ export default StyleSheet.create({
   },
   subTitle: {
     fontSize: 12,
-     color: colors.brandLightGray
+    color: 'gray',
+    fontWeight: '500'
   },
   content: {
-    fontSize: 12
+    fontSize: 12,
+    marginTop: 5
   },
   bottomText: {
     color: '#00A1B4',

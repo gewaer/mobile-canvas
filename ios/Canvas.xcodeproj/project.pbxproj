@@ -53,6 +53,11 @@
 		ADB05734218367B600548F61 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57520F98880C4EDCAE766016 /* Ionicons.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B5E8AF7D44934308ABB08772 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6B570DD7F46441FA2B48FB4 /* MaterialIcons.ttf */; };
+		B629255C21DE5F0900A4F676 /* libRNDocumentPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B629255921DE5EB200A4F676 /* libRNDocumentPicker.a */; };
+		B6CC783C21E3D7D00001AA70 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6CC783B21E3D7D00001AA70 /* QBImagePicker.framework */; };
+		B6CC783D21E3D7D00001AA70 /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6CC783B21E3D7D00001AA70 /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B6CC786A21E3D8550001AA70 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6CC786921E3D8550001AA70 /* RSKImageCropper.framework */; };
+		B6CC786B21E3D8550001AA70 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6CC786921E3D8550001AA70 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CD6214B1B8454892A39B47F1 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D75AE895254B06B8819041 /* libRNVectorIcons.a */; };
 		DFBB8E2FAF9342B082771C94 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04DC3854DBB44DE8B5D3ED64 /* AntDesign.ttf */; };
 		FD6846B62EB04A549A1306AD /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24C49E77C3444FACA24B92CB /* libRNSVG-tvOS.a */; };
@@ -374,7 +379,29 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		B629255821DE5EB200A4F676 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B629252D21DE5EB200A4F676 /* RNDocumentPicker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E01DD9DB1D2311A600C39062;
+			remoteInfo = RNDocumentPicker;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B6CC786821E3D7D00001AA70 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B6CC783D21E3D7D00001AA70 /* QBImagePicker.framework in Embed Frameworks */,
+				B6CC786B21E3D8550001AA70 /* RSKImageCropper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -422,6 +449,10 @@
 		AD28B72820E67D6000CD2007 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B35ED9876E7949C4BC18B12C /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
+		B629252D21DE5EB200A4F676 /* RNDocumentPicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDocumentPicker.xcodeproj; path = "../node_modules/react-native-document-picker/ios/RNDocumentPicker.xcodeproj"; sourceTree = "<group>"; };
+		B629255D21DE606900A4F676 /* Canvas.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Canvas.entitlements; sourceTree = "<group>"; };
+		B6CC783B21E3D7D00001AA70 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6CC786921E3D8550001AA70 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0D75AE895254B06B8819041 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		C6B570DD7F46441FA2B48FB4 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		C7BB40C87F97497EB1CEE1E4 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
@@ -445,6 +476,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B629255C21DE5F0900A4F676 /* libRNDocumentPicker.a in Frameworks */,
 				AD28B75320E67DB100CD2007 /* libReactNativeNavigation.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -452,6 +484,7 @@
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
+				B6CC786A21E3D8550001AA70 /* RSKImageCropper.framework in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
@@ -461,6 +494,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				CD6214B1B8454892A39B47F1 /* libRNVectorIcons.a in Frameworks */,
 				227BDDD506D649FCB4C983F7 /* libimageCropPicker.a in Frameworks */,
+				B6CC783C21E3D7D00001AA70 /* QBImagePicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,6 +617,7 @@
 		13B07FAE1A68108700A75B9A /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
+				B629255D21DE606900A4F676 /* Canvas.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -646,6 +681,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				B629252D21DE5EB200A4F676 /* RNDocumentPicker.xcodeproj */,
 				AD28B72820E67D6000CD2007 /* ReactNativeNavigation.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -678,6 +714,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B6CC786921E3D8550001AA70 /* RSKImageCropper.framework */,
+				B6CC783B21E3D7D00001AA70 /* QBImagePicker.framework */,
 				13B07FAE1A68108700A75B9A /* Canvas */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* AhorrandoAppTests */,
@@ -773,6 +811,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		B629252E21DE5EB200A4F676 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B629255921DE5EB200A4F676 /* libRNDocumentPicker.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -802,6 +848,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				B6CC786821E3D7D00001AA70 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -859,11 +906,17 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = 4837HV9LA2;
+						DevelopmentTeam = 7UBUKR2PLZ;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 4837HV9LA2;
+						DevelopmentTeam = 7UBUKR2PLZ;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -943,6 +996,10 @@
 				{
 					ProductGroup = AD28B72920E67D6000CD2007 /* Products */;
 					ProjectRef = AD28B72820E67D6000CD2007 /* ReactNativeNavigation.xcodeproj */;
+				},
+				{
+					ProductGroup = B629252E21DE5EB200A4F676 /* Products */;
+					ProjectRef = B629252D21DE5EB200A4F676 /* RNDocumentPicker.xcodeproj */;
 				},
 				{
 					ProductGroup = 0CE868382100590F00333664 /* Products */;
@@ -1265,6 +1322,13 @@
 			remoteRef = ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		B629255921DE5EB200A4F676 /* libRNDocumentPicker.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNDocumentPicker.a;
+			remoteRef = B629255821DE5EB200A4F676 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1411,7 +1475,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 4837HV9LA2;
+				DEVELOPMENT_TEAM = 7UBUKR2PLZ;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1445,7 +1509,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 4837HV9LA2;
+				DEVELOPMENT_TEAM = 7UBUKR2PLZ;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
@@ -1475,9 +1539,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Canvas/Canvas.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 4837HV9LA2;
+				DEVELOPMENT_TEAM = 7UBUKR2PLZ;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
@@ -1492,8 +1560,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Mctekk.Canvas;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Mctekk.Vivook;
 				PRODUCT_NAME = Canvas;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1503,8 +1572,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Canvas/Canvas.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4837HV9LA2;
+				DEVELOPMENT_TEAM = 7UBUKR2PLZ;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
@@ -1519,8 +1592,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Mctekk.Canvas;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Mctekk.Vivook;
 				PRODUCT_NAME = Canvas;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

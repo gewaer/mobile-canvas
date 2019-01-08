@@ -6,6 +6,7 @@ import Reports from './screens/reports';
 import AddPost from './screens/add-post';
 import Home from './screens/home';
 import PostDetail from './screens/post-detail';
+import Bills from './screens/bills';
 
 import Welcome from './screens/Welcome';
 import TitleBar from "./components/TitleBar";
@@ -31,6 +32,7 @@ export function registerScreen(store, Provider) {
     Navigation.registerComponent('vv.AddPost', () => AddPost, store, Provider);
     Navigation.registerComponent('vv.Home', () => Home, store, Provider);
     Navigation.registerComponent('vv.PostDetail', () => PostDetail, store, Provider);
+    Navigation.registerComponent('vv.Bills', () => Bills, store, Provider);
     
     Navigation.registerComponent('dac.Welcome', () => Welcome, store, Provider);
     Navigation.registerComponent('dac.Register', () => Register, store, Provider);

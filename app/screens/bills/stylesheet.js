@@ -17,30 +17,35 @@ export default StyleSheet.create({
         fontSize: 14
     },
     submitBtn: {
-        backgroundColor: '#68B143',
-        width: 25,
-        height: 25,
-        justifyContent: 'center',
-        paddingTop: 0,
-        paddingBottom: 0,
-        marginLeft: 12
+        backgroundColor: '#00A1B4',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        width: 169,
+        alignSelf: 'flex-end',
+        height: 30,
+        marginHorizontal: 16
     },
     formItem: {
         borderTopWidth: 1,
         borderLeftWidth: 1,
         borderRightWidth: 1,
-        borderRadius: 4,
-        borderColor: colors.brandLightGray,
-        height: 27,
+        borderColor: '#B5B5B5',
+        marginTop: 8,
+        height: 29.5,
+        borderRadius: 3
     },
     formInput: {
         borderWidth: 1,
-        borderColor: '#68B143',
-        height: 25,
-        borderRadius: 12
+        borderColor: '#00A1B4',
+        marginTop: 8,
+        fontSize: 12,
+        paddingLeft: 16,
+        paddingRight: 16
     },
     titleBarContent: {
-        color: "black",
+        color: "white",
         fontWeight: "600"
     },
     containerView: {
@@ -62,52 +67,24 @@ export default StyleSheet.create({
         backgroundColor: "transparent"
     },
     divisionLine: {
-        height: 3,
-        borderBottomWidth: 3,
-        borderBottomColor: colors.brandLightGray
+        height: 1,
+        borderBottomWidth: 0.7,
+        borderBottomColor: colors.brandDarkGrey
     },
     labelText: {
         fontSize: 14,
         marginTop: 10
     },
+    titleText: {
+        fontSize: 16,
+        color: '#00A1B4',
+        marginLeft: 12,
+        marginVertical: 12
+    },
     buttonIcon: {
         marginLeft: 0,
         marginRight: 0,
         paddingTop: 0,
-        height: 27,
-    },
-    topContainer: {
-        marginHorizontal: 16,
-        marginVertical: 16
-    },
-    commentRowBotom: {
-        flexDirection: 'row',
-        marginHorizontal: 16,
-        marginTop: 16
-    },
-    commentRowTop: {
-        flexDirection: 'row',
-        marginHorizontal: 16,
-    },
-    commentRow: {
-        marginVertical: 16
-    },
-    descriptionContainer: {
-        marginTop: 12
-    },
-    titleContainer: {
-        marginBottom: 12
-    },
-    titleText: {
-        fontSize: 14,
-        color: 'black'
-    },
-    thumbnail: {
-        width: 40,
-        height: 40,
-        borderColor: colors.brandLightGray,
-        borderWidth: 2,
-        borderRadius: 20,
-        marginRight: 12
-    },
+        height: 25,
+    }
 });

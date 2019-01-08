@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 
 import {
     View,
-    Image,
-    AsyncStorage,
     Platform,
     TouchableOpacity,
     BackHandler,
@@ -22,16 +20,12 @@ import {
     Spinner,
     Icon,
     Root,
-    Toast,
     Picker
 } from "native-base";
 
 import { connect } from 'react-redux';
-
-// Importing local assets and components.
-import { appImages } from "../../config/imagesRoutes";
 import TitleBar from '../../components/TitleBar';
-import { VUE_APP_BASE_API_URL, FORGOT_PASSWORD_URL } from '../../config/env'
+import cloneDeep  from "lodash/cloneDeep";
 
 import {
     globalStyle,
@@ -50,6 +44,9 @@ import {
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/';
 import AddFileButton from '../../components/add-file-button';
+import FilePlaceholder from '../../components/file-placeholder';
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+import * as mime from 'react-native-mime-types';
 
 const axios = require('../../config/axios');
 
@@ -67,9 +64,10 @@ class AddPost extends Component {
 
         this.state = {
             isLoading: false,
-            pickerSelection: undefined,
-            title: undefined,
-            content: undefined
+            pickerSelection: '',
+            title: '',
+            content: '',
+            files: []
         };
     }
 
@@ -107,12 +105,14 @@ class AddPost extends Component {
     }
 
     createPost = () => {
-        if (this.state.title && this.state.content && this.state.pickerSelection+1) {
+        let content = this.state.content.trim();
+        let title = this.state.title.trim();
+        if (title && content && this.state.pickerSelection+1) {
             const data = new FormData();
             data.append('CondoId', this.props.currentCondo.CondoId);
             data.append('SectId', this.props.sections[this.state.pickerSelection+1].SectId);
-            data.append('BlogTitle', this.state.title);
-            data.append('BlogText', this.state.content);
+            data.append('BlogTitle', title);
+            data.append('BlogText', content);
 
             axios({
             url: `/blogs`,
@@ -197,6 +197,25 @@ class AddPost extends Component {
         }) 
     }
 
+     showFilePicker() {
+        DocumentPicker.show({
+            filetype: [DocumentPickerUtil.allFiles()],
+          },
+            (error, file) => {
+                this.setState({ files: this.state.files.concat(file) }, () => { console.log(this.state.files) });
+                const fileData = new FormData();
+                fileData.append("uri", file.uri);
+                fileData.append("fileSize", file.fileSize);
+                fileData.append("fileName", file.fileName);
+          })
+    }
+
+    removeFile(index) {
+        let files = cloneDeep(this.state.files);
+        files.splice(index, 1);
+        this.setState({ files });
+    }
+
     render() {
         return (
             <Root>
@@ -248,7 +267,21 @@ class AddPost extends Component {
                                             />                                   
                                         </Form>
                                         <Text style={ [Stylesheet.labelText, { marginBottom: 8 }] }>Adjuntar imagen o archivo:</Text>
-                                        <AddFileButton/>
+                                        <View style={ { flexDirection: 'row' } }>
+                                            <AddFileButton onPress = { () => { this.showFilePicker() } }/>
+                                            { this.state.files.map((file, index) => {
+                                                    return(
+                                                        <FilePlaceholder
+                                                            key = { index }
+                                                            style={ { marginLeft: 8, borderWidth: 1, borderColor: colors.brandLightGray } }
+                                                            isImage = { mime.lookup(file.uri).includes('image') }
+                                                            source = { file.uri }
+                                                            onPress = { () => { this.removeFile(index) } }
+                                                        />
+                                                    );
+                                                })
+                                            }
+                                        </View>
                                     </View>
                                     <View style={ Stylesheet.divisionLine }></View>
                                     <Button

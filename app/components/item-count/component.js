@@ -2,27 +2,13 @@
 import React, { Component } from "react";
 
 import {
-	ScrollView,
-	View,
-	TouchableOpacity,
-	AsyncStorage,
-	StyleSheet
+	View
 } from "react-native";
 
 import {
-	Body,
 	Icon,
 	Text,
-	ListItem,
-	List,
-	Right,
 } from "native-base";
-
-import {
-	ListStyles,
-	paddingHelpers,
-	colors,
-} from "../../config/styles";
 
 import Stylesheet from "./stylesheet";
 
@@ -45,9 +31,9 @@ class ItemCount extends Component {
 			containerStyle
 		} = this.props;
 		return (
-			<View style={ [this.props.containerStyle, { flexDirection: 'row', justifyContent: 'flex-end' }] }>
-				<Text style={ Stylesheet.count }>{ this.props.count }</Text>
-				<Icon type={ this.props.iconType } name={ this.props.iconName } style={ [Stylesheet.count, this.props.iconStyle] } />
+			<View style={ [containerStyle, { flexDirection: 'row', justifyContent: 'flex-end' }] }>
+				<Text style={ Stylesheet.count }>{ count }</Text>
+				<Icon type={ iconType } name={ iconName } style={ [Stylesheet.count, iconStyle] } />
 			</View>
 		);
 	}

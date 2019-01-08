@@ -129,7 +129,7 @@ startApp = (root) => {
                     navigatorButtons: {} // override the nav buttons for the tab screen, see "Adding buttons to the navigator" below (optional)
                 },
                 {
-                    screen: 'dac.Companies', // unique ID registered with Navigation.registerScreen
+                    screen: 'vv.Bills', // unique ID registered with Navigation.registerScreen
                     icon: require('./app/assets/images/icons/bills.png'), // local image asset for the tab icon unselected state (optional on iOS)
                     iconInsets: { // add this to change icon position (optional, iOS only).
                         top: 6, // optional, default is 0.
