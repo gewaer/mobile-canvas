@@ -106,7 +106,8 @@ export default StyleSheet.create({
   title: {
     fontWeight: "bold",
     fontSize: 14,
-    marginBottom: 2
+    marginBottom: 2,
+    maxWidth: '70%'
   },
   subTitle: {
     fontSize: 12,

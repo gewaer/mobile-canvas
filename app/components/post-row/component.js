@@ -51,7 +51,7 @@ class PostRow extends Component {
 						<Icon type={'Ionicons'} name={'ios-contact'} style={ { color: '#B5B5B5',  fontSize: 48, marginRight: 12, marginBottom: -9} } /> 
 					}
 					<View style={ { justifyContent: 'center' } }>
-						<Text style={ Stylesheet.title }>{ title }</Text>
+						<Text numberOfLines={ 1 } style={ Stylesheet.title }>{ title }</Text>
 						<Text style={ Stylesheet.subTitle }>{ subTitle }</Text>
 					</View>
 				</View>
