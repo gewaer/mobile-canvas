@@ -43,7 +43,7 @@ import {
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/';
 import PostRow from '../../components/post-row';
-import { dateFormat } from '../../lib/helpers';
+import { dateHourFormat } from '../../lib/helpers';
 
 const axios = require('../../config/axios')
 
@@ -302,8 +302,8 @@ class Home extends Component {
                                 imagesCount={ item.images.length }
                                 commentsCount={ item.comments.length }
                                 atchCount={ item.files.length }
-                                subTitle={ dateFormat(item.BlogCreatedDate ) }
-                                onPress={ () => { this.pushScreen({ activeScreen: 'vv.PostDetail', post: item, date: dateFormat(item.BlogCreatedDate ) }) } }
+                                subTitle={ dateHourFormat(item.BlogCreatedDate ) }
+                                onPress={ () => { this.pushScreen({ activeScreen: 'vv.PostDetail', post: item, date: dateHourFormat(item.BlogCreatedDate ) }) } }
                             />
                         )}
                         onEndReached={ () => this.handleLoadMore()}

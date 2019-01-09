@@ -16,14 +16,16 @@ class BillRow extends Component {
 
 	static defaultProps = {
 		title: 'Unidades de consumo de gas. Nuevo adeudo.',
-		subTitle: '20 nov. 2018 a las 11:00 AM'
+		subTitle: '20 nov. 2018',
+		amount: '$68,000.00'
 	} 
 	
 	render() {
 		const {
 			title,
 			subTitle,
-			onPress
+			onPress,
+			amount
 		} = this.props;
 
 		return (
@@ -31,7 +33,7 @@ class BillRow extends Component {
 				<View style={ { justifyContent: 'center' } }>
 					<View style={ { flexDirection: 'row', justifyContent: 'space-between' } }>
 						<Text numberOfLines={ 1 } style={ Stylesheet.title }>{ title }</Text>
-						<Text style={ Stylesheet.title }>$68,000.00</Text>
+						<Text style={ Stylesheet.title }>{ amount }</Text>
 					</View>
 					<Text style={ Stylesheet.subTitle }>{ subTitle }</Text>
 				</View>

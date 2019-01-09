@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import {
     View,
     Image,
-    Platform,
+    Alert,
     TouchableOpacity,
     BackHandler,
     FlatList
@@ -204,6 +204,35 @@ class PostDetail extends Component {
         );
     };
 
+    deleteComment(cmmtId){
+        Alert.alert(
+            "Eliminar",
+            "¿Eliminar este comentario?", [{
+                    text: "Cancelar",
+                    onPress: () => console.log("Cancel Pressed")
+                },
+                {
+                    text: "OK",
+                    onPress: () => {
+                        this.setState({ isLoading: true });
+                        axios.delete(`/comments/${cmmtId}`)
+                        .then(() => {
+                            this.setState({ comments: [] }, () => {
+                                this.getComments(this.state.post.BlogId, this.state.commentsPage)
+                            })
+                        })
+                        .catch((error) => {
+                            this.setState({ isLoading: false });
+                            console.log(error);
+                        })
+                    }
+                }
+            ], {
+                cancelable: false
+            }
+        ) 
+    }
+
     renderComments = () => {
         let comments = cloneDeep(this.state.comments)
         comments.sort((a, b) => a.CmmtCreatedDate < b.CmmtCreatedDate);
@@ -218,6 +247,8 @@ class PostDetail extends Component {
                 renderItem={({ item }) => (
                     <CommentRow
                         comment={ item }
+                        onDeletePress = { () => { this.deleteComment(item.CmmtId) } }
+                        shouldModifyComment = { this.props.isAdmin || item.CmmtCreatedBy == this.props.user.UserId || this.state.post.BlogCreatedBy == this.props.user.UserId }
                     />
                 )}
                 onEndReached={ () => this.handleLoadMore()}
@@ -320,7 +351,8 @@ const mapStateToProps = state => {
         condos: state.session.condos,
         currentCondo: state.session.currentCondo,
         user: state.session.user,
-        posts: state.session.posts
+        posts: state.session.posts,
+        isAdmin: state.session.isAdmin
     };
 };
 

@@ -5,22 +5,18 @@ import {
     View,
     Platform,
     TouchableOpacity,
-    BackHandler,
-    Alert
+    BackHandler
 } from "react-native";
 
 import {
-    Button,
     Text,
     Content,
     Container,
     Form,
     Item,
-    Input,
     Spinner,
     Icon,
     Root,
-    Toast,
     Picker
 } from "native-base";
 
@@ -44,6 +40,8 @@ import {
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/';
 import ExpandButton from '../../components/expand-button';
+import BillRow from '../../components/bill-row';
+import { amountFormat, dateFormat } from "../../lib/helpers";
 const axios = require('../../config/axios');
 
 // Gets the operating system's name where the app is running (Android or iOS).
@@ -64,13 +62,20 @@ class Bills extends Component {
             title: '',
             content: '',
             isDebtsExpanded: false,
-            isPaySummExpanded: false
+            isPaySummExpanded: false,
+            apartments: [],
+            currentApartment: {},
+            accountStatus: {}
         };
     }
 
     onValueChange(value) {
         this.setState({
             pickerSelection: value
+        }, () => {
+            this.setState({ currentApartment: this.state.apartments[this.state.pickerSelection] }, () => {
+                this.getAccountStatus(this.props.currentCondo.CondoId, this.state.currentApartment.ApmtId)
+            })
         });
     }
 
@@ -83,6 +88,7 @@ class Bills extends Component {
     componentDidMount() {
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
+        this.getApartments(this.props.currentCondo.CondoId);
     }
 
     componentWillUnmount() {
@@ -134,16 +140,103 @@ class Bills extends Component {
         };
     }
     
-    sectionItems() {
-        return this.props.sections.filter(section => section.SectCode).map((section, index) => {
+    apartmentItems() {
+        return this.state.apartments.map((apartment, index) => {
             return(
                 <Picker.Item
                     key={ index }
                     value={ index }
-                    label={ section.SectName }
+                    label={ apartment.AptName }
                 />
             );
         }) 
+    }
+
+    debtsSection(color, isExpanded) {
+        return(
+            isExpanded && this.state.accountStatus.data.adeudos &&
+            <View style={ [Stylesheet.expandedSection, { borderColor: color }] }>
+                {this.state.accountStatus.data.adeudos.map((debt, index) => {
+                    return(
+                        <BillRow
+                            key={ index }
+                            title={ debt.concepto }
+                            subTitle={ dateFormat(debt.fecha) }
+                            amount={ debt.importe }
+                        />
+                    )
+                })}
+            </View>
+        )
+    }
+
+    paymentsSection(color, isExpanded) {
+        return(
+            isExpanded && this.state.accountStatus.data.abonos &&
+            <View style={ [Stylesheet.expandedSection, { borderColor: color }] }>
+                {this.state.accountStatus.data.abonos.map((payment, index) => {
+                    return(
+                        <BillRow
+                            key={ index }
+                            title={ payment.pago }
+                            subTitle={ dateFormat(payment.fecha) }
+                            amount={ payment.monto }
+                        />
+                    )
+                })}
+            </View>
+        )
+    }
+
+    currentBalanceDisplay(title, balance, shouldDisplay) { 
+        let color = '';
+        let label ='';
+        let intBalance = balance ? amountFormat(balance) : 0;
+        if(intBalance > 0){
+            label = 'Saldo a favor'
+            color = '#68B143'
+        } else if (intBalance < 0){
+            label = 'Saldo pendiente'
+            color = '#241D1E'
+        } else {
+            label = 'Saldo final'
+            color = '#004CB4'
+        }
+
+        return(
+            shouldDisplay &&
+            <View>
+                <View style={ Stylesheet.balanceRow }>
+                    <Text style={ Stylesheet.balanceTitle }>{ title }</Text>
+                    <Text style={ [Stylesheet.balanceSubTitle, { color }] }>{ label }: { balance }</Text>
+                </View>
+                <View style={ Stylesheet.divisionLine }/>
+            </View>
+        )
+    }
+
+    getApartments(condoId) {
+        this.setState({ isLoading: true });
+        axios.get(`/apartments?q=(condoid:${condoId})&limit=200&sort=AptName`)
+        .then((response) => {
+            this.setState({ apartments: response.data }, () => { this.setState({ isLoading: false }); });
+        })
+        .catch((error) => {
+            console.log(error);
+            this.setState({ isLoading: false });
+        })
+    }
+
+    getAccountStatus(condoId, aptId){
+        this.setState({ isLoading: true });
+        axios.get(`/bank-statement?condo=19236&apt=403625&year=2018`)
+        .then((response) => {
+            this.setState({ accountStatus: response.data }, () => { this.setState({ isLoading: false }); });
+        })
+        .catch((error) => {
+            console.log(error);
+            this.setState({ isLoading: false });
+        })
     }
 
     render() {
@@ -174,13 +267,20 @@ class Bills extends Component {
                                                     onValueChange={(itemValue) => this.onValueChange(itemValue)}
                                                 >
                                                     {
-                                                        this.sectionItems()
+                                                        this.apartmentItems()
                                                     }
                                                 </Picker>
                                             </Item>                             
                                         </Form>
                                     </View>
                                     <View style={ Stylesheet.divisionLine }></View>
+                                    { 
+                                        this.currentBalanceDisplay(
+                                            this.state.currentApartment.AptName,
+                                            this.state.accountStatus.saldofinal,
+                                            this.state.pickerSelection
+                                        )
+                                    }
                                     <ExpandButton
                                         isExpanded={ this.state.pickerSelection != null ? this.state.isDebtsExpanded : false }
                                         text={ 'Adeudos Pendientes' }
@@ -189,6 +289,7 @@ class Bills extends Component {
                                         style={{ marginTop: 16 }}
                                         isDisabled= { this.state.pickerSelection == null ? true : false }
                                     />
+                                    { this.debtsSection(colors.brandRed, this.state.pickerSelection != null ? this.state.isDebtsExpanded : false) }
                                     <ExpandButton
                                         isExpanded={ this.state.pickerSelection != null ? this.state.isPaySummExpanded : false }
                                         text={ 'Resumen de Pagos' }
@@ -197,6 +298,7 @@ class Bills extends Component {
                                         style={{ marginTop: 16 }}
                                         isDisabled= { this.state.pickerSelection == null ? true : false }
                                     />
+                                    { this.paymentsSection('#68B143', this.state.pickerSelection != null ? this.state.isPaySummExpanded : false) }
                                 </View>
                         }
                     </Content>
