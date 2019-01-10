@@ -22,7 +22,8 @@ export default StyleSheet.create({
         paddingHorizontal: 16,
         paddingVertical: 20,
         flexDirection: 'row',
-        borderColor: colors.brandLightGray
+        borderColor: colors.brandLightGray,
+        backgroundColor: colors.normalWhite
     },
     title: {
         fontSize: 14
@@ -58,14 +59,17 @@ export default StyleSheet.create({
         borderColor: colors.brandLightGray,
         borderBottomWidth: 1
     },
+    listAppRowContainer: {
+        padding: 8,
+        borderColor: colors.brandLightGray,
+        borderBottomWidth: 1
+    },
     listRowLabel: {
         fontSize: 12,
-        color: 'gray',
-        flex: 1
+        color: 'gray'
     },
     listRowContent: {
-        fontSize: 12,
-        flex: 3
+        fontSize: 12
     },
     listTitleContainer: {
         paddingTop: 20,

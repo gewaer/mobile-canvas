@@ -27,6 +27,7 @@ import {
 import Stylesheet from './stylesheet';
 import MulticolorBar from '../../components/multicolor-bar/';
 import { dateFormat } from "../../lib/helpers";
+import accounting from 'accounting';
 
 class BillDetail extends Component {
     
@@ -37,7 +38,8 @@ class BillDetail extends Component {
             isLoading: false,
             isDebt: this.props.params.isDebt,
             bill: this.props.params.bill,
-            detailData: []
+            detailData: [],
+            applicationsData: []
         };
     }
 
@@ -51,6 +53,7 @@ class BillDetail extends Component {
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
         this.createDetailArray();
+        this.createApplicationArray();
     }
 
     componentWillUnmount() {
@@ -125,30 +128,64 @@ class BillDetail extends Component {
         )
     }
 
-    dataListRow(label, content) {
+    dataDetailRow(label, content) {
         return(
             <View style={ Stylesheet.listRowContainer }>
-                <Text style={ Stylesheet.listRowLabel }>{ label }</Text>
-                <Text style={ Stylesheet.listRowContent }>{ content }</Text>
+                <Text style={ [Stylesheet.listRowLabel, { flex: 1 }] }>{ label }</Text>
+                <Text style={ [Stylesheet.listRowContent, { flex: 3 }] }>{ content }</Text>
+            </View>
+        )
+    }
+
+    dataAppRow(label, label2, content, content2) {
+        return(
+            <View style={ [Stylesheet.listRowContainer] }>
+                <View style={{ flexDirection: 'row', flex: 1 }}>
+                    <Text style={ [Stylesheet.listRowLabel] }>{ label } </Text>
+                    <Text style={ Stylesheet.listRowContent }>{ content }</Text>
+                </View>
+                <View style={{ flexDirection: 'row', flex: 1 }}>
+                    <Text style={ Stylesheet.listRowLabel }>{ label2 } </Text>
+                    <Text style={ Stylesheet.listRowContent }>{ content2 }</Text>
+                </View> 
             </View>
         )
     }
 
     dataList(type, data, color) {
-        return(
-            <View>
-                <View style={ [Stylesheet.listTitleContainer, { borderBottomColor: color }] }>
-                    <Text style={ [Stylesheet.listTitle, { color }] }>{ type }</Text>
-                </View>
-                <View style={ { paddingHorizontal: 8 } }>
-                {
-                    data.map((row) => {
-                        return(this.dataListRow(row.label, row.content))
-                    })
-                }
-                </View>
-            </View>
-        )
+        if(type == 'Detalle'){
+            return(
+                data.length ?
+                <View style={{ backgroundColor: colors.normalWhite }}>
+                    <View style={ [Stylesheet.listTitleContainer, { borderBottomColor: color }] }>
+                        <Text style={ [Stylesheet.listTitle, { color }] }>{ type }</Text>
+                    </View>
+                    <View style={ { paddingHorizontal: 8 } }>
+                    { 
+                        data.map((row) => {
+                            return(this.dataDetailRow(row.label, row.content))
+                        })
+                    }
+                    </View>
+                </View> : null
+            )
+        } else if(type == 'Aplicaciones'){
+            return(
+                data.length ?
+                <View style={{ backgroundColor: colors.normalWhite }}>
+                    <View style={ [Stylesheet.listTitleContainer, { borderBottomColor: color }] }>
+                        <Text style={ [Stylesheet.listTitle, { color }] }>{ type }</Text>
+                    </View>
+                    <View style={ { paddingHorizontal: 8 } }>
+                    {
+                        data.map((row) => {
+                            return(this.dataAppRow(row.label, row.label2, row.content, row.content2,))
+                        })
+                    }
+                    </View>
+                </View> : null
+            )
+        }
     }
     
     createDetailArray(){
@@ -177,24 +214,38 @@ class BillDetail extends Component {
             {
                 label: "Vencimiento:",
                 content: dateFormat(this.state.bill.vencimiento)
-            },
-            // {
-            //     label: "Recargo:",
-            //     content: this.state.bill.importe
-            // } recargo ??????
+            }
         ]
         this.setState({ detailData: data }, () => {
             this.setState({ isLoading: false })
         })
     }
 
+    createApplicationArray(){
+        if(this.state.bill.aplicaciones){
+            this.setState({ isLoading: true })
+            let data = []
+            this.state.bill.aplicaciones.map((item) => {
+                data.push({
+                    label: "Fecha:",
+                    content: dateFormat(item.fecha),
+                    label2: "Aplicado:",
+                    content2: accounting.formatMoney(item.aplicado)
+                })
+            })
+            this.setState({ applicationsData: data }, () => {
+                this.setState({ isLoading: false })
+            })
+        }
+    }
+
     render() {
         return (
             <Root>
-                <Container style={{ backgroundColor: colors.normalWhite }}>
+                <Container>
                     <TitleBar noShadow left={this.titleBarLeft()} body={this.titleBarBody()} bgColor={colors.brandLightBlack} />
                     <MulticolorBar/>
-                    <Content style={{ backgroundColor: colors.normalWhite }}>
+                    <Content style={{ backgroundColor: '#EEEEEE' }}>
                         {
                             this.state.isLoading ?
                                 <Spinner color={colors.brandLightBlack} /> :
@@ -203,7 +254,7 @@ class BillDetail extends Component {
                                     <View style={ Stylesheet.titleBottom }></View>
                                     { this.dataList("Detalle", this.state.detailData, "#68B143") }
                                     <View style={ Stylesheet.titleBottom }></View>
-                                    { this.dataList("Aplicaciones", [{label: "clasificacion", content: "administracion"}, {label: "clasificacion2", content: "administracion2"}], colors.brandRed) }
+                                    { this.dataList("Aplicaciones", this.state.applicationsData, colors.brandRed) }
                                 </View>
                         }
                     </Content>
