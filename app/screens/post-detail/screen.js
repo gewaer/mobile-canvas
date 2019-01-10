@@ -111,8 +111,9 @@ class PostDetail extends Component {
                 method: "POST",
                 data
             }).then(() => {
-                this.setState({ comment: '' });
-                this.getComments(this.state.post.BlogId, 1);
+                this.setState({ comment: '', comments: [] }, () => {
+                    this.getComments(this.state.post.BlogId, 1);
+                });
             }).catch(() => {
             })
         }
@@ -239,7 +240,7 @@ class PostDetail extends Component {
         return (
             comments && 
             <FlatList
-                onRefresh={() => this.getComments(this.state.post.BlogId, 1)}
+                onRefresh={() => this.onRefresh()}
                 refreshing={this.state.isRefreshing}
                 initialNumberToRender={4}
                 keyExtractor={item => item.CmmtId}
@@ -286,7 +287,7 @@ class PostDetail extends Component {
             commentsPage: 1,
             comments: []
         }, () => {
-            this.getPosts(this.state.post.BlogId, this.state.commentsPage);
+            this.getComments(this.state.post.BlogId, this.state.commentsPage);
         });
     }
 

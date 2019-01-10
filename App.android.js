@@ -59,6 +59,16 @@ startApp = (root) => {
             },
         });
             break;
+        case 'bill-detail':
+        Navigation.startSingleScreenApp({
+            screen: {
+                screen: 'vv.BillDetail', // unique ID registered with Navigation.registerScreen
+                navigatorStyle: {
+                    navBarHidden: true,
+                },
+            },
+        });
+            break;
         case 'reports':
         Navigation.startSingleScreenApp({
             screen: {

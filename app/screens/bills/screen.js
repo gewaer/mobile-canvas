@@ -101,12 +101,19 @@ class Bills extends Component {
     }
 
     // Pushes to another screen in the navigator stack.
-    pushScreen(activeScreen) {
+    pushScreen({activeScreen, bill, isDebt}) {
+        let params = {
+            bill,
+            isDebt
+        };
         this.props.navigator.push({
             screen: activeScreen,
             navigatorStyle: {
                 navBarHidden: true,
                 tabBarHidden: true,
+            },
+            passProps: {
+                params
             },
         });
     }
@@ -163,6 +170,7 @@ class Bills extends Component {
                             title={ debt.concepto }
                             subTitle={ dateFormat(debt.fecha) }
                             amount={ debt.importe }
+                            onPress={ () => { this.pushScreen({ activeScreen: 'vv.BillDetail', bill: debt, isDebt: true}) } }
                         />
                     )
                 })}
@@ -250,7 +258,6 @@ class Bills extends Component {
                             this.state.isLoading ?
                                 <Spinner color={colors.brandLightBlack} /> :
                                 <View>
-                                    <View style={ Stylesheet.divisionLine }></View>
                                     <View style={Stylesheet.containerView}>
                                         <Form>
                                             <Text style={ Stylesheet.labelText }>Consultar estado de cuenta de:</Text>
@@ -278,7 +285,7 @@ class Bills extends Component {
                                         this.currentBalanceDisplay(
                                             this.state.currentApartment.AptName,
                                             this.state.accountStatus.saldofinal,
-                                            this.state.pickerSelection
+                                            this.state.pickerSelection != null
                                         )
                                     }
                                     <ExpandButton
