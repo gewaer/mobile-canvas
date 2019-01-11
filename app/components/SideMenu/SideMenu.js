@@ -110,7 +110,7 @@ class SideMenu extends Component {
 							<SideMenuRow title={ 'Mis Condominios' } iconType={ 'FontAwesome' } iconName={ 'building' } onPress={ () => { this.changeScreen('condominiums') } }/>
 							<SideMenuRow title={ 'Estado de Cuenta' } iconType={ 'Ionicons' } iconName={ 'logo-usd' } onPress={ () => { this.switchTab(2) } }/>
 							<SideMenuRow title={ 'Notificaciones' } iconType={ 'Ionicons' } iconName={ 'md-notifications' } onPress={ () => { this.switchTab(3) } }/>
-							<SideMenuRow title={ 'Perfil' } iconType={ 'Ionicons' } iconName={ 'ios-contact' } onPress={ () => { this.switchTab(0) } }/>
+							<SideMenuRow title={ 'Perfil' } iconType={ 'Ionicons' } iconName={ 'ios-contact' } onPress={ () => { this.changeScreen('profile') } }/>
 							<SideMenuRow title={ 'Reportes' } iconType={ 'Ionicons' } iconName={ 'ios-settings' } onPress={ () => { this.changeScreen('reports') } }/>
 							{ this.props.isAdmin && <SideMenuRow title={ 'Panel de Administración' } iconType={ 'Ionicons' } iconName={ 'ios-briefcase' } onPress={ () => { this.switchTab(0) } }/>}
 							<SideMenuRow title={ 'Salir' } iconType={ 'Ionicons' } iconName={ 'ios-log-out' } onPress={ () => { this.logOut() } } shouldShowArrow={ false }/>

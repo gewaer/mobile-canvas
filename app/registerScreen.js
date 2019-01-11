@@ -8,6 +8,7 @@ import Home from './screens/home';
 import PostDetail from './screens/post-detail';
 import Bills from './screens/bills';
 import BillDetail from './screens/bill-detail';
+import Profile from "./screens/profile";
 
 import Welcome from './screens/Welcome';
 import TitleBar from "./components/TitleBar";
@@ -15,7 +16,6 @@ import SideMenu from './components/SideMenu';
 import Dashboard from './screens/Dashboard';
 import Companies from "./screens/Companies";
 import AddCompany from "./screens/AddCompany";
-import Profile from "./screens/Profile";
 import Company from "./screens/Company";
 import EditCompany from "./screens/EditCompany";
 import EditProfile from "./screens/EditProfile";
@@ -35,13 +35,13 @@ export function registerScreen(store, Provider) {
     Navigation.registerComponent('vv.PostDetail', () => PostDetail, store, Provider);
     Navigation.registerComponent('vv.Bills', () => Bills, store, Provider);
     Navigation.registerComponent('vv.BillDetail', () => BillDetail, store, Provider);
+    Navigation.registerComponent('vv.Profile', () => Profile, store, Provider);
     
     Navigation.registerComponent('dac.Welcome', () => Welcome, store, Provider);
     Navigation.registerComponent('dac.Register', () => Register, store, Provider);
     Navigation.registerComponent('dac.SideMenu', () => SideMenu, store, Provider);
     Navigation.registerComponent('dac.Dashboard', () => Dashboard, store, Provider);
     Navigation.registerComponent('dac.AddCompany', () => AddCompany, store, Provider);
-    Navigation.registerComponent('dac.Profile', () => Profile, store, Provider);
     Navigation.registerComponent('dac.CompaniesProfile', () => Company, store, Provider);
     Navigation.registerComponent('dac.EditCompany', () => EditCompany, store, Provider);
     Navigation.registerComponent('dac.EditProfile', () => EditProfile, store, Provider);
