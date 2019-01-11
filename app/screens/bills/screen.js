@@ -64,7 +64,7 @@ class Bills extends Component {
             isDebtsExpanded: false,
             isPaySummExpanded: false,
             apartments: [],
-            currentApartment: {},
+            currentApartment: null,
             accountStatus: {}
         };
     }
@@ -88,7 +88,9 @@ class Bills extends Component {
     componentDidMount() {
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
-        this.getApartments(this.props.currentCondo.CondoId);
+        this.props.isAdmin ? 
+            this.getApartments(this.props.currentCondo.CondoId) :
+            this.setTenantApartment();
     }
 
     componentWillUnmount() {
@@ -189,6 +191,7 @@ class Bills extends Component {
                             title={ payment.pago }
                             subTitle={ dateFormat(payment.fecha) }
                             amount={ payment.monto }
+                            onPress={ () => { this.pushScreen({ activeScreen: 'vv.BillDetail', bill: payment, isDebt: false}) } }
                         />
                     )
                 })}
@@ -196,10 +199,10 @@ class Bills extends Component {
         )
     }
 
-    currentBalanceDisplay(title, balance, shouldDisplay) { 
+    currentBalanceDisplay(shouldDisplay) { 
         let color = '';
         let label ='';
-        let intBalance = balance ? amountFormat(balance) : 0;
+        let intBalance = this.state.accountStatus.saldofinal ? amountFormat(this.state.accountStatus.saldofinal) : 0;
         if(intBalance > 0){
             label = 'Saldo a favor'
             color = '#68B143'
@@ -215,12 +218,22 @@ class Bills extends Component {
             shouldDisplay &&
             <View>
                 <View style={ Stylesheet.balanceRow }>
-                    <Text style={ Stylesheet.balanceTitle }>{ title }</Text>
-                    <Text style={ [Stylesheet.balanceSubTitle, { color }] }>{ label }: { balance }</Text>
+                    <Text style={ Stylesheet.balanceTitle }>{ this.state.currentApartment.AptName }</Text>
+                    <Text style={ [Stylesheet.balanceSubTitle, { color }] }>{ label }: { this.state.accountStatus.saldofinal }</Text>
                 </View>
                 <View style={ Stylesheet.divisionLine }/>
             </View>
         )
+    }
+
+    setTenantApartment() {
+        console.log(this.props.user.apartment[0])
+        this.setState({ isLoading: true }, () => {
+            this.setState({currentApartment: this.props.user.apartment[0]}, () => {
+                this.getAccountStatus(this.props.currentCondo.CondoId, this.state.currentApartment.ApmtId)
+            })
+        });
+        
     }
 
     getApartments(condoId) {
@@ -258,54 +271,54 @@ class Bills extends Component {
                             this.state.isLoading ?
                                 <Spinner color={colors.brandLightBlack} /> :
                                 <View>
-                                    <View style={Stylesheet.containerView}>
-                                        <Form>
-                                            <Text style={ Stylesheet.labelText }>Consultar estado de cuenta de:</Text>
-                                            <Item picker style={ Stylesheet.formItem }>
-                                                <Picker
-                                                    textStyle={{ fontSize: 12 }}
-                                                    mode="dropdown"
-                                                    iosIcon={<Icon name="ios-arrow-down-outline" />}
-                                                    style={{ width: 350 }}
-                                                    placeholder="Selecciona una vivienda..."
-                                                    placeholderStyle={{ color: colors.brandLightGray, fontSize: 12 }}
-                                                    placeholderIconColor="#007aff"
-                                                    selectedValue={this.state.pickerSelection}
-                                                    onValueChange={(itemValue) => this.onValueChange(itemValue)}
-                                                >
-                                                    {
-                                                        this.apartmentItems()
-                                                    }
-                                                </Picker>
-                                            </Item>                             
-                                        </Form>
-                                    </View>
+                                    { this.props.isAdmin &&
+                                        <View style={Stylesheet.containerView}>
+                                            <Form>
+                                                <Text style={ Stylesheet.labelText }>Consultar estado de cuenta de:</Text>
+                                                <Item picker style={ Stylesheet.formItem }>
+                                                    <Picker
+                                                        textStyle={{ fontSize: 12 }}
+                                                        mode="dropdown"
+                                                        iosIcon={<Icon name="ios-arrow-down-outline" />}
+                                                        style={{ width: 350 }}
+                                                        placeholder="Selecciona una vivienda..."
+                                                        placeholderStyle={{ color: colors.brandLightGray, fontSize: 12 }}
+                                                        placeholderIconColor="#007aff"
+                                                        selectedValue={this.state.pickerSelection}
+                                                        onValueChange={(itemValue) => this.onValueChange(itemValue)}
+                                                    >
+                                                        {
+                                                            this.apartmentItems()
+                                                        }
+                                                    </Picker>
+                                                </Item>                             
+                                            </Form>
+                                        </View>
+                                    }
                                     <View style={ Stylesheet.divisionLine }></View>
                                     { 
                                         this.currentBalanceDisplay(
-                                            this.state.currentApartment.AptName,
-                                            this.state.accountStatus.saldofinal,
-                                            this.state.pickerSelection != null
+                                            this.state.currentApartment != null
                                         )
                                     }
                                     <ExpandButton
-                                        isExpanded={ this.state.pickerSelection != null ? this.state.isDebtsExpanded : false }
+                                        isExpanded={ this.state.currentApartment != null ? this.state.isDebtsExpanded : false }
                                         text={ 'Adeudos Pendientes' }
                                         color={ colors.brandRed }
                                         onPress={ () => {this.setState({ isDebtsExpanded: !this.state.isDebtsExpanded })} }
                                         style={{ marginTop: 16 }}
-                                        isDisabled= { this.state.pickerSelection == null ? true : false }
+                                        isDisabled= { this.state.currentApartment == null ? true : false }
                                     />
-                                    { this.debtsSection(colors.brandRed, this.state.pickerSelection != null ? this.state.isDebtsExpanded : false) }
+                                    { this.debtsSection(colors.brandRed, this.state.currentApartment != null ? this.state.isDebtsExpanded : false) }
                                     <ExpandButton
-                                        isExpanded={ this.state.pickerSelection != null ? this.state.isPaySummExpanded : false }
+                                        isExpanded={ this.state.currentApartment != null ? this.state.isPaySummExpanded : false }
                                         text={ 'Resumen de Pagos' }
                                         color={ '#68B143' }
                                         onPress={ () => {this.setState({ isPaySummExpanded: !this.state.isPaySummExpanded })} }
                                         style={{ marginTop: 16 }}
-                                        isDisabled= { this.state.pickerSelection == null ? true : false }
+                                        isDisabled= { this.state.currentApartment == null ? true : false }
                                     />
-                                    { this.paymentsSection('#68B143', this.state.pickerSelection != null ? this.state.isPaySummExpanded : false) }
+                                    { this.paymentsSection('#68B143', this.state.currentApartment != null ? this.state.isPaySummExpanded : false) }
                                 </View>
                         }
                     </Content>
@@ -322,7 +335,8 @@ const mapStateToProps = state => {
         condos: state.session.condos,
         currentCondo: state.session.currentCondo,
         user: state.session.user,
-        sections: state.session.sections
+        sections: state.session.sections,
+        isAdmin: state.session.isAdmin
     };
 };
 
