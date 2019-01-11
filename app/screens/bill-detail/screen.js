@@ -52,7 +52,7 @@ class BillDetail extends Component {
     componentDidMount() {
         // Creates an event listener for Android's back button
         BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
-        this.createDetailArray();
+        this.state.isDebt ? this.createDetailDebtArray() : this.createDetailPayArray();
         this.createApplicationArray();
     }
 
@@ -93,12 +93,7 @@ class BillDetail extends Component {
     }
 
     popScreen() {
-        this.props.navigator.resetTo({
-            screen: 'vv.Bills',
-            navigatorStyle: {
-                navBarHidden: true
-            }
-        });
+        this.props.navigator.pop();
     }
 
     // Defines title bar's body content
@@ -188,7 +183,7 @@ class BillDetail extends Component {
         }
     }
     
-    createDetailArray(){
+    createDetailDebtArray(){
         this.setState({ isLoading: true })
         let data = [
             {
@@ -215,6 +210,31 @@ class BillDetail extends Component {
                 label: "Vencimiento:",
                 content: dateFormat(this.state.bill.vencimiento)
             }
+        ]
+        this.setState({ detailData: data }, () => {
+            this.setState({ isLoading: false })
+        })
+    }
+
+    createDetailPayArray(){
+        this.setState({ isLoading: true })
+        let data = [
+            {
+                label: "Referencia:",
+                content: this.state.bill.referencia
+            },
+            {
+                label: "Naturaleza:",
+                content: this.state.bill.naturaleza
+            },
+            {
+                label: "Cuenta:",
+                content: this.state.bill.cuenta
+            },
+            {
+                label: "Comment:",
+                content: this.state.bill.comment
+            },
         ]
         this.setState({ detailData: data }, () => {
             this.setState({ isLoading: false })
@@ -250,7 +270,13 @@ class BillDetail extends Component {
                             this.state.isLoading ?
                                 <Spinner color={colors.brandLightBlack} /> :
                                 <View>
-                                    { this.titleSection(this.state.bill.concepto, this.state.bill.importe, this.state.bill.fecha) }
+                                    {
+                                        this.titleSection(
+                                            this.state.isDebt ? this.state.bill.concepto : this.state.bill.pago,
+                                            this.state.isDebt ? this.state.bill.importe : this.state.bill.monto,
+                                            this.state.bill.fecha
+                                        )
+                                    }
                                     <View style={ Stylesheet.titleBottom }></View>
                                     { this.dataList("Detalle", this.state.detailData, "#68B143") }
                                     <View style={ Stylesheet.titleBottom }></View>
