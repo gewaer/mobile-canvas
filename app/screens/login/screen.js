@@ -9,7 +9,8 @@ import {
     AsyncStorage,
     Platform,
     TouchableOpacity,
-    BackHandler
+    BackHandler,
+    StatusBar
 } from "react-native";
 
 import {
@@ -218,7 +219,7 @@ class Login extends Component {
     // Tries to get the user's information using the stored token.
 	// If the response is an error then the token is expired and removes the session data.
     getUserInfo() {
-        axios.get(`/users`)
+        axios.get(`/users&relationships=appOptions,apartment,condo`)
         .then((response) => {
             this.props.changeUser({ user: response.data });
             this.getUserCondos();
@@ -256,16 +257,22 @@ class Login extends Component {
         return (
             <Root>
                 <Container style={{ backgroundColor: colors.normalWhite }}>
-                    <TitleBar noShadow left={this.titleBarLeft()} body={this.titleBarBody()} bgColor={colors.normalWhite} />
-                    <View style={{alignItems: 'center'}}>
-                        <ImageBackground
-                            source={appImages.Logo.uri}
-                            style={ [globalStyle.logoTag, { margin: 24 }] }
-                            resizeMode='contain' 
+                    <View style={{ backgroundColor: colors.brandLightBlack, height: 25 }}>
+                        <StatusBar
+                            translucent
+                            backgroundColor={colors.brandLightBlack}
+                            barStyle="light-content" 
                         />
                     </View>
-                    <MulticolorBar/>
-                    <Content style={{ backgroundColor: colors.normalWhite }}>
+                    <Content style={{ backgroundColor: colors.normalWhite, paddingTop: 40 }}>
+                        <View style={{alignItems: 'center'}}>
+                            <ImageBackground
+                                source={appImages.Logo.uri}
+                                style={ [globalStyle.logoTag, { margin: 24 }] }
+                                resizeMode='contain' 
+                            />
+                        </View>
+                        <MulticolorBar/>
                         {
                             this.state.isLoading ?
                                 <Spinner color={colors.brandOrange} /> :
