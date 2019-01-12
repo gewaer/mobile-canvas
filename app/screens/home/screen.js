@@ -288,31 +288,33 @@ class Home extends Component {
                                 </View>
                         }
                     </View>
-                    <FlatList
-                        onRefresh={() => this.onRefresh()}
-                        refreshing={this.state.isRefreshing}
-                        initialNumberToRender={4}
-                        keyExtractor={item => item.BlogId}
-                        data={ this.state.posts }
-                        renderItem={({ item }) => (
-                            <PostRow
-                                source={ item.appOptions ? item.appOptions.foto : "" }
-                                title={ item.BlogTitle }
-                                content={ item.BlogText }
-                                imagesCount={ item.images.length }
-                                commentsCount={ item.comments.length }
-                                atchCount={ item.files.length }
-                                subTitle={ dateHourFormat(item.BlogCreatedDate ) }
-                                onPress={ () => { this.pushScreen({ activeScreen: 'vv.PostDetail', post: item, date: dateHourFormat(item.BlogCreatedDate ) }) } }
-                            />
-                        )}
-                        onEndReached={ () => this.handleLoadMore()}
-                        onEndReachedThreshold = { 0.5 }
-                        ListFooterComponent={() => this.renderFooter()}
-                        getItemLayout={(data, index) => (
-                            { length: 135.5, offset: 135.5 * index, index }
-                        )}
-                    />
+                    { !this.state.isLoading &&
+                        <FlatList
+                            onRefresh={() => this.onRefresh()}
+                            refreshing={this.state.isRefreshing}
+                            initialNumberToRender={4}
+                            keyExtractor={item => item.BlogId}
+                            data={ this.state.posts }
+                            renderItem={({ item }) => (
+                                <PostRow
+                                    source={ item.appOptions ? item.appOptions.foto : "" }
+                                    title={ item.BlogTitle }
+                                    content={ item.BlogText }
+                                    imagesCount={ item.images.length }
+                                    commentsCount={ item.comments.length }
+                                    atchCount={ item.files.length }
+                                    subTitle={ dateHourFormat(item.BlogCreatedDate ) }
+                                    onPress={ () => { this.pushScreen({ activeScreen: 'vv.PostDetail', post: item, date: dateHourFormat(item.BlogCreatedDate ) }) } }
+                                />
+                            )}
+                            onEndReached={ () => this.handleLoadMore()}
+                            onEndReachedThreshold = { 0.5 }
+                            ListFooterComponent={() => this.renderFooter()}
+                            getItemLayout={(data, index) => (
+                                { length: 135.5, offset: 135.5 * index, index }
+                            )}
+                        />
+                    }
                 </Container>
             </Root>
         );

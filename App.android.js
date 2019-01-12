@@ -91,6 +91,28 @@ startApp = (root) => {
             }
         });
             return;
+        case 'profile':
+        Navigation.startSingleScreenApp({
+            screen: {
+                screen: 'vv.Profile', // unique ID registered with Navigation.registerScreen
+                navigatorStyle: {
+                    navBarHidden: true,
+                },
+            },
+            drawer: {
+                left: {
+                    screen: 'dac.SideMenu',
+                },
+                style: {
+                    drawerShadow: false,
+                    contentOverlayColor: 'rgba(0,0,0,0.25)',
+                    leftDrawerWidth: 75,
+                    rightDrawerWidth: 30,
+                    shouldStretchDrawer: false
+                },
+            }
+        });
+            break;
         case 'welcome':
             Navigation.startSingleScreenApp({
                 screen: {

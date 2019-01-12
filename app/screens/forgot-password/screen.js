@@ -250,10 +250,10 @@ class Login extends Component {
                                                     primary
                                                     onPress={() => this.sendEmail()}
                                                     style={[Stylesheet.submitBtn, { marginTop: 30 }]}>
-                                                    <Text style={{ color: colors.normalWhite }}>
+                                                    <Text style={{ color: colors.normalWhite, paddingRight: 0, paddingLeft: 0 }}>
                                                         Enviar
                                                     </Text>
-                                                    <Icon type="Ionicons" name="ios-mail"  color={colors.normalWhite} />
+                                                    <Icon type="Ionicons" name="ios-mail"  color={colors.normalWhite} style={ { marginRight: 0, marginLeft: 10 } }/>
                                                 </Button>
                                             </Form>
                                             

@@ -102,7 +102,29 @@ export default class App extends Component {
 				}
 			});
 				break;
-			case 'welcome':
+			case 'profile':
+			Navigation.startSingleScreenApp({
+				screen: {
+					screen: 'vv.Profile', // unique ID registered with Navigation.registerScreen
+					navigatorStyle: {
+						navBarHidden: true,
+					},
+				},
+				drawer: {
+					left: {
+						screen: 'dac.SideMenu',
+					},
+					style: {
+						drawerShadow: false,
+						contentOverlayColor: 'rgba(0,0,0,0.25)',
+						leftDrawerWidth: 75,
+						rightDrawerWidth: 30,
+						shouldStretchDrawer: false
+					},
+				}
+			});
+				break;
+		case 'welcome':
 				Navigation.startSingleScreenApp({
 					screen: {
 						screen: 'dac.Welcome', // unique ID registered with Navigation.registerScreen
@@ -264,35 +286,6 @@ export default class App extends Component {
 							navBarHidden: true,
 						},
 					},
-				});
-				break;
-			case 'profile':
-				Navigation.startSingleScreenApp({
-					screen: {
-						screen: 'dac.Profile', // unique ID registered with Navigation.registerScreen
-						icon: require('./app/assets/images/icons/menu.png'), // local image asset for the tab icon unselected state (optional on iOS)
-						iconInsets: { // add this to change icon position (optional, iOS only).
-							top: 6, // optional, default is 0.
-							left: 0, // optional, default is 0.
-							bottom: -6, // optional, default is 0.
-							right: 0 // optional, default is 0.
-						},
-						navigatorStyle: {
-							navBarHidden: true,
-						},
-					},
-					drawer: {
-						left: {
-							screen: 'dac.SideMenu',
-						},
-						style: {
-							drawerShadow: false,
-							contentOverlayColor: 'rgba(0,0,0,0.25)',
-							leftDrawerWidth: 75,
-							rightDrawerWidth: 30,
-							shouldStretchDrawer: false
-						},
-					}
 				});
 				break;
 			case 'family-profile':

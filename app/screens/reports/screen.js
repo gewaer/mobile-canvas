@@ -265,10 +265,10 @@ class Reports extends Component {
                                         primary
                                         onPress={() => { this.createReport() }}
                                         style={[Stylesheet.submitBtn, { marginTop: 20 }]}>
-                                        <Text style={{ color: colors.normalWhite }}>
+                                        <Text style={{ color: colors.normalWhite, paddingRight: 0, paddingLeft: 0 }}>
                                             Enviar reporte
                                         </Text>
-                                        <Icon type="Ionicons"  name="ios-send"  color={colors.normalWhite} />
+                                        <Icon type="Ionicons"  name="ios-send"  color={colors.normalWhite} style={ { marginRight: 0, marginLeft: 10 } }/>
                                     </Button>
                                 </View>
                         }
