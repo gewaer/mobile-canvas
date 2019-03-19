@@ -1,36 +1,40 @@
 {
-  "name": "AhorrandoApp",
+  "name": "Canvas",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "lint": "node_modules/eslint/bin/eslint.js --ext .js src/ --fix",
     "test": "jest"
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "lodash": "^4.17.10",
-    "moment": "^2.22.2",
-    "native-base": "^2.8.0",
-    "react": "16.6.1",
-    "react-native": "0.57.7",
-    "react-native-image-crop-picker": "^0.21.3",
-    "react-native-navigation": "^1.1.484",
-    "react-native-progress": "^3.5.0",
-    "react-native-swipeout": "^2.3.6",
-    "react-native-vector-icons": "^6.0.2",
-    "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0",
-    "jest-haste-map": "23.6.0"
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "native-base": "^2.12.0",
+    "react": "16.6.3",
+    "react-native": "^0.58.5",
+    "react-native-navigation": "^2.13.0",
+    "react-native-navigation-drawer-extension": "^1.0.3",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1"
   },
   "devDependencies": {
-    "@babel/plugin-external-helpers": "^7.2.0",
-    "babel-jest": "23.2.0",
-    "babel-preset-react-native": "4.0.0",
-    "jest": "23.2.0",
-    "metro-react-native-babel-preset": "^0.50.0",
-    "react-test-renderer": "16.3.1",
-    "schedule": "^0.4.0"
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "24.1.0",
+    "eslint": "^5.15.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-native": "^3.6.0",
+    "jest": "24.1.0",
+    "metro-react-native-babel-preset": "0.52.0",
+    "prettier": "^1.16.4",
+    "react-test-renderer": "16.6.3"
   },
   "jest": {
     "preset": "react-native"
