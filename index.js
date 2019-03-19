@@ -1,4 +1,29 @@
-import { AppRegistry } from 'react-native';
-import App from './App.android';
+/**
+ * @format
+ * @lint-ignore-every XPLATJSCOPYRIGHT1
+ */
+import { Navigation } from 'react-native-navigation';
+import { registerScreens } from './src/navigation/screens';
 
-AppRegistry.registerComponent('AhorrandoApp', () => App);
+registerScreens();
+
+Navigation.events().registerAppLaunchedListener(() => {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [
+          {
+            component: {
+              name: 'canvas.Welcome',
+              options: {
+                topBar: {
+                  visible: false
+                }
+              }
+            }
+          }
+        ],
+      }
+    }
+  });
+});
