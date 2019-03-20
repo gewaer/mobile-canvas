@@ -35,7 +35,7 @@ import * as axios from 'axios'
 // Importing local assets and components.
 import { appImages } from '../../config/imagesRoutes';
 import TitleBar from '../../components/title-bar';
-import { VUE_APP_BASE_API_URL, FORGOT_PASSWORD_URL } from '../../config/env'
+import { API_KEY, FORGOT_PASSWORD_URL } from 'react-native-dotenv'
 
 import {
   globalStyle,
@@ -156,7 +156,7 @@ class Login extends Component {
       formData.append('password', this.state.password);
 
       axios
-        .post(`${VUE_APP_BASE_API_URL}/auth`, formData)
+        .post(`${API_KEY}/auth`, formData)
         .then(response => {
           this.saveSessionData('sessionData', JSON.stringify(response.data));
           this.props.changeSessionToken({ token: response.data.token });
@@ -204,7 +204,7 @@ class Login extends Component {
     formData.append('password', 'nosenose');
 
     axios
-      .post(`${VUE_APP_BASE_API_URL}/auth`, formData)
+      .post(`${API_KEY}/auth`, formData)
       .then(response => {
         this.saveSessionData('sessionData', JSON.stringify(response.data));
         this.props.changeSessionToken({ token: response.data.token });
@@ -232,7 +232,7 @@ class Login extends Component {
       Authorization: token
     };
     axios
-      .get(`${VUE_APP_BASE_API_URL}/users/${userId}`, { headers: data })
+      .get(`${API_KEY}/users/${userId}`, { headers: data })
       .then(response => {
         this.props.changeUser({ user: response.data });
         this.getUserDefaultCompany(response.data.default_company, token);
@@ -256,7 +256,7 @@ class Login extends Component {
       Authorization: token
     };
     axios
-      .get(`${VUE_APP_BASE_API_URL}/companies?q=(id:${companyId})`, {
+      .get(`${API_KEY}/companies?q=(id:${companyId})`, {
         headers: data
       })
       .then(response => {

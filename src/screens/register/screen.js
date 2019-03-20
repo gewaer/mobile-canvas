@@ -35,7 +35,8 @@ import {
 } from '../../config/styles';
 
 import TitleBar from '../../components/title-bar';
-import { VUE_APP_BASE_API_URL } from '../../config/env'
+import { API_KEY } from 'react-native-dotenv'
+
 
 // Importing Redux's actions
 import {
@@ -197,7 +198,7 @@ class Register extends Component {
     };
 
     axios
-      .post(`${VUE_APP_BASE_API_URL}/users`, this.formatFormData(data))
+      .post(`${API_KEY}/users`, this.formatFormData(data))
       .then(response => {
         this.saveSessionData(
           'sessionData',
@@ -242,7 +243,7 @@ class Register extends Component {
       Authorization: token
     };
     axios
-      .get(`${VUE_APP_BASE_API_URL}/companies?q=(id:${companyId})`, {
+      .get(`${API_KEY}/companies?q=(id:${companyId})`, {
         headers: data
       })
       .then(response => {

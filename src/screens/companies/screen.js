@@ -30,7 +30,7 @@ import {
   changeActiveFamily,
   changeActiveCompany
 } from '../../actions/SessionActions';
-import { VUE_APP_BASE_API_URL } from '../../config/env';
+import { API_KEY } from 'react-native-dotenv';
 import { connect } from 'react-redux';
 import * as axios from 'axios';
 const platform = Platform.OS;
@@ -90,7 +90,7 @@ class Family extends Component {
     };
 
     axios
-      .get(`${VUE_APP_BASE_API_URL}/companies`, { headers: data })
+      .get(`${API_KEY}/companies`, { headers: data })
       .then(response => {
         this.setState({ companies: response.data, isLoading: false });
       })

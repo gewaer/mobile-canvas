@@ -28,7 +28,7 @@ import {
   paddingHelpers
 } from '../../config/styles';
 import { appImages } from '../../config/imagesRoutes';
-import { VUE_APP_BASE_API_URL } from '../../config/env'
+import { API_KEY } from 'react-native-dotenv';
 
 // Importing Redux's actions
 import {
@@ -90,7 +90,7 @@ class Welcome extends Component {
     const data = {
       'Authorization': token,
     };
-    axios.get(`${VUE_APP_BASE_API_URL}/users/${userId}`, { headers: data })
+    axios.get(`${API_KEY}/users/${userId}`, { headers: data })
       .then((response) => {
         // Sets user's data in redux state.
         this.props.changeUser({ user: response.data });
@@ -110,7 +110,7 @@ class Welcome extends Component {
     const data = {
       'Authorization': token,
     };
-    axios.get(`${VUE_APP_BASE_API_URL}/companies?q=(id:${companyId})`, { headers: data })
+    axios.get(`${API_KEY}/companies?q=(id:${companyId})`, { headers: data })
       .then((response) => {
         // Sets user's active company in redux state.
         this.props.changeActiveCompany({ company: response.data[0] });

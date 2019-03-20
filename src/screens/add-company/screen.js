@@ -31,7 +31,7 @@ import { connect } from 'react-redux';
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 import * as axios from 'axios'
-import { VUE_APP_BASE_API_URL } from '../../config/env'
+import { API_KEY } from 'react-native-dotenv';
 import StyleSheet from './stylesheet'
 import { Navigation } from 'react-native-navigation';
 
@@ -62,7 +62,7 @@ class AddCompany extends Component {
     formData.append('website', this.state.newCompanyWebsite);
     formData.append('users_id', this.props.user.id);
 
-    axios.post(`${VUE_APP_BASE_API_URL}/companies`, formData, { headers: headersData })
+    axios.post(`${API_KEY}/companies`, formData, { headers: headersData })
       .then(() => {
         Navigation.dismissAllModals();
         companyCreatedAction();

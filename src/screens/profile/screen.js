@@ -25,7 +25,7 @@ import { colors  } from '../../config/styles';
 import { changeActiveScreen } from '../../actions/SessionActions';
 import { connect } from 'react-redux';
 import * as axios from 'axios'
-import { VUE_APP_BASE_API_URL } from '../../config/env'
+import { API_KEY } from 'react-native-dotenv'
 
 import TitleBar from '../../components/title-bar'
 
@@ -94,7 +94,7 @@ class Profile extends Component {
 
     axios
       .get(
-        `${VUE_APP_BASE_API_URL}/companies?q=(users_id:${this.props.user.id})`,
+        `${API_KEY}/companies?q=(users_id:${this.props.user.id})`,
         { headers: data }
       )
       .then(response => {
@@ -126,7 +126,7 @@ class Profile extends Component {
       Authorization: this.props.token
     };
     axios
-      .get(`${VUE_APP_BASE_API_URL}/users/${this.props.user.id}`, {
+      .get(`${API_KEY}/users/${this.props.user.id}`, {
         headers: data
       })
       .then(response => {

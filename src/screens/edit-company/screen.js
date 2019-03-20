@@ -27,7 +27,7 @@ import {
 
 // Importing local assets and components.
 import { colors } from '../../config/styles';
-import { VUE_APP_BASE_API_URL } from '../../config/env';
+import { API_KEY } from 'react-native-dotenv';
 import TitleBar from '../../components/title-bar';
 
 // Importing Redux's actions
@@ -140,7 +140,7 @@ class EditCompany extends Component {
 
     axios
       .put(
-        `${VUE_APP_BASE_API_URL}/companies/${this.state.company.id}`,
+        `${API_KEY}/companies/${this.state.company.id}`,
         this.formatFormData(data),
         headersData
       )
