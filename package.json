@@ -6,7 +6,9 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "lint": "node_modules/eslint/bin/eslint.js --ext .js src/ --fix",
     "test": "jest",
-    "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug"
+    "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
+    "android-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
+    "generateApk": "cd ./android && ./gradlew clean && ./gradlew assembleRelease"
   },
   "dependencies": {
     "axios": "^0.18.0",
