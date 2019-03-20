@@ -1,7 +1,7 @@
 // Importing package modules.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as axios from 'axios';
+const axios = require('../../../src/config/axios');
 
 import {
   View,
@@ -129,10 +129,6 @@ class EditCompany extends Component {
 
     this.setState({ isLoading: true });
 
-    const headersData = {
-      headers: { Authorization: this.props.token }
-    };
-
     let data = {
       name: this.state.companyName,
       website: this.state.companyWebsite
@@ -140,9 +136,8 @@ class EditCompany extends Component {
 
     axios
       .put(
-        `${API_KEY}/companies/${this.state.company.id}`,
-        this.formatFormData(data),
-        headersData
+        `/companies/${this.state.company.id}`,
+        this.formatFormData(data)
       )
       .then(response => {
         if (this.props.selectedCompany.id == response.data.id) {

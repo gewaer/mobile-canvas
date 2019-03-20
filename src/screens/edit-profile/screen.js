@@ -31,7 +31,7 @@ import {
 import { colors } from '../../config/styles';
 import { changeActiveCompany } from '../../actions/SessionActions';
 import { connect } from 'react-redux';
-import * as axios from 'axios'
+const axios = require('../../../src/config/axios');
 // import ImagePicker from 'react-native-image-crop-picker';
 
 import TitleBar from '../../components/title-bar'
@@ -213,10 +213,6 @@ class EditProfile extends Component {
 
     this.setState({ isLoading: true });
 
-    const headersData = {
-      headers: { Authorization: this.props.token }
-    };
-
     let data = {
       firstname: this.state.userName,
       lastname: this.state.userLastName,
@@ -228,8 +224,7 @@ class EditProfile extends Component {
     axios
       .put(
         `https://apidev.ahorrando.la/v1/users/${this.props.userInfo.id}`,
-        this.formatFormData(data),
-        headersData
+        this.formatFormData(data)
       )
       .then(response => {
         let userSelectedFamilty = this.getDefaultFamilyName();

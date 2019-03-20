@@ -30,10 +30,9 @@ import { changeActiveScreen } from '../../actions/SessionActions';
 import { connect } from 'react-redux';
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
-import * as axios from 'axios'
-import { API_KEY } from 'react-native-dotenv';
 import StyleSheet from './stylesheet'
 import { Navigation } from 'react-native-navigation';
+const axios = require('../../../src/config/axios');
 
 class AddCompany extends Component {
 
@@ -53,16 +52,12 @@ class AddCompany extends Component {
   createCompany() {
     const { companyCreatedAction } = this.props;
 
-    const headersData = {
-      'Authorization': this.props.token,
-    };
-
     let formData = new FormData();
     formData.append('name', this.state.newCompanyName);
     formData.append('website', this.state.newCompanyWebsite);
     formData.append('users_id', this.props.user.id);
 
-    axios.post(`${API_KEY}/companies`, formData, { headers: headersData })
+    axios.post(`/companies`, formData)
       .then(() => {
         Navigation.dismissAllModals();
         companyCreatedAction();

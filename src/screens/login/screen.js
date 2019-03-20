@@ -30,12 +30,11 @@ import {
 import { Navigation } from 'react-native-navigation';
 
 import { connect } from 'react-redux';
-import * as axios from 'axios'
 
 // Importing local assets and components.
 import { appImages } from '../../config/imagesRoutes';
 import TitleBar from '../../components/title-bar';
-import { API_KEY, FORGOT_PASSWORD_URL } from 'react-native-dotenv'
+import { FORGOT_PASSWORD_URL } from 'react-native-dotenv';
 
 import {
   globalStyle,
@@ -53,6 +52,8 @@ import {
   changeUser,
   changeActiveCompany
 } from '../../actions/SessionActions';
+
+const axios = require('../../../src/config/axios');
 
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
@@ -156,7 +157,7 @@ class Login extends Component {
       formData.append('password', this.state.password);
 
       axios
-        .post(`${API_KEY}/auth`, formData)
+        .post(`/auth`, formData)
         .then(response => {
           this.saveSessionData('sessionData', JSON.stringify(response.data));
           this.props.changeSessionToken({ token: response.data.token });
@@ -204,11 +205,10 @@ class Login extends Component {
     formData.append('password', 'nosenose');
 
     axios
-      .post(`${API_KEY}/auth`, formData)
+      .post(`/auth`, formData)
       .then(response => {
         this.saveSessionData('sessionData', JSON.stringify(response.data));
         this.props.changeSessionToken({ token: response.data.token });
-        //this.changeScreen('dashboard');
         this.getUserInfo(response.data.id, response.data.token);
       })
       .catch(error => {
@@ -227,15 +227,12 @@ class Login extends Component {
 
   // Tries to get the user's information using the stored token.
   // If the response is an error then the token is expired and removes the session data.
-  getUserInfo(userId, token) {
-    const data = {
-      Authorization: token
-    };
+  getUserInfo(userId) {
     axios
-      .get(`${API_KEY}/users/${userId}`, { headers: data })
+      .get(`/users/${userId}`)
       .then(response => {
         this.props.changeUser({ user: response.data });
-        this.getUserDefaultCompany(response.data.default_company, token);
+        this.getUserDefaultCompany(response.data.default_company);
       })
       .catch(error => {
         this.setState({ isLoginIn: false });
@@ -251,14 +248,9 @@ class Login extends Component {
   }
 
   // Gets user's default company.
-  getUserDefaultCompany(companyId, token) {
-    const data = {
-      Authorization: token
-    };
+  getUserDefaultCompany(companyId) {
     axios
-      .get(`${API_KEY}/companies?q=(id:${companyId})`, {
-        headers: data
-      })
+      .get(`/companies?q=(id:${companyId})`)
       .then(response => {
         this.props.changeActiveCompany({ company: response.data[0] });
         this.changeScreen('dashboard');
@@ -409,7 +401,9 @@ class Login extends Component {
 
 // Maps redux's state variables to this class' props
 const mapStateToProps = state => {
-  return {};
+  return {
+    
+  };
 };
 
 // Connects redux actions to this class' props

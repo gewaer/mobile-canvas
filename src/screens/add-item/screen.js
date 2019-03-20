@@ -26,7 +26,7 @@ import { changeActiveScreen } from '../../actions/SessionActions';
 import { connect } from 'react-redux';
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
-import * as axios from 'axios'
+const axios = require('../../../src/config/axios');
 
 import { Navigation } from 'react-native-navigation';
 
@@ -88,17 +88,13 @@ class AddItem extends Component {
   createItem() {
     const { itemCreatedAction } = this.props;
 
-    const headersData = {
-      headers: { 'Authorization': this.props.token }
-    };
-
     let data = {};
 
     this.state.itemSettings.fields.forEach((item) => {
       data[item.key] = this.state[item.key];
     });
 
-    axios.post('https://apidev.gewaer.io/v1/leads', this.formatFormData(data), headersData)
+    axios.post('https://apidev.gewaer.io/v1/leads', this.formatFormData(data))
       .then((response) => {
         itemCreatedAction();
         Navigation.dismissAllModals();
