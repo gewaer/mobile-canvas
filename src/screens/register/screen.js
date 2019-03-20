@@ -1,7 +1,7 @@
 // Importing package modules.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as axios from 'axios'
+const axios = require('../../../src/config/axios');
 import { Navigation } from 'react-native-navigation';
 
 import {
@@ -35,7 +35,8 @@ import {
 } from '../../config/styles';
 
 import TitleBar from '../../components/title-bar';
-import { VUE_APP_BASE_API_URL } from '../../config/env'
+import { API_KEY } from 'react-native-dotenv'
+
 
 // Importing Redux's actions
 import {
@@ -197,7 +198,7 @@ class Register extends Component {
     };
 
     axios
-      .post(`${VUE_APP_BASE_API_URL}/users`, this.formatFormData(data))
+      .post(`/users`, this.formatFormData(data))
       .then(response => {
         this.saveSessionData(
           'sessionData',
@@ -238,13 +239,8 @@ class Register extends Component {
 
   // Gets the user's default company.
   getUserDefaultCompany(companyId, token) {
-    const data = {
-      Authorization: token
-    };
     axios
-      .get(`${VUE_APP_BASE_API_URL}/companies?q=(id:${companyId})`, {
-        headers: data
-      })
+      .get(`/companies?q=(id:${companyId})`)
       .then(response => {
         this.props.changeActiveCompany({ company: response.data[0] });
         this.changeScreen('dashboard');

@@ -1,7 +1,7 @@
 // Importing package modules.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as axios from 'axios';
+const axios = require('../../../src/config/axios');
 import { Navigation } from 'react-native-navigation';
 
 import { pushDashboard } from '../../navigation/flows'
@@ -28,7 +28,7 @@ import {
   paddingHelpers
 } from '../../config/styles';
 import { appImages } from '../../config/imagesRoutes';
-import { VUE_APP_BASE_API_URL } from '../../config/env'
+import { API_KEY } from 'react-native-dotenv';
 
 // Importing Redux's actions
 import {
@@ -87,10 +87,7 @@ class Welcome extends Component {
   // Tries to get the user's information using the stored token.
   // If the response is an error then the token is expired and removes the session data.
   getUserInfo(userId, token) {
-    const data = {
-      'Authorization': token,
-    };
-    axios.get(`${VUE_APP_BASE_API_URL}/users/${userId}`, { headers: data })
+    axios.get(`/users/${userId}`)
       .then((response) => {
         // Sets user's data in redux state.
         this.props.changeUser({ user: response.data });
@@ -107,10 +104,7 @@ class Welcome extends Component {
 
   // Get the user's default company.
   getUserDefaultCompany(companyId, token) {
-    const data = {
-      'Authorization': token,
-    };
-    axios.get(`${VUE_APP_BASE_API_URL}/companies?q=(id:${companyId})`, { headers: data })
+    axios.get(`/companies?q=(id:${companyId})`)
       .then((response) => {
         // Sets user's active company in redux state.
         this.props.changeActiveCompany({ company: response.data[0] });

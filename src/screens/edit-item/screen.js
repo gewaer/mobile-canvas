@@ -27,7 +27,7 @@ import {
 
 import { colors } from '../../config/styles';
 import { connect } from 'react-redux';
-import * as axios from 'axios';
+const axios = require('../../../src/config/axios');
 
 import TitleBar from '../../components/title-bar';
 
@@ -227,10 +227,6 @@ class EditInfo extends Component {
 
     this.setState({ isLoading: true });
 
-    const headersData = {
-      headers: { Authorization: this.props.token }
-    };
-
     let data = {};
 
     this.state.itemSettings.fields.forEach(item => {
@@ -240,8 +236,7 @@ class EditInfo extends Component {
     axios
       .put(
         `https://apidev.gewaer.io/v1/leads/${this.state.item.id}`,
-        this.formatFormData(data),
-        headersData
+        this.formatFormData(data)
       )
       .then(response => {
         this.changeScreen(true, response.data);

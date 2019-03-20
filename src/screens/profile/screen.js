@@ -24,8 +24,8 @@ import {
 import { colors  } from '../../config/styles';
 import { changeActiveScreen } from '../../actions/SessionActions';
 import { connect } from 'react-redux';
-import * as axios from 'axios'
-import { VUE_APP_BASE_API_URL } from '../../config/env'
+const axios = require('../../../src/config/axios');
+import { API_KEY } from 'react-native-dotenv'
 
 import TitleBar from '../../components/title-bar'
 
@@ -88,14 +88,9 @@ class Profile extends Component {
   }
 
   getFamilies = () => {
-    const data = {
-      Authorization: this.props.token
-    };
-
     axios
       .get(
-        `${VUE_APP_BASE_API_URL}/companies?q=(users_id:${this.props.user.id})`,
-        { headers: data }
+        `/companies?q=(users_id:${this.props.user.id})`
       )
       .then(response => {
         this.setState({ families: response.data, isLoading: false }, () => {
@@ -126,9 +121,7 @@ class Profile extends Component {
       Authorization: this.props.token
     };
     axios
-      .get(`${VUE_APP_BASE_API_URL}/users/${this.props.user.id}`, {
-        headers: data
-      })
+      .get(`/users/${this.props.user.id}`)
       .then(response => {
         console.log(response.data);
         this.setState({ userInfo: response.data });
