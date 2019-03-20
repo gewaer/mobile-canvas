@@ -16,13 +16,13 @@ import {
 import { colors } from '../../config/styles';
 import { changeActiveScreen } from '../../actions/SessionActions';
 import { connect } from 'react-redux';
-import * as axios from 'axios';
 const platform = Platform.OS;
 import TitleBar from '../../components/title-bar';
 import { Navigation } from 'react-native-navigation';
 import { pushSingleScreenApp } from '../../navigation/flows';
 import StyleSheet from './stylesheet';
 
+const axios = require('../../../src/config/axios');
 
 class Dashboard extends PureComponent {
   constructor(props) {

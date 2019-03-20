@@ -30,9 +30,8 @@ import {
   changeActiveFamily,
   changeActiveCompany
 } from '../../actions/SessionActions';
-import { API_KEY } from 'react-native-dotenv';
 import { connect } from 'react-redux';
-import * as axios from 'axios';
+const axios = require('../../../src/config/axios');
 const platform = Platform.OS;
 import TitleBar from '../../components/title-bar';
 import getStore from '../../store/store';
@@ -85,12 +84,8 @@ class Family extends Component {
   getCompanies = () => {
     this.setState({ isLoading: true });
 
-    const data = {
-      Authorization: this.props.token
-    };
-
     axios
-      .get(`${API_KEY}/companies`, { headers: data })
+      .get(`/companies`)
       .then(response => {
         this.setState({ companies: response.data, isLoading: false });
       })
