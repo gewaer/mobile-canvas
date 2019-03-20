@@ -1,6 +1,6 @@
 # React Native Canvas
 
-MacTekk's Boilerplate to faster development
+McTekk's Boilerplate to faster development
 
 ## Documentation
 
