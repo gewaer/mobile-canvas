@@ -294,6 +294,9 @@ class Register extends Component {
                             this.setState({ firstname })
                           }
                           style={globalStyle.formInput}
+                          onSubmitEditing={() => {
+                            this.lastName._root.focus(); 
+                          }}
                         />
                       </Item>
                       <Item
@@ -306,6 +309,10 @@ class Register extends Component {
                           value={this.state.lastname}
                           onChangeText={lastname => this.setState({ lastname })}
                           style={globalStyle.formInput}
+                          getRef={(input) => {this.lastName = input}}
+                          onSubmitEditing={() => {
+                            this.email._root.focus(); 
+                          }}
                         />
                       </Item>
                       <Item floatingLabel last style={StyleSheet.formItem}>
@@ -316,6 +323,10 @@ class Register extends Component {
                           style={globalStyle.formInput}
                           keyboardType={'email-address'}
                           autoCapitalize={'none'}
+                          getRef={(input) => {this.email = input}}
+                          onSubmitEditing={() => {
+                            this.password._root.focus(); 
+                          }}
                         />
                       </Item>
                       <Item floatingLabel last style={StyleSheet.formItem}>
@@ -326,6 +337,10 @@ class Register extends Component {
                           style={globalStyle.formInput}
                           secureTextEntry
                           autoCapitalize={'none'}
+                          getRef={(input) => {this.password = input}}
+                          onSubmitEditing={() => {
+                            this.confirmPassword._root.focus(); 
+                          }}
                         />
                       </Item>
                       <Item floatingLabel last style={StyleSheet.formItem}>
@@ -340,6 +355,10 @@ class Register extends Component {
                           style={globalStyle.formInput}
                           secureTextEntry
                           autoCapitalize={'none'}
+                          getRef={(input) => {this.confirmPassword = input}}
+                          onSubmitEditing={() => {
+                            this.company._root.focus(); 
+                          }}
                         />
                       </Item>
                       <Item floatingLabel last style={StyleSheet.formItem}>
@@ -348,6 +367,10 @@ class Register extends Component {
                           value={this.state.family}
                           onChangeText={family => this.setState({ family })}
                           style={globalStyle.formInput}
+                          getRef={(input) => {this.company = input}}
+                          onSubmitEditing={() => {
+                            this.createUser();
+                          }}
                         />
                       </Item>
                       {// If the app is creating the user hide the register button and show a loading spinner

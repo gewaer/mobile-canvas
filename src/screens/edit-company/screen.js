@@ -275,6 +275,9 @@ class EditCompany extends Component {
                     value={this.state.companyName}
                     autoCapitalize
                     onChangeText={name => this.setState({ companyName: name })}
+                    onSubmitEditing={() => {
+                      this.website._root.focus(); 
+                    }}
                   />
                 </Item>
                 <Item stackedLabel style={StyleSheet.formItem}>
@@ -293,6 +296,7 @@ class EditCompany extends Component {
                     onChangeText={website =>
                       this.setState({ companyWebsite: website })
                     }
+                    ref={(input) => {this.website = input}}
                   />
                 </Item>
               </View>

@@ -306,6 +306,9 @@ class Login extends Component {
                             style={globalStyle.formInput}
                             keyboardType={'email-address'}
                             autoCapitalize={'none'}
+                            onSubmitEditing={() => {
+                              this._inputDesc._root.focus(); 
+                            }}
                           />
                         </Item>
                         <Item floatingLabel last style={StyleSheet.formItem}>
@@ -317,6 +320,10 @@ class Login extends Component {
                             style={globalStyle.formInput}
                             secureTextEntry
                             autoCapitalize={'none'}
+                            getRef={(input) => this._inputDesc = input}
+                            onSubmitEditing={() => {
+                              this.logIn(); 
+                            }}
                           />
                         </Item>
                         {this.state.isLoginIn ? (
