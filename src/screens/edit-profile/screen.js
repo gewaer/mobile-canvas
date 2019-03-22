@@ -45,7 +45,7 @@ import { Navigation } from 'react-native-navigation';
 class EditProfile extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       isLoading: true,
       userName: '',
@@ -311,6 +311,9 @@ class EditProfile extends Component {
                     style={StyleSheet.formInput}
                     value={this.capitalizeFilter(this.state.userName)}
                     onChangeText={name => this.setState({ userName: name })}
+                    onSubmitEditing={() => {
+                      this.lastName._root.focus(); 
+                    }}
                   />
                 </Item>
                 <Item
@@ -337,6 +340,10 @@ class EditProfile extends Component {
                     onChangeText={lastName =>
                       this.setState({ userLastName: lastName })
                     }
+                    ref={(input) => {this.lastName = input}}
+                    onSubmitEditing={() => {
+                      this.email._root.focus(); 
+                    }}
                   />
                 </Item>
                 <Item
@@ -359,6 +366,10 @@ class EditProfile extends Component {
                     style={StyleSheet.formInput}
                     value={this.state.userEmail}
                     onChangeText={email => this.setState({ userEmail: email })}
+                    ref={(input) => {this.email = input}}
+                    onSubmitEditing={() => {
+                      this.password._root.focus(); 
+                    }}
                   />
                 </Item>
                 <View>
@@ -387,6 +398,7 @@ class EditProfile extends Component {
                         this.setState({ userPassword: password })
                       }
                       secureTextEntry={!this.state.passwordVisible}
+                      ref={(input) => {this.password = input}}
                     />
                   </Item>
 

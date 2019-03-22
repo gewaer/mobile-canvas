@@ -81,6 +81,9 @@ class AddCompany extends Component {
               onChangeText={(companyName) => this.setState({ newCompanyName: companyName })}
               style={{ height: 60, color: 'black' }}
               secureTextEntry={false}
+              onSubmitEditing={() => {
+                this._inputDesc._root.focus(); 
+              }}
             />
           </Item>
           <Item floatingLabel last style={StyleSheet.formItem} >
@@ -93,6 +96,10 @@ class AddCompany extends Component {
               onChangeText={(companyWebsite) => this.setState({ newCompanyWebsite: companyWebsite })}
               style={{ height: 60, color: 'black' }}
               secureTextEntry={false}
+              getRef={(input) => this._inputDesc = input}
+              onSubmitEditing={() => {
+                  this.createCompany(); 
+              }}
             />
           </Item>
           <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
