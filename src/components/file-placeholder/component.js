@@ -52,7 +52,7 @@ class FilePlaceholder extends Component {
 					{	
 						displayRemove &&
 						<TouchableOpacity onPress={ onRemovePress } style={ { alignSelf: 'flex-end' } }>
-							<Icon type="Ionicons" name="ios-remove-circle"  style={ { color: colors.brandRed, fontSize: 16, marginTop: -10, paddingTop: 2, marginRight: 5 } }></Icon>
+							<Icon type="Ionicons" name="ios-remove-circle"  style={ { color: 'red', fontSize: 16, marginTop: -10, paddingTop: 2, marginRight: 5 } }></Icon>
 						</TouchableOpacity>
 					}
 				</TouchableOpacity>
@@ -65,7 +65,7 @@ class FilePlaceholder extends Component {
 					{
 						displayRemove &&
 						<TouchableOpacity onPress={ onRemovePress } style={ { alignSelf: 'flex-end',  } }>
-							<Icon type="Ionicons" name="ios-remove-circle"  style={ { color: colors.brandRed, fontSize: 16, marginTop: -10, paddingTop: 2, marginRight: 5 } }></Icon>
+							<Icon type="Ionicons" name="ios-remove-circle"  style={ { color: 'red', fontSize: 16, marginTop: -10, paddingTop: 2, marginRight: 5 } }></Icon>
 						</TouchableOpacity>
 					}
 				</TouchableOpacity>
