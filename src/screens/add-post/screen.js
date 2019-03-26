@@ -43,6 +43,8 @@ import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker
 //import ImagePicker from 'react-native-image-crop-picker';
 import * as mime from 'react-native-mime-types';
 import { normalizeFile } from '../../../src/lib/helpers';
+import { Navigation } from 'react-native-navigation';
+
 const axios = require('../../../src/config/axios');
 
 // Gets the operating system's name where the app is running (Android or iOS).
@@ -119,6 +121,16 @@ class AddPost extends Component {
 		});
 	}
 
+	showDrawer = () => {
+		Navigation.mergeOptions('navigation.drawer.left', {
+		  sideMenu: {
+			left: {
+			  visible: true
+			}
+		  }
+		});
+	  };
+
 	getPost(postId) {
 		axios.get(`/myUrl/${postId}`)
 			.then((response) => {
@@ -181,7 +193,7 @@ class AddPost extends Component {
 		return {
 			content: (
 				<View>
-					<TouchableOpacity transparent onPress={() => this.props.navigator.toggleDrawer({ side: 'left', animated: true, to: 'open' })}>
+					<TouchableOpacity transparent onPress={() => this.showDrawer()}>
 						<Icon type={'Ionicons'} name={'ios-menu'} style={{ color: 'white', width: 22 }} />
 					</TouchableOpacity>
 				</View>
