@@ -42,6 +42,12 @@ export const globalStyle = {
   formInput: {
     height: 60,
     color: 'white',
+  },
+  pickerIcon: {
+    paddingTop: 0,
+    marginTop: -4,
+    marginLeft: 0,
+    marginRight: 12
   }
 };
 
@@ -63,6 +69,7 @@ export const colors = {
   brandWhite: '#ededed',
   brandBlack: '#1c1d1d',
   brandGrey: '#c2c1c0',
+  brandLightGray: '#b5b5b5',
   brandDarkGrey: '#4b4b4b',
   brandGreen: '#189687',
   brandGold: '#f1ac2f',
