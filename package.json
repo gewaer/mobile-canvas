@@ -8,7 +8,15 @@
     "test": "jest",
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "android-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
-    "generateApk": "cd ./android && ./gradlew clean && ./gradlew assembleRelease"
+    "generateApk": "cd ./android && ./gradlew clean && ./gradlew assembleRelease",
+    "testFlight": "cd ios && fastlane beta && cd ../" ,
+    "screenShoot-ios": "cd ios && fastlane screenshots && cd ../ ",
+    "release-ios": "cd ios && fastlane release && cd ../",
+    "test-ios": "cd ios && fastlane test && cd ../",
+    "playstore-test": "cd android && fastlane beta && cd ../" ,
+    "screenshoot-android": "cd android && fastlane screenshots && cd ../ ",
+    "release-android": "cd android && fastlane playstore && cd ../",
+    "test-android": "cd android && fastlane test && cd ../"
   },
   "dependencies": {
     "axios": "^0.18.0",
