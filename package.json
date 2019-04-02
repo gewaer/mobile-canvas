@@ -8,7 +8,8 @@
     "test": "jest",
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "android-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
-    "generateApk": "cd ./android && ./gradlew clean && ./gradlew assembleRelease"
+    "generate-apk": "cd ./android && ./gradlew clean && ./gradlew assembleRelease",
+    "postinstall": "sed -i.bak -e 's/design:26.1.0/design:28.0.0/g' ./node_modules/react-native-navigation/lib/android/app/build.gradle && sed -i.bak -e 's/targetSdkVersion 25/targetSdkVersion 28/g' ./node_modules/react-native-navigation/lib/android/app/build.gradle && sed -i.bak -e 's/compileSdkVersion 26/compileSdkVersion 28/g' ./node_modules/react-native-navigation/lib/android/app/build.gradle && sed -i.bak -e \"s/buildToolsVersion '27.0.3'/buildToolsVersion '28.0.3'/g\" ./node_modules/react-native-navigation/lib/android/app/build.gradle"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -19,10 +20,12 @@
     "react-native": "^0.58.5",
     "react-native-autogrow-textinput": "^5.2.0",
     "react-native-document-picker": "^2.3.0",
+    "react-native-fs": "^2.13.3",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-mime-types": "^2.2.1",
     "react-native-navigation": "^2.13.0",
     "react-native-navigation-drawer-extension": "^1.0.3",
+    "react-native-sound": "^0.10.12",
     "react-native-sentry": "^0.42.0",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1"
