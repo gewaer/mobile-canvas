@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "expo-facebook": "^4.0.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "native-base": "^2.12.0",
@@ -25,8 +26,9 @@
     "react-native-mime-types": "^2.2.1",
     "react-native-navigation": "^2.13.0",
     "react-native-navigation-drawer-extension": "^1.0.3",
-    "react-native-sound": "^0.10.12",
     "react-native-sentry": "^0.42.0",
+    "react-native-sound": "^0.10.12",
+    "react-native-unimodules": "^0.2.0",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1"
   },
