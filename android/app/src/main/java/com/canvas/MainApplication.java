@@ -3,6 +3,7 @@ package com.canvas;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.zmxv.RNSound.RNSoundPackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
