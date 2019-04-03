@@ -148,7 +148,7 @@ export function pushDashboard(sideMenuProps) {
               },
               {
                 component: {
-                  id: 'navigation.myScreen',
+                  id: 'navigation.mySscreen',
                   name: 'canvas.MyScreen',
                   options: {
                     bottomTab: {

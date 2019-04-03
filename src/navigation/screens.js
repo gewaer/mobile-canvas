@@ -36,5 +36,4 @@ export function registerScreens() {
   Navigation.registerComponent('canvas.AddCompany', () => WrapperProvider(AddCompany));
   Navigation.registerComponent('canvas.AddPost', () => WrapperProvider(AddPost));
   Navigation.registerComponent('canvas.MyScreen', () => WrapperProvider(MyScreen));
-
 }
