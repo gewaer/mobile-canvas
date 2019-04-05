@@ -45,6 +45,8 @@ import { pushDashboard } from '../../navigation/flows'
 
 import StyleSheet from './stylesheet'
 
+import { LoginManager, GraphRequest,GraphRequestManager } from 'react-native-fbsdk';
+
 // Importing Redux's actions
 import {
   changeActiveScreen,
@@ -268,6 +270,52 @@ class Login extends Component {
       });
   }
 
+  signInWithFacebookAsync = async () => {
+    LoginManager.logInWithReadPermissions(["email"]).then(loginState => {
+          if (loginState.isCancelled) {
+          } else {
+              const infoRequest = new GraphRequest('/me?fields=name,picture,email', null,(error, user) => {
+                  if (error) {
+                      console.log('Error fetching data: ' + error.toString());
+                  } else {
+                      const userData = new FormData();
+                      userData.append('email', user.email);
+                      userData.append('social_id', user.id);
+
+                      this.saveItem('email', user.email);
+                      this.saveItem('social_id', user.id);
+
+                      axios.post(`/auth`, userData).then(({ data: login }) => {
+                          if (login.token) {
+                              this.saveItem('login_type', 'facebook');
+                              this.saveItem('id_token', login.token);
+                              this.saveItem('user_id', login.id.toString());
+
+                              this.props.saveFacebookLoginData({
+                                  userEmail: user.email,
+                                  userSessionToken: login.token,
+                                  userId: login.id.toString(),
+                                  socialId: user.id,
+                                  loginType: 'facebook'
+                              })
+
+                              this.changeScreen('dashboard');
+                          }
+                      }).catch(error => {
+                          console.log(error.response);
+                          Alert.alert("Your email is not associated with an account.")
+                      });
+                  }
+              });
+              new GraphRequestManager().addRequest(infoRequest).start();
+          }
+      }, error => {
+        console.log(error);
+          Alert.alert("Error while trying to authenticate with your Facebook account.")
+      }
+    );
+  }
+
   render() {
     return (
       <Root>
@@ -307,7 +355,7 @@ class Login extends Component {
                             keyboardType={'email-address'}
                             autoCapitalize={'none'}
                             onSubmitEditing={() => {
-                              this._inputDesc._root.focus(); 
+                              this._inputDesc._root.focus();
                             }}
                           />
                         </Item>
@@ -322,7 +370,7 @@ class Login extends Component {
                             autoCapitalize={'none'}
                             getRef={(input) => this._inputDesc = input}
                             onSubmitEditing={() => {
-                              this.logIn(); 
+                              this.logIn();
                             }}
                           />
                         </Item>
@@ -372,31 +420,26 @@ class Login extends Component {
                     </View>
                   </View>
                 </View>
-                {/* <View style={StyleSheet.containerViewBack}>
-                                        <View style={StyleSheet.textContainer}>
-                                            <H3 style={[globalStyle.text, {color: colors.brandBlack}]}> OR SIGN IN WITH </H3>
-                                        </View>
-                                        <View style={StyleSheet.btnContainer}>
-                                            <Button
-                                                block
-                                                style={StyleSheet.facebookBtn}
-                                                onPress={() => this.logIn()}
-                                            >
-                                                <Text style={StyleSheet.facebookText}>
-                                                    Facebook
-                                                </Text>
-                                            </Button>
-                                            <Button
-                                                block
-                                                style={[StyleSheet.googleBtn, {marginTop: 20}]}
-                                                onPress={() => this.signInWithGoogleAsync()}
-                                            >
-                                                <Text style={StyleSheet.googleText}>
-                                                    Google+
-                                                </Text>
-                                            </Button>
-                                        </View>
-                                    </View> */}
+                <View style={StyleSheet.btnContainer}>
+                  <Button
+                      block
+                      style={StyleSheet.facebookBtn}
+                      onPress={() => this.signInWithFacebookAsync()}
+                  >
+                      <Text style={StyleSheet.facebookText}>
+                          Facebook
+                      </Text>
+                  </Button>
+                  <Button
+                      block
+                      style={[StyleSheet.googleBtn, {marginTop: 20}]}
+                      onPress={() => this.signInWithFacebookAsync()}
+                  >
+                      <Text style={StyleSheet.googleText}>
+                          Google
+                      </Text>
+                  </Button>
+                </View>
               </View>
             )}
           </Content>
@@ -409,7 +452,7 @@ class Login extends Component {
 // Maps redux's state variables to this class' props
 const mapStateToProps = state => {
   return {
-    
+
   };
 };
 

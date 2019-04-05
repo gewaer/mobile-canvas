@@ -10,20 +10,30 @@ PODS:
   - EXConstants (4.0.0):
     - UMConstantsInterface
     - UMCore
-  - EXFacebook (4.0.0):
-    - FBSDKCoreKit
-    - FBSDKLoginKit
-    - UMConstantsInterface
-    - UMCore
   - EXFileSystem (4.0.0):
     - UMCore
     - UMFileSystemInterface
   - EXPermissions (4.0.0):
     - UMCore
     - UMPermissionsInterface
-  - FBSDKCoreKit (4.39.0):
+  - FacebookSDK (4.38.0):
     - Bolts (~> 1.9)
-  - FBSDKLoginKit (4.39.0):
+    - FacebookSDK/CoreKit (= 4.38.0)
+    - FacebookSDK/MarketingKit (= 4.38.0)
+  - FacebookSDK/CoreKit (4.38.0):
+    - Bolts (~> 1.9)
+    - FBSDKCoreKit
+  - FacebookSDK/MarketingKit (4.38.0):
+    - Bolts (~> 1.9)
+    - FacebookSDK/CoreKit
+    - FBSDKMarketingKit
+  - FBSDKCoreKit (4.38.1):
+    - Bolts (~> 1.9)
+  - FBSDKLoginKit (4.38.1):
+    - FBSDKCoreKit
+  - FBSDKMarketingKit (4.38.0):
+    - FBSDKCoreKit
+  - FBSDKShareKit (4.38.1):
     - FBSDKCoreKit
   - Folly (2018.10.22.00):
     - boost-for-react-native
@@ -32,6 +42,20 @@ PODS:
   - glog (0.3.5)
   - React (0.58.6):
     - React/Core (= 0.58.6)
+  - react-native-fbsdk (0.8.0):
+    - React
+    - react-native-fbsdk/Core (= 0.8.0)
+    - react-native-fbsdk/Login (= 0.8.0)
+    - react-native-fbsdk/Share (= 0.8.0)
+  - react-native-fbsdk/Core (0.8.0):
+    - FBSDKCoreKit
+    - React
+  - react-native-fbsdk/Login (0.8.0):
+    - FBSDKLoginKit
+    - React
+  - react-native-fbsdk/Share (0.8.0):
+    - FBSDKShareKit
+    - React
   - React/Core (0.58.6):
     - yoga (= 0.58.6.React)
   - React/CxxBridge (0.58.6):
@@ -89,11 +113,15 @@ PODS:
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
-  - EXFacebook (from `../node_modules/expo-facebook/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXPermissions (from `../node_modules/expo-permissions/ios`)
+  - FacebookSDK (~> 4.38.0)
+  - FBSDKCoreKit (~> 4.38.0)
+  - FBSDKLoginKit (~> 4.38.0)
+  - FBSDKShareKit (~> 4.38.0)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
@@ -120,16 +148,17 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Bolts
     - boost-for-react-native
+    - FacebookSDK
     - FBSDKCoreKit
     - FBSDKLoginKit
+    - FBSDKMarketingKit
+    - FBSDKShareKit
 
 EXTERNAL SOURCES:
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
-  EXFacebook:
-    :path: "../node_modules/expo-facebook/ios"
   EXFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   EXPermissions:
@@ -140,6 +169,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   React:
     :path: "../node_modules/react-native"
+  react-native-fbsdk:
+    :path: "../node_modules/react-native-fbsdk"
   UMBarCodeScannerInterface:
     :path: "../node_modules/unimodules-barcode-scanner-interface/ios"
   UMCameraInterface:
@@ -172,14 +203,17 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   EXConstants: 9fef2c937fa0c8e6182b26cfea29e9a27fbb3009
-  EXFacebook: 7e74e8f19337282c91d59750aa3cfc7066736ab4
   EXFileSystem: fc5260fcc461ad675ea1bb56a1d5be4c56e2b556
   EXPermissions: 615f9e58b861a3a82bbf9784483c2fb34e75c751
-  FBSDKCoreKit: 1e3981faefab8c88edfaa9eecd94aab02d99a9bc
-  FBSDKLoginKit: 30ba5039a2c53d65a75103889bc2deebdacd5a1f
+  FacebookSDK: 73f54b8b94e09b05647cdef0af147f470cd3edc6
+  FBSDKCoreKit: 8d47857400e2f5bdea697a80daff882e91c84ef6
+  FBSDKLoginKit: 4621c690d9dd8628031a4791497062183ea34b0d
+  FBSDKMarketingKit: e609f39d74ab273cf52e2f8b7e8829ed412b2827
+  FBSDKShareKit: 6ffe22f0a0618eb7424d4104ab0ef3ce9643d42a
   Folly: de497beb10f102453a1afa9edbf8cf8a251890de
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
   React: 130b87b2d5e2baac646954282cab87be986d98fc
+  react-native-fbsdk: 5c3ff4dda057e17d3b4b5491033fc653d423e71d
   UMBarCodeScannerInterface: e5c8c1a9b1a3724169601da09ece11ba742fe574
   UMCameraInterface: fab8201fb49679a4951dbee4bc9de43c4771207f
   UMConstantsInterface: 661f05e74c4de53030b25e6a64e5e116eecf4bef
@@ -194,6 +228,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 4640d2fed78f46943d2e7fc37318b9749a0f8106
   yoga: 32d7ef1081951e9a35a4c72a7be797598b138a48
 
-PODFILE CHECKSUM: 17aab00e981f69229f596a88e1e93507f6d2e013
+PODFILE CHECKSUM: f6c1db348aa112f982db450ef32887b7172ef291
 
 COCOAPODS: 1.6.1

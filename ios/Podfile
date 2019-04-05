@@ -26,8 +26,15 @@ target 'Canvas' do
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+  pod 'FacebookSDK', '~> 4.38.0'
+  pod 'FBSDKShareKit', '~> 4.38.0'
+  pod 'FBSDKCoreKit', '~> 4.38.0'
+  pod 'FBSDKLoginKit', '~> 4.38.0'
+
 
   use_unimodules!
+
+  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
   target 'CanvasTests' do
     inherit! :search_paths
