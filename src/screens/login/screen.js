@@ -34,7 +34,7 @@ import { connect } from 'react-redux';
 // Importing local assets and components.
 import { appImages } from '../../config/imagesRoutes';
 import TitleBar from '../../components/title-bar';
-import { FORGOT_PASSWORD_URL } from 'react-native-dotenv';
+import { FORGOT_PASSWORD_URL, GOOGLE_CLIENT_ID } from 'react-native-dotenv';
 
 import {
   globalStyle,
@@ -46,6 +46,7 @@ import { pushDashboard } from '../../navigation/flows'
 import StyleSheet from './stylesheet'
 
 import { LoginManager, GraphRequest,GraphRequestManager } from 'react-native-fbsdk';
+import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 
 // Importing Redux's actions
 import {
@@ -79,6 +80,11 @@ class Login extends Component {
   componentDidMount() {
     // Creates an event listener for Android's back button
     BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
+    GoogleSignin.configure({
+      scopes: ['https://www.googleapis.com/auth/plus.login'], // what API you want to access on behalf of the user, default is email and profile
+      webClientId: GOOGLE_CLIENT_ID, // client ID of type WEB for your server (needed to verify user ID and offline access)
+      offlineAccess: true
+    });
   }
 
   // Handles Android's back button's action
@@ -275,6 +281,7 @@ class Login extends Component {
           if (loginState.isCancelled) {
           } else {
               const infoRequest = new GraphRequest('/me?fields=name,picture,email', null,(error, user) => {
+                  console.log(user)
                   if (error) {
                       console.log('Error fetching data: ' + error.toString());
                   } else {
@@ -315,6 +322,77 @@ class Login extends Component {
       }
     );
   }
+
+  signInWithGoogleAsync = async () => {
+      GoogleSignin.hasPlayServices().then(() => {
+        GoogleSignin.signIn().then(result => {
+            console.log(result)
+            if (result.accessToken) {
+              var data = new FormData();
+              data.append('email', result.user.email);
+              data.append('social_id', result.user.id);
+              this.saveItem('social_id', result.user.id);
+              this.saveItem('code', result.serverAuthCode);
+              this.saveItem('email', result.user.email);
+              //data.append('access_token', result.accessToken);
+              //data.append('refresh_token', result.refreshToken);
+              //data.append('code', result.serverAuthCode);
+
+              axios.post(`/auth`, data)
+              .then(response => {
+                if (response.data.token) {
+                  this.saveItem('login_type', 'google');
+                  this.saveItem('id_token', response.data.token);
+                  this.saveItem('user_id', response.data.id.toString());
+
+                  this.props.saveGoogleLoginData({
+                      userEmail: result.user.email,
+                      userSessionToken: response.data.token,
+                      userId: response.data.id.toString(),
+                      socialId: result.user.id,
+                      loginType: 'google',
+                      serverAuthCode: result.serverAuthCode
+                  })
+                  this.changeScreen('dashboard');
+                }
+              })
+              .catch(function (error) {
+                console.log(error.response);
+              });
+            }
+        });
+      }).catch (error => {
+        console.log("ERROR")
+        console.log(JSON.stringify(error))
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (f.e. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    })
+  };
+
+  async saveItem(item, selectedValue) {
+    try {
+      await AsyncStorage.setItem(item, selectedValue);
+    } catch (error) {
+      console.error('AsyncStorage error: ' + error.message);
+    }
+  }
+
+  googleSignOut = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      this.setState({ user: null }); // Remember to remove the user from your app's state as well
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   render() {
     return (
@@ -433,10 +511,19 @@ class Login extends Component {
                   <Button
                       block
                       style={[StyleSheet.googleBtn, {marginTop: 20}]}
-                      onPress={() => this.signInWithFacebookAsync()}
+                      onPress={() => this.signInWithGoogleAsync()}
                   >
                       <Text style={StyleSheet.googleText}>
                           Google
+                      </Text>
+                  </Button>
+                  <Button
+                      block
+                      style={[StyleSheet.googleBtn, {marginTop: 20}]}
+                      onPress={() => this.googleSignOut()}
+                  >
+                      <Text style={StyleSheet.googleText}>
+                          Google Sign Out
                       </Text>
                   </Button>
                 </View>

@@ -18,8 +18,8 @@ export default StyleSheet.create({
   },
   googleBtn: {
     backgroundColor: colors.gmail,
-    width: '100%',
-    alignItems: 'center'
+    width: '70%',
+    alignSelf: 'center'
   },
   googleText: {
     color: '#fff',
@@ -30,8 +30,8 @@ export default StyleSheet.create({
     marginTop: paddingHelpers.S,
     marginBottom: paddingHelpers.XS,
     backgroundColor: colors.facebook,
-    width: '100%',
-    alignItems: 'center'
+    width: '70%',
+    alignSelf: 'center'
   },
   facebookText: {
     color: '#fff',
