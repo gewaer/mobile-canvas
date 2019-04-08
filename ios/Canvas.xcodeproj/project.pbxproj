@@ -60,6 +60,13 @@
 		B1C214576C4E4244BC79701E /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A985F6F0A7614E85AB587BCC /* rubicon-icon-font.ttf */; };
 		B62CF8F82228343B001761AF /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B62CF8F5222833DE001761AF /* libReactNativeNavigation.a */; };
 		B62E4E56224D43A900A1BC62 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B62E4E53224D438A00A1BC62 /* libRNFS.a */; };
+		B633906C2257A11E00159385 /* libFBSDKCoreKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B633906B2257A11E00159385 /* libFBSDKCoreKit.a */; };
+		B633909B2257A12800159385 /* libFBSDKShareKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B633909A2257A12800159385 /* libFBSDKShareKit.a */; };
+		B633909D2257A13500159385 /* libFBSDKLoginKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B633909C2257A13500159385 /* libFBSDKLoginKit.a */; };
+		B633909F2257A13B00159385 /* libreact-native-fbsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B633909E2257A13B00159385 /* libreact-native-fbsdk.a */; };
+		B6A27DE7225B980600262754 /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6A27DE6225B980600262754 /* libRNGoogleSignin.a */; };
+		B6A27E16225B981600262754 /* libGoogleToolboxForMac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6A27E15225B981600262754 /* libGoogleToolboxForMac.a */; };
+		B6A27E18225BC1CB00262754 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6A27E17225BC1CB00262754 /* GoogleService-Info.plist */; };
 		BA2B284827C24CFE89102697 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8194097EA2047269D976F5A /* FontAwesome.ttf */; };
 		BAA173751B196D1E207F0622 /* libPods-Canvas-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF7C39AC9FA9D86AFAE9DB77 /* libPods-Canvas-tvOS.a */; };
 		C9F3AE9F54FC460FB622A4D3 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 61C69DD392B24458B9721FC0 /* FontAwesome5_Regular.ttf */; };
@@ -461,7 +468,14 @@
 		B5257CF24B124FD2846E76B0 /* libRNSentry-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNSentry-tvOS.a"; sourceTree = "<group>"; };
 		B62CF8EF222833DD001761AF /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		B62E4E25224D438A00A1BC62 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
+		B633906B2257A11E00159385 /* libFBSDKCoreKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFBSDKCoreKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B633909A2257A12800159385 /* libFBSDKShareKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFBSDKShareKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B633909C2257A13500159385 /* libFBSDKLoginKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFBSDKLoginKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B633909E2257A13B00159385 /* libreact-native-fbsdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libreact-native-fbsdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63C484F2249553A004B0DF2 /* Canvas.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Canvas.entitlements; path = Canvas/Canvas.entitlements; sourceTree = "<group>"; };
+		B6A27DE6225B980600262754 /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6A27E15225B981600262754 /* libGoogleToolboxForMac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libGoogleToolboxForMac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6A27E17225BC1CB00262754 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C14B4DA57D1B4275B6C773B1 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
 		C5BE5A19A617F896F880581E /* Pods-Canvas.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Canvas.release.xcconfig"; path = "Target Support Files/Pods-Canvas/Pods-Canvas.release.xcconfig"; sourceTree = "<group>"; };
 		CAB6F782B72D360A4A787A52 /* Pods-Canvas-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Canvas-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Canvas-tvOS/Pods-Canvas-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -489,6 +503,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A27E16225B981600262754 /* libGoogleToolboxForMac.a in Frameworks */,
+				B6A27DE7225B980600262754 /* libRNGoogleSignin.a in Frameworks */,
+				B633909F2257A13B00159385 /* libreact-native-fbsdk.a in Frameworks */,
+				B633909D2257A13500159385 /* libFBSDKLoginKit.a in Frameworks */,
+				B633909B2257A12800159385 /* libFBSDKShareKit.a in Frameworks */,
+				B633906C2257A11E00159385 /* libFBSDKCoreKit.a in Frameworks */,
 				B62E4E56224D43A900A1BC62 /* libRNFS.a in Frameworks */,
 				B62CF8F82228343B001761AF /* libReactNativeNavigation.a in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
@@ -639,6 +659,7 @@
 		13B07FAE1A68108700A75B9A /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
+				B6A27E17225BC1CB00262754 /* GoogleService-Info.plist */,
 				B63C484F2249553A004B0DF2 /* Canvas.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -677,6 +698,12 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B6A27E15225B981600262754 /* libGoogleToolboxForMac.a */,
+				B6A27DE6225B980600262754 /* libRNGoogleSignin.a */,
+				B633909E2257A13B00159385 /* libreact-native-fbsdk.a */,
+				B633909C2257A13500159385 /* libFBSDKLoginKit.a */,
+				B633909A2257A12800159385 /* libFBSDKShareKit.a */,
+				B633906B2257A11E00159385 /* libFBSDKCoreKit.a */,
 				B62E4E25224D438A00A1BC62 /* RNFS.xcodeproj */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
@@ -975,6 +1002,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1411,6 +1439,7 @@
 				B1C214576C4E4244BC79701E /* rubicon-icon-font.ttf in Resources */,
 				0F6431F0EC8A4E6F89627247 /* SimpleLineIcons.ttf in Resources */,
 				84080ACD51624888997FABEC /* Zocial.ttf in Resources */,
+				B6A27E18225BC1CB00262754 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1536,12 +1565,14 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Canvas/Pods-Canvas-resources.sh",
 				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
