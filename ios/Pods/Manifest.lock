@@ -40,6 +40,19 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - GoogleSignIn (4.4.0):
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
+    - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleToolboxForMac/DebugUtils (2.2.0):
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+  - GoogleToolboxForMac/Defines (2.2.0)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.0)":
+    - GoogleToolboxForMac/DebugUtils (= 2.2.0)
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.0)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.2.0)"
+  - GTMSessionFetcher/Core (1.2.1)
   - React (0.58.6):
     - React/Core (= 0.58.6)
   - react-native-fbsdk (0.8.0):
@@ -93,6 +106,9 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
+  - RNGoogleSignin (1.2.2):
+    - GoogleSignIn (~> 4.4.0)
+    - React
   - UMBarCodeScannerInterface (1.0.0)
   - UMCameraInterface (1.0.0)
   - UMConstantsInterface (1.0.0)
@@ -121,6 +137,7 @@ DEPENDENCIES:
   - FBSDKShareKit (~> 4.38.0)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - GoogleSignIn (~> 4.4.0)
   - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
@@ -130,6 +147,7 @@ DEPENDENCIES:
   - React/RCTNetwork (from `../node_modules/react-native`)
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
+  - RNGoogleSignin (from `../node_modules/react-native-google-signin`)
   - UMBarCodeScannerInterface (from `../node_modules/unimodules-barcode-scanner-interface/ios`)
   - UMCameraInterface (from `../node_modules/unimodules-camera-interface/ios`)
   - UMConstantsInterface (from `../node_modules/unimodules-constants-interface/ios`)
@@ -153,6 +171,9 @@ SPEC REPOS:
     - FBSDKLoginKit
     - FBSDKMarketingKit
     - FBSDKShareKit
+    - GoogleSignIn
+    - GoogleToolboxForMac
+    - GTMSessionFetcher
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -171,6 +192,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native"
   react-native-fbsdk:
     :path: "../node_modules/react-native-fbsdk"
+  RNGoogleSignin:
+    :path: "../node_modules/react-native-google-signin"
   UMBarCodeScannerInterface:
     :path: "../node_modules/unimodules-barcode-scanner-interface/ios"
   UMCameraInterface:
@@ -212,8 +235,12 @@ SPEC CHECKSUMS:
   FBSDKShareKit: 6ffe22f0a0618eb7424d4104ab0ef3ce9643d42a
   Folly: de497beb10f102453a1afa9edbf8cf8a251890de
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
+  GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
+  GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
+  GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   React: 130b87b2d5e2baac646954282cab87be986d98fc
   react-native-fbsdk: 5c3ff4dda057e17d3b4b5491033fc653d423e71d
+  RNGoogleSignin: 87609bab5259417834a5a4f305d8a040babdfc56
   UMBarCodeScannerInterface: e5c8c1a9b1a3724169601da09ece11ba742fe574
   UMCameraInterface: fab8201fb49679a4951dbee4bc9de43c4771207f
   UMConstantsInterface: 661f05e74c4de53030b25e6a64e5e116eecf4bef
@@ -228,6 +255,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 4640d2fed78f46943d2e7fc37318b9749a0f8106
   yoga: 32d7ef1081951e9a35a4c72a7be797598b138a48
 
-PODFILE CHECKSUM: f6c1db348aa112f982db450ef32887b7172ef291
+PODFILE CHECKSUM: 1c4a51be424a572437043ab625cb1455848bd3e9
 
 COCOAPODS: 1.6.1
