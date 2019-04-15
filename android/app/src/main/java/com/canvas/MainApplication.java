@@ -22,6 +22,9 @@ import com.reactnativenavigation.react.ReactGateway;
 import java.util.Arrays;
 import java.util.List;
 
+import com.rnfs.RNFSPackage;
+import com.zmxv.RNSound.RNSoundPackage;
+
 public class MainApplication extends NavigationApplication {
 
   @Override
@@ -44,6 +47,9 @@ public class MainApplication extends NavigationApplication {
       // Add additional packages you require here
       // No need to add RnnPackage and MainReactPackage
       return Arrays.<ReactPackage>asList(
+        new RNGoogleSigninPackage(),
+        new RNFSPackage(),
+        new RNSoundPackage()
           // eg. new VectorIconsPackage()
       );
   }
