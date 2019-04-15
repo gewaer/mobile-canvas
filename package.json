@@ -8,7 +8,6 @@
     "test": "jest",
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "android-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
-<<<<<<< HEAD
     "generateApk": "cd ./android && ./gradlew clean && ./gradlew assembleRelease",
     "testFlight": "cd ios && fastlane beta && cd ../" ,
     "screenShoot-ios": "cd ios && fastlane screenshots && cd ../ ",
@@ -17,11 +16,9 @@
     "playstore-test": "cd android && fastlane beta && cd ../" ,
     "screenshoot-android": "cd android && fastlane screenshots && cd ../ ",
     "release-android": "cd android && fastlane playstore && cd ../",
-    "test-android": "cd android && fastlane test && cd ../"
-=======
+    "test-android": "cd android && fastlane test && cd ../",
     "generate-apk": "cd ./android && ./gradlew clean && ./gradlew assembleRelease",
     "postinstall": "sed -i.bak -e 's/design:26.1.0/design:28.0.0/g' ./node_modules/react-native-navigation/lib/android/app/build.gradle && sed -i.bak -e 's/targetSdkVersion 25/targetSdkVersion 28/g' ./node_modules/react-native-navigation/lib/android/app/build.gradle && sed -i.bak -e 's/compileSdkVersion 26/compileSdkVersion 28/g' ./node_modules/react-native-navigation/lib/android/app/build.gradle && sed -i.bak -e \"s/buildToolsVersion '27.0.3'/buildToolsVersion '28.0.3'/g\" ./node_modules/react-native-navigation/lib/android/app/build.gradle"
->>>>>>> cde0aa20ada75a2b9bf154824769c196b939b4d3
   },
   "dependencies": {
     "axios": "^0.18.0",
