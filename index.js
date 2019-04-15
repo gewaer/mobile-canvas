@@ -4,6 +4,7 @@
  */
 import { Navigation } from 'react-native-navigation';
 import { registerScreens } from './src/navigation/screens';
+import'./src/config/sentry';
 
 registerScreens();
 

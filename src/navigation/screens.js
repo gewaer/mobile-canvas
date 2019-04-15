@@ -16,6 +16,7 @@ import Settings from '../screens/settings';
 import EditProfile from '../screens/edit-profile';
 import WrapperProvider from '../config/WrapperProvider';
 import AddPost from '../screens/add-post';
+import MyScreen from '../screens/my-screen';
 
 export function registerScreens() {
   Navigation.registerComponent('canvas.Welcome', () => WrapperProvider(Welcome));
@@ -34,4 +35,5 @@ export function registerScreens() {
   Navigation.registerComponent('canvas.SideMenu', () => WrapperProvider(SideMenu));
   Navigation.registerComponent('canvas.AddCompany', () => WrapperProvider(AddCompany));
   Navigation.registerComponent('canvas.AddPost', () => WrapperProvider(AddPost));
+  Navigation.registerComponent('canvas.MyScreen', () => WrapperProvider(MyScreen));
 }

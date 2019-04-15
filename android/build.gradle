@@ -7,6 +7,7 @@ buildscript {
         compileSdkVersion = 26
         targetSdkVersion = 26
         supportLibVersion = "26.1.0"
+        googlePlayServicesAuthVersion = "15.0.1"
     }
     repositories {
         google()
@@ -16,7 +17,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
-
+        classpath 'com.google.gms:google-services:3.2.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -24,10 +25,11 @@ buildscript {
 
 allprojects {
     repositories {
+        jcenter()
+        maven { url "https://maven.google.com" }
         mavenLocal()
         mavenCentral()
         google()
-        jcenter()
         maven { url "$rootDir/../node_modules/react-native/android" }
         maven { url 'https://jitpack.io' }
     }
@@ -36,14 +38,6 @@ allprojects {
 task wrapper(type: Wrapper) {
     gradleVersion = '4.7'
     distributionUrl = distributionUrl.replace("bin", "all")
-}
-
-ext {
-    buildToolsVersion = "27.0.3"
-    minSdkVersion = 19
-    compileSdkVersion = 26
-    targetSdkVersion = 26
-    supportLibVersion = "26.1.0"
 }
 
 subprojects { subproject ->
