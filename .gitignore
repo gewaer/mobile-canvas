@@ -67,6 +67,12 @@ buck-out/
 
 # Env
 .env
+.env.development
+.env.stagin
+.env.production
 
 # Transpiler
 ./builds
+
+# Google Services
+GoogleService-into.plist
