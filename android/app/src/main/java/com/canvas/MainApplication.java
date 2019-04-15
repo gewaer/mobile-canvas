@@ -3,6 +3,11 @@ package com.canvas;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.rnfs.RNFSPackage;
+import com.wix.autogrowtextinput.AutoGrowTextInputPackage;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import com.zmxv.RNSound.RNSoundPackage;
 import io.sentry.RNSentryPackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.facebook.react.ReactNativeHost;
@@ -18,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends NavigationApplication {
-    
+
   @Override
   protected ReactGateway createReactGateway() {
       ReactNativeHost host = new NavigationReactNativeHost(this, isDebug(), createAdditionalReactPackages()) {

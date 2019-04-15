@@ -149,6 +149,13 @@ configurations.all {
 }
 
 dependencies {
+    implementation project(':react-native-fs')
+    implementation project(':react-native-autogrow-textinput')
+    compile project(':react-native-fs')
+    compile 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation project(':react-native-google-signin')
+    implementation project(':react-native-fbsdk')
+    implementation project(':react-native-sound')
     implementation project(':react-native-sentry')
     implementation project(':react-native-document-picker')
     implementation fileTree(dir: "libs", include: ["*.jar"])
