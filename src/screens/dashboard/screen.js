@@ -104,7 +104,7 @@ class Dashboard extends PureComponent {
   }
 
   showDrawer = () => {
-    Navigation.mergeOptions('navigation.drawer.left', {
+    Navigation.mergeOptions('navigation.drawer.left.tab', {
       sideMenu: {
         left: {
           visible: true

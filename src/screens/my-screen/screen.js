@@ -2,11 +2,12 @@
 import React, { Component } from 'react';
 
 import {
-	View,
+  View,
 	Platform,
 	TouchableOpacity,
 	Alert,
   ScrollView,
+  ListView,
   Image
 } from "react-native";
 
@@ -15,13 +16,12 @@ import {
 	Text,
 	Content,
 	Container,
-	Form,
-	Input,
 	Spinner,
 	Icon,
-	Root,
-	Picker,
-	ActionSheet
+  Root,
+  List,
+  ListItem,
+  SwipeRow
 } from "native-base";
 
 import { connect } from 'react-redux';
@@ -38,18 +38,21 @@ import {
 	changeActiveScreen
 } from '../../actions/SessionActions';
 import Stylesheet from './stylesheet';
-import FilePlaceholder from '../../components/file-placeholder';
-import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
-//import ImagePicker from 'react-native-image-crop-picker';
-import * as mime from 'react-native-mime-types';
-import { normalizeFile } from '../../../src/lib/helpers';
 import { Navigation } from 'react-native-navigation';
+import { pushSingleScreenApp } from '../../navigation/flows';
+import { SwipeListView } from 'react-native-swipe-list-view';
+import MyCarousel from '../../components/carousel';
 const RNFS = require('react-native-fs');
 const axios = require('../../../src/config/axios');
 const Sound = require('react-native-sound');
 
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
+const datas = [
+  'Simon Mignolet',
+  'Nathaniel Clyne',
+  'Dejan Lovren'
+];
 
 class MyScreen extends Component {
 
@@ -63,7 +66,24 @@ class MyScreen extends Component {
       content: '',
       imageUrl: 'https://pay.google.com/about/static/images/social/knowledge_graph_logo.png',
       //imageUrl: 'https://img.depor.com/files/ec_article_multimedia_gallery/uploads/2018/05/11/5af5fb33ad2dc.jpeg',
-      imageLocalRoute: ''
+      imageLocalRoute: '',
+      basic: true,
+      listViewData: datas,
+      sliderActiveSlide: 0,
+      entries: [
+        {
+          uri: "https://media.idownloadblog.com/wp-content/uploads/2017/11/iOS-stock-21-for-iPhone-X.jpeg"
+        },
+        {
+          uri: "https://i.pinimg.com/originals/9d/16/60/9d1660c1d5e9610c60cbdb99080b420a.jpg"
+        },
+        {
+          uri: "https://i.pinimg.com/originals/9d/16/60/9d1660c1d5e9610c60cbdb99080b420a.jpg"
+        },
+        {
+          uri: "https://i.pinimg.com/originals/9d/16/60/9d1660c1d5e9610c60cbdb99080b420a.jpg"
+        }
+      ]
 		};
   }
 
@@ -74,9 +94,9 @@ class MyScreen extends Component {
 	}
 
 	// Changes the active screen using redux.
-	changeScreen(activeScreen) {
-		this.props.changeActiveScreen({ activeScreen });
-	}
+	changeScreen(screen) {
+    pushSingleScreenApp(screen);
+  }
 
 	// Pushes to another screen in the navigator stack.
 	pushScreen({ activeScreen, post, originScreen }) {
@@ -97,7 +117,7 @@ class MyScreen extends Component {
 	}
 
 	showDrawer = () => {
-		Navigation.mergeOptions('navigation.drawer.left', {
+		Navigation.mergeOptions('navigation.drawer.left.tab', {
 		  sideMenu: {
 			left: {
 			  visible: true
@@ -123,14 +143,17 @@ class MyScreen extends Component {
 	titleBarBody() {
 		return {
 			content: (
-				<View style={[Stylesheet.titleBarContent, { width: '105%' }]}>
-					<Text style={[Stylesheet.titleBarContent, { fontSize: 20 }]} numberOfLines={1}>
-						{(this.props.currentCondo && this.props.currentCondo.userCondo) ? this.props.currentCondo.userCondo[0].UserName : ''}
-					</Text>
-					<Text style={[Stylesheet.titleBarContent, { fontSize: 14 }]}>
-						{this.props.currentCondo && this.props.currentCondo.CondoName}
-					</Text>
-				</View>
+				<View style={Stylesheet.titleBarContent}>
+          <Text
+            style={{
+              color: '#fff',
+              paddingLeft: platform === 'ios' ? 0 : 10,
+              fontSize: platform === 'ios' ? 18 : 19.64
+            }}
+          >
+            My Screen
+          </Text>
+        </View>
 			)
 		};
   }
@@ -153,19 +176,55 @@ class MyScreen extends Component {
     })
   }
 
+  deleteRow(secId, rowId, rowMap) {
+    rowMap[`${secId}${rowId}`].props.closeRow();
+    const newData = [...this.state.listViewData];
+    newData.splice(rowId, 1);
+    this.setState({ listViewData: newData });
+  }
+
+  _renderItem ({item, index}) {
+    return (
+        <View>
+            <Text>{ item.title }</Text>
+        </View>
+    );
+  }
+
 	render() {
 		return (
 			<Root>
 				<Container style={{ backgroundColor: colors.normalWhite }}>
 					<TitleBar noShadow left={this.titleBarLeft()} body={this.titleBarBody()} bgColor={colors.brandLightBlack} />
-					<Content style={{ backgroundColor: colors.normalWhite }}>
+					<ScrollView style={{ backgroundColor: colors.normalWhite }}>
 						{
 							this.state.isLoading ?
 								<Spinner color={colors.brandLightBlack} /> :
 								<View>
-									<Text style={Stylesheet.titleText}>My Screen</Text>
-									<View style={Stylesheet.divisionLine}></View>
-
+                  <MyCarousel
+                    entries={ this.state.entries }
+                    activeSlide={ this.state.sliderActiveSlide }
+                    onSnapToItem={ (index) => this.setState({ sliderActiveSlide: index }) }
+                  />
+                  <View style={{ marginHorizontal: 12 }}>
+                    <SwipeListView
+                      useFlatList
+                      data={this.state.listViewData}
+                      renderItem={ (data, rowMap) => (
+                        <View style={ Stylesheet.rowFront }>
+                            <Text>I am {data.item} in a SwipeListView</Text>
+                        </View>
+                      )}
+                      renderHiddenItem={ (data, rowMap) => (
+                        <View style={ Stylesheet.rowBack }>
+                            <Text>Left</Text>
+                            <Text>Right</Text>
+                        </View>
+                      )}
+                      leftOpenValue={75}
+                      rightOpenValue={-75}
+                    />
+                  </View>
 									<Button
 										block
 										primary
@@ -206,14 +265,13 @@ class MyScreen extends Component {
 									  </Text>
 										<Icon type="Ionicons" name="ios-add" color={colors.normalWhite} style={Stylesheet.buttonIcon} />
 									</Button>
-
                   <Image
                     source={ { uri: this.state.imageLocalRoute } }
                     style={ {height: 100, width: 100, borderWidth: 1, alignSelf: 'center', marginTop: 10} }
                   />
 								</View>
 						}
-					</Content>
+					</ScrollView>
 				</Container>
 			</Root>
 		);
@@ -223,11 +281,7 @@ class MyScreen extends Component {
 // Maps redux's state variables to this class' props
 const mapStateToProps = state => {
 	return {
-		state: state,
-		condos: state.session.condos,
-		currentCondo: state.session.currentCondo,
-		user: state.session.user,
-		sections: state.session.sections
+		state: state
 	};
 };
 

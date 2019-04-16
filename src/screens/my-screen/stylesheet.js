@@ -47,7 +47,7 @@ export default StyleSheet.create({
         flexGrow: 1,
         marginTop: paddingHelpers.XS,
         marginBottom: paddingHelpers.XS,
-        paddingVertical: paddingHelpers.N, 
+        paddingVertical: paddingHelpers.N,
         backgroundColor: colors.brandWhite,
         alignItems: 'center',
         paddingHorizontal: paddingHelpers.N,
@@ -92,5 +92,21 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 10
+    },
+    rowFront: {
+      alignItems: 'center',
+      backgroundColor: '#CCC',
+      borderBottomColor: 'black',
+      borderBottomWidth: 1,
+      justifyContent: 'center',
+      height: 50,
+    },
+    rowBack: {
+      alignItems: 'center',
+      backgroundColor: '#DDD',
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingLeft: 15,
     }
 });

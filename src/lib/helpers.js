@@ -17,3 +17,8 @@ export function normalizeFile(uri, type, name){
     };
     return (file);
 }
+
+export function getPercentage(qty, percentage){
+  const result = (qty*percentage)/100;
+  return (result);
+}

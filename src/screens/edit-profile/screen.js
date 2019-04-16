@@ -9,7 +9,8 @@ import {
   View,
   Platform,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
+  Keyboard
 } from 'react-native';
 
 import {
@@ -45,7 +46,7 @@ import { Navigation } from 'react-native-navigation';
 class EditProfile extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       isLoading: true,
       userName: '',
@@ -201,6 +202,7 @@ class EditProfile extends Component {
   }
 
   updateUserInfo() {
+    Keyboard.dismiss();
     if (!this.canEdit()) {
       Toast.show({
         text: '¡Por favor, llene los campos vacíos!',
@@ -312,7 +314,7 @@ class EditProfile extends Component {
                     value={this.capitalizeFilter(this.state.userName)}
                     onChangeText={name => this.setState({ userName: name })}
                     onSubmitEditing={() => {
-                      this.lastName._root.focus(); 
+                      this.lastName._root.focus();
                     }}
                   />
                 </Item>
@@ -342,7 +344,7 @@ class EditProfile extends Component {
                     }
                     ref={(input) => {this.lastName = input}}
                     onSubmitEditing={() => {
-                      this.email._root.focus(); 
+                      this.email._root.focus();
                     }}
                   />
                 </Item>
@@ -368,7 +370,7 @@ class EditProfile extends Component {
                     onChangeText={email => this.setState({ userEmail: email })}
                     ref={(input) => {this.email = input}}
                     onSubmitEditing={() => {
-                      this.password._root.focus(); 
+                      this.password._root.focus();
                     }}
                   />
                 </Item>
