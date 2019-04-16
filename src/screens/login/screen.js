@@ -8,7 +8,8 @@ import {
   AsyncStorage,
   Platform,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
+  Keyboard
 } from 'react-native';
 
 import {
@@ -158,6 +159,7 @@ class Login extends Component {
 
   // Process LogIn
   logIn() {
+    Keyboard.dismiss();
     if (this.state.username && this.state.password) {
       this.setState({ isLoginIn: true });
       let formData = new FormData();

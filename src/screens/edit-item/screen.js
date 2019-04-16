@@ -9,7 +9,8 @@ import {
   View,
   Platform,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
+  Keyboard
 } from 'react-native';
 
 import {
@@ -224,7 +225,7 @@ class EditInfo extends Component {
     //     });
     //     return;
     // }
-
+    Keyboard.dismiss();
     this.setState({ isLoading: true });
 
     let data = {};
