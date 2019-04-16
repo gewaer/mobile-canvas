@@ -39,6 +39,8 @@ target 'Canvas' do
 
   pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
 
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   target 'CanvasTests' do
     inherit! :search_paths
     # Pods for testing
