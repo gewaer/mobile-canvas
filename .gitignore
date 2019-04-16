@@ -1,6 +1,8 @@
 # OSX
 #
 .DS_Store
+.vscode
+
 
 # Xcode
 #
@@ -37,6 +39,7 @@ node_modules/
 package-lock.json
 npm-debug.log
 yarn-error.log
+yarn.lock
 
 # BUCK
 buck-out/
@@ -76,3 +79,4 @@ buck-out/
 
 # Google Services
 GoogleService-into.plist
+google-services.json

@@ -9,11 +9,11 @@
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "android-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "generateApk": "cd ./android && ./gradlew clean && ./gradlew assembleRelease",
-    "testFlight": "cd ios && fastlane beta && cd ../" ,
+    "testFlight": "cd ios && fastlane beta && cd ../",
     "screenShoot-ios": "cd ios && fastlane screenshots && cd ../ ",
     "release-ios": "cd ios && fastlane release && cd ../",
     "test-ios": "cd ios && fastlane test && cd ../",
-    "playstore-test": "cd android && fastlane beta && cd ../" ,
+    "playstore-test": "cd android && fastlane beta && cd ../",
     "screenshoot-android": "cd android && fastlane screenshots && cd ../ ",
     "release-android": "cd android && fastlane playstore && cd ../",
     "test-android": "cd android && fastlane test && cd ../",
@@ -58,7 +58,8 @@
     "metro-react-native-babel-preset": "0.52.0",
     "prettier": "^1.16.4",
     "react-native-dotenv": "^0.2.0",
-    "react-test-renderer": "16.6.3"
+    "react-test-renderer": "16.6.3",
+    "ts-jest": "^24.0.2"
   },
   "jest": {
     "preset": "react-native",
