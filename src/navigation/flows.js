@@ -63,7 +63,7 @@ export function pushDashboard(sideMenuProps) {
       sideMenu: {
         left: {
           component: {
-            id: 'navigation.drawer.left',
+            id: 'navigation.drawer.left.tab',
             name: 'canvas.SideMenu',
             passProps: sideMenuProps,
             options: {
