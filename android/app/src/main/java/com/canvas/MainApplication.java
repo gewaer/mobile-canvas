@@ -5,6 +5,7 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.rnfs.RNFSPackage;
 import com.wix.autogrowtextinput.AutoGrowTextInputPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.zmxv.RNSound.RNSoundPackage;
@@ -49,9 +50,9 @@ public class MainApplication extends NavigationApplication {
       return Arrays.<ReactPackage>asList(
         new RNGoogleSigninPackage(),
         new RNFSPackage(),
-        new RNSoundPackage()
+        new RNSoundPackage(),
+        new ReactNativeDocumentPicker(),
           // eg. new VectorIconsPackage()
-          new ReactNativeDocumentPicker()
       );
   }
 

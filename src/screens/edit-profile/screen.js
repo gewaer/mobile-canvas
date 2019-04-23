@@ -26,14 +26,15 @@ import {
   Picker,
   Root,
   Toast,
-  Thumbnail
+  Thumbnail,
+  ActionSheet
 } from 'native-base';
 
 import { colors } from '../../config/styles';
 import { changeActiveCompany } from '../../actions/SessionActions';
 import { connect } from 'react-redux';
+import { normalizeFile } from '../../../src/lib/helpers';
 const axios = require('../../../src/config/axios');
-// import ImagePicker from 'react-native-image-crop-picker';
 
 import TitleBar from '../../components/title-bar'
 
@@ -42,6 +43,8 @@ const platform = Platform.OS;
 import StyleSheet from './stylesheet'
 
 import { Navigation } from 'react-native-navigation';
+
+import ImagePicker from 'react-native-image-crop-picker';
 
 class EditProfile extends Component {
   constructor(props) {
@@ -57,6 +60,7 @@ class EditProfile extends Component {
       userFamilies: [],
       initialPassword: '',
       passwordVisible: false,
+      profilePhotoSelection: {},
       profilePicture: {
         path:
           'https://banner2.kisspng.com/20180406/sve/kisspng-computer-icons-user-material-design-business-login-dizzy-5ac7f1c61041c2.5160856515230529980666.jpg'
@@ -93,18 +97,59 @@ class EditProfile extends Component {
   }
 
   openImagePicker() {
-    console.log('Picker to be implemented');
-    // ImagePicker.openPicker({
-    //   multiple: false
-    // }).then(images => {
-    //   this.setState({ profilePicture: images });
-    // });
+    ActionSheet.show(
+      {
+        title:'Seleccionar imagen',
+        options:['Cámara', 'Imágenes', 'Cancelar'],
+        cancelButtonIndex: 2
+      },
+      buttonIndex => {
+        this.handlePickPhoto(buttonIndex);
+      }
+    )
   }
 
   changeActiveFamily(family) {
     console.log('Company Id: ', family.id);
     //this.setState({ isLoading: true })
     this.props.changeActiveCompany({ company: family });
+  }
+
+  showImagePicker() {
+    ImagePicker.openPicker({
+      multiple: false,
+    }).then(image => {
+      const normalizedFile = normalizeFile(
+        Platform.OS == 'ios' ? image.sourceURL : image.path,
+        image.mime,
+        Platform.OS == 'ios' ? image.filename : image.path.split('/').pop()
+      );
+      console.log(normalizeFile);
+      this.setState({ profilePhotoSelection: normalizedFile }, () => {
+        console.log(this.state.profilePhotoSelection)
+        //this.uploadPhoto();
+      });
+    });
+  }
+
+  showCamera() {
+    ImagePicker.openCamera({
+      cropping: true
+    }).then(image => {
+      const normalizedFile = normalizeFile(image.path, image.mime, image.path.split('/').pop());
+      this.setState({ profilePhotoSelection: normalizedFile }, () => {
+        console.log(this.state.profilePhotoSelection)
+        this.uploadPhoto();
+      });
+    });
+  }
+
+  handlePickPhoto = (index) => {
+    if(index == 0) {
+      this.showCamera()
+    } else if(index == 1) {
+      this.showImagePicker()
+    }
   }
 
   changeScreen(infoChanged) {
@@ -205,7 +250,7 @@ class EditProfile extends Component {
     Keyboard.dismiss();
     if (!this.canEdit()) {
       Toast.show({
-        text: '¡Por favor, llene los campos vacíos!',
+        text: 'Please, fill empty fields!',
         buttonText: 'Ok',
         duration: 3000,
         type: 'danger'
@@ -225,7 +270,7 @@ class EditProfile extends Component {
 
     axios
       .put(
-        `https://apidev.ahorrando.la/v1/users/${this.props.userInfo.id}`,
+        `/users/${this.props.userInfo.id}`,
         this.formatFormData(data)
       )
       .then(response => {

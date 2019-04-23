@@ -9,7 +9,8 @@ import {
   AsyncStorage,
   Platform,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
+  Keyboard
 } from 'react-native';
 
 import {
@@ -33,6 +34,8 @@ import {
   globalStyle,
   colors
 } from '../../config/styles';
+
+import { pushDashboard } from '../../navigation/flows';
 
 import TitleBar from '../../components/title-bar';
 import { API_KEY } from 'react-native-dotenv'
@@ -163,6 +166,7 @@ class Register extends Component {
 
   // Handles user's account creation
   createUser() {
+    Keyboard.dismiss();
     // Displays an error notification if the password and confirm password fields are not equal
     if (this.state.password != this.state.confirmPassword) {
       Toast.show({
@@ -178,7 +182,7 @@ class Register extends Component {
     // Displays an error notification if any of the required feilds is empty
     if (!this.canCreate()) {
       Toast.show({
-        text: '¡Por favor, llene los campos vacíos!',
+        text: 'Please, fill empty fields!',
         buttonText: 'Ok',
         duration: 3000,
         type: 'danger'
@@ -189,16 +193,16 @@ class Register extends Component {
 
     this.setState({ isLoading: true });
 
-    let data = {
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
-      email: this.state.email,
-      password: this.state.password,
-      default_company: this.state.family
-    };
+    const data = new FormData();
+    data.append('firstname', this.state.firstname);
+    data.append('lastname', this.state.lastname);
+    data.append('email', this.state.email);
+    data.append('password', this.state.password);
+    data.append('default_company', this.state.family);
+    data.append('verify_password', this.state.confirmPassword);
 
     axios
-      .post(`/users`, this.formatFormData(data))
+      .post(`/users`, data)
       .then(response => {
         this.saveSessionData(
           'sessionData',
@@ -212,6 +216,7 @@ class Register extends Component {
         );
       })
       .catch(error => {
+        console.log(error)
         this.setState({ isLoading: false });
         Toast.show({
           text:
@@ -243,7 +248,7 @@ class Register extends Component {
       .get(`/companies?q=(id:${companyId})`)
       .then(response => {
         this.props.changeActiveCompany({ company: response.data[0] });
-        this.changeScreen('dashboard');
+        pushDashboard({ activeScreen: 'canvas.Dashboard' });
       })
       .catch(function(error) {
         // handle error
@@ -295,7 +300,7 @@ class Register extends Component {
                           }
                           style={globalStyle.formInput}
                           onSubmitEditing={() => {
-                            this.lastName._root.focus(); 
+                            this.lastName._root.focus();
                           }}
                         />
                       </Item>
@@ -311,7 +316,7 @@ class Register extends Component {
                           style={globalStyle.formInput}
                           getRef={(input) => {this.lastName = input}}
                           onSubmitEditing={() => {
-                            this.email._root.focus(); 
+                            this.email._root.focus();
                           }}
                         />
                       </Item>
@@ -325,7 +330,7 @@ class Register extends Component {
                           autoCapitalize={'none'}
                           getRef={(input) => {this.email = input}}
                           onSubmitEditing={() => {
-                            this.password._root.focus(); 
+                            this.password._root.focus();
                           }}
                         />
                       </Item>
@@ -339,7 +344,7 @@ class Register extends Component {
                           autoCapitalize={'none'}
                           getRef={(input) => {this.password = input}}
                           onSubmitEditing={() => {
-                            this.confirmPassword._root.focus(); 
+                            this.confirmPassword._root.focus();
                           }}
                         />
                       </Item>
@@ -357,7 +362,7 @@ class Register extends Component {
                           autoCapitalize={'none'}
                           getRef={(input) => {this.confirmPassword = input}}
                           onSubmitEditing={() => {
-                            this.company._root.focus(); 
+                            this.company._root.focus();
                           }}
                         />
                       </Item>

@@ -218,7 +218,7 @@ class EditInfo extends Component {
   updateItem() {
     // if (!this.canEdit()) {
     //     Toast.show({
-    //         text: '¡Por favor, llene los campos vacíos!',
+    //         text: 'Please fill empty fields!',
     //         buttonText: 'Ok',
     //         duration: 3000,
     //         type: 'danger'
