@@ -53,6 +53,7 @@ PODS:
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.0)"
   - "GoogleToolboxForMac/NSString+URLArguments (2.2.0)"
   - GTMSessionFetcher/Core (1.2.1)
+  - QBImagePickerController (3.4.0)
   - React (0.58.6):
     - React/Core (= 0.58.6)
   - react-native-fbsdk (0.8.0):
@@ -106,9 +107,16 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
-  - RNGoogleSignin (1.2.2):
+  - RNFS (2.13.3):
+    - React
+  - RNGoogleSignin (1.2.3):
     - GoogleSignIn (~> 4.4.0)
     - React
+  - RNImageCropPicker (0.23.1):
+    - QBImagePickerController
+    - React/Core
+    - RSKImageCropper
+  - RSKImageCropper (2.2.1)
   - UMBarCodeScannerInterface (1.0.0)
   - UMCameraInterface (1.0.0)
   - UMConstantsInterface (1.0.0)
@@ -147,7 +155,9 @@ DEPENDENCIES:
   - React/RCTNetwork (from `../node_modules/react-native`)
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNGoogleSignin (from `../node_modules/react-native-google-signin`)
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - UMBarCodeScannerInterface (from `../node_modules/unimodules-barcode-scanner-interface/ios`)
   - UMCameraInterface (from `../node_modules/unimodules-camera-interface/ios`)
   - UMConstantsInterface (from `../node_modules/unimodules-constants-interface/ios`)
@@ -174,6 +184,8 @@ SPEC REPOS:
     - GoogleSignIn
     - GoogleToolboxForMac
     - GTMSessionFetcher
+    - QBImagePickerController
+    - RSKImageCropper
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -192,8 +204,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native"
   react-native-fbsdk:
     :path: "../node_modules/react-native-fbsdk"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNGoogleSignin:
     :path: "../node_modules/react-native-google-signin"
+  RNImageCropPicker:
+    :path: "../node_modules/react-native-image-crop-picker"
   UMBarCodeScannerInterface:
     :path: "../node_modules/unimodules-barcode-scanner-interface/ios"
   UMCameraInterface:
@@ -238,9 +254,13 @@ SPEC CHECKSUMS:
   GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
   GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
+  QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: 130b87b2d5e2baac646954282cab87be986d98fc
   react-native-fbsdk: 5c3ff4dda057e17d3b4b5491033fc653d423e71d
-  RNGoogleSignin: 87609bab5259417834a5a4f305d8a040babdfc56
+  RNFS: c9bbde46b0d59619f8e7b735991c60e0f73d22c1
+  RNGoogleSignin: ca4746b76a9d58fb68408d3a120a0ce7120e2eda
+  RNImageCropPicker: a4c8db5757926bda8b04ba6796cc2a21cc6fd783
+  RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
   UMBarCodeScannerInterface: e5c8c1a9b1a3724169601da09ece11ba742fe574
   UMCameraInterface: fab8201fb49679a4951dbee4bc9de43c4771207f
   UMConstantsInterface: 661f05e74c4de53030b25e6a64e5e116eecf4bef
@@ -255,6 +275,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 4640d2fed78f46943d2e7fc37318b9749a0f8106
   yoga: 32d7ef1081951e9a35a4c72a7be797598b138a48
 
-PODFILE CHECKSUM: 1c4a51be424a572437043ab625cb1455848bd3e9
+PODFILE CHECKSUM: cd2ce9c550aafa0a8abfa4d06fe997bfa0fa71d2
 
 COCOAPODS: 1.6.1

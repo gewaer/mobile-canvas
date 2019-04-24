@@ -51,8 +51,7 @@ public class MainApplication extends NavigationApplication {
         new RNGoogleSigninPackage(),
         new RNFSPackage(),
         new RNSoundPackage(),
-        new ReactNativeDocumentPicker(),
-          // eg. new VectorIconsPackage()
+        new ReactNativeDocumentPicker()
       );
   }
 

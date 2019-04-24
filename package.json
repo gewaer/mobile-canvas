@@ -35,7 +35,7 @@
     "react-native-image-crop-picker": "^0.23.1",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-mime-types": "^2.2.1",
-    "react-native-navigation": "^2.13.0",
+    "react-native-navigation": "^2.18.1",
     "react-native-navigation-drawer-extension": "^1.0.3",
     "react-native-sentry": "^0.42.0",
     "react-native-snap-carousel": "^3.7.5",
