@@ -7,7 +7,8 @@ import {
   View,
   Platform,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
+  Keyboard
 } from 'react-native';
 
 import {
@@ -117,6 +118,7 @@ class EditCompany extends Component {
 
   // Handles company info update process.
   updateCompanyInfo() {
+    Keyboard.dismiss();
     if (!this.canEdit()) {
       Toast.show({
         text: 'Please fill the empty fields!',
@@ -276,7 +278,7 @@ class EditCompany extends Component {
                     autoCapitalize
                     onChangeText={name => this.setState({ companyName: name })}
                     onSubmitEditing={() => {
-                      this.website._root.focus(); 
+                      this.website._root.focus();
                     }}
                   />
                 </Item>

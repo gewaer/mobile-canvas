@@ -40,7 +40,7 @@ import Stylesheet from './stylesheet';
 //import AddFileButton from '../../components/add-file-button';
 import FilePlaceholder from '../../components/file-placeholder';
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
-//import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import * as mime from 'react-native-mime-types';
 import { normalizeFile } from '../../../src/lib/helpers';
 import { Navigation } from 'react-native-navigation';
@@ -122,7 +122,7 @@ class AddPost extends Component {
 	}
 
 	showDrawer = () => {
-		Navigation.mergeOptions('navigation.drawer.left', {
+		Navigation.mergeOptions('navigation.drawer.left.tab', {
 		  sideMenu: {
 			left: {
 			  visible: true
