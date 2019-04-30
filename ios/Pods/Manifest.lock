@@ -107,15 +107,22 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
+  - ReactNativeNavigation (2.18.4):
+    - React
   - RNFS (2.13.3):
     - React
-  - RNGoogleSignin (1.2.3):
+  - RNGoogleSignin (1.2.2):
     - GoogleSignIn (~> 4.4.0)
     - React
   - RNImageCropPicker (0.23.1):
     - QBImagePickerController
     - React/Core
     - RSKImageCropper
+  - RNSound (0.10.12):
+    - React/Core
+    - RNSound/Core (= 0.10.12)
+  - RNSound/Core (0.10.12):
+    - React/Core
   - RSKImageCropper (2.2.1)
   - UMBarCodeScannerInterface (1.0.0)
   - UMCameraInterface (1.0.0)
@@ -155,9 +162,11 @@ DEPENDENCIES:
   - React/RCTNetwork (from `../node_modules/react-native`)
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
+  - ReactNativeNavigation (from `../node_modules/react-native-navigation`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGoogleSignin (from `../node_modules/react-native-google-signin`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
+  - RNSound (from `../node_modules/react-native-sound`)
   - UMBarCodeScannerInterface (from `../node_modules/unimodules-barcode-scanner-interface/ios`)
   - UMCameraInterface (from `../node_modules/unimodules-camera-interface/ios`)
   - UMConstantsInterface (from `../node_modules/unimodules-constants-interface/ios`)
@@ -204,12 +213,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native"
   react-native-fbsdk:
     :path: "../node_modules/react-native-fbsdk"
+  ReactNativeNavigation:
+    :path: "../node_modules/react-native-navigation"
   RNFS:
     :path: "../node_modules/react-native-fs"
   RNGoogleSignin:
     :path: "../node_modules/react-native-google-signin"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
+  RNSound:
+    :path: "../node_modules/react-native-sound"
   UMBarCodeScannerInterface:
     :path: "../node_modules/unimodules-barcode-scanner-interface/ios"
   UMCameraInterface:
@@ -257,9 +270,11 @@ SPEC CHECKSUMS:
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: 130b87b2d5e2baac646954282cab87be986d98fc
   react-native-fbsdk: 5c3ff4dda057e17d3b4b5491033fc653d423e71d
+  ReactNativeNavigation: 134f3bd53fc6f34aab20302c6224f074e643034d
   RNFS: c9bbde46b0d59619f8e7b735991c60e0f73d22c1
-  RNGoogleSignin: ca4746b76a9d58fb68408d3a120a0ce7120e2eda
+  RNGoogleSignin: 87609bab5259417834a5a4f305d8a040babdfc56
   RNImageCropPicker: a4c8db5757926bda8b04ba6796cc2a21cc6fd783
+  RNSound: e157320f503bdd4f4ee6d8542e948d54f90c3c3a
   RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
   UMBarCodeScannerInterface: e5c8c1a9b1a3724169601da09ece11ba742fe574
   UMCameraInterface: fab8201fb49679a4951dbee4bc9de43c4771207f
@@ -275,6 +290,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 4640d2fed78f46943d2e7fc37318b9749a0f8106
   yoga: 32d7ef1081951e9a35a4c72a7be797598b138a48
 
-PODFILE CHECKSUM: cd2ce9c550aafa0a8abfa4d06fe997bfa0fa71d2
+PODFILE CHECKSUM: 8e525137a771e7a919f730bc73aae9e16d0be073
 
 COCOAPODS: 1.6.1
