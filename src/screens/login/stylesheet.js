@@ -1,20 +1,26 @@
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet, Platform } from 'react-native';
 import {
   colors,
   paddingHelpers
 } from '../../config/styles';
+const platform = Platform.OS;
 
 
 export default StyleSheet.create({
   linkBTN: {
-    color: colors.brandWhite,
+    color: colors.brandPrimary,
     textDecorationLine: 'underline'
   },
   submitBtn: {
     marginTop: paddingHelpers.S,
     marginBottom: paddingHelpers.S,
-    borderColor: colors.brandWhite
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    height: 48,
+    borderRadius: 3,
+    backgroundColor: colors.brandPrimary
   },
   googleBtn: {
     backgroundColor: colors.gmail,
@@ -39,12 +45,21 @@ export default StyleSheet.create({
     width: '100%'
   },
   formItem: {
-    borderBottomWidth: 2,
-    borderBottomColor: colors.brandWhite
+    borderBottomColor: colors.brandWhite,
+    marginTop: 0,
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderRadius: 3,
+    borderBottomColor: colors.brandPrimary,
+    borderColor: colors.brandPrimary
   },
-  titleBarContent: {
-    color: 'white',
-    fontWeight: '600'
+  title: {
+    color: colors.brandPrimary,
+    fontWeight: 'bold',
+    fontSize: 20,
+    alignSelf: 'center'
   },
   containerView: {
     marginTop: paddingHelpers.XS,
@@ -64,5 +79,10 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
     backgroundColor: 'transparent'
+  },
+  buttonText: {
+    color: colors.brandWhite,
+    fontWeight: 'bold',
+    fontSize: 10
   }
 });

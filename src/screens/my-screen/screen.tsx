@@ -42,9 +42,11 @@ import { Navigation } from 'react-native-navigation';
 import { pushSingleScreenApp } from '../../navigation/flows';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import MyCarousel from '../../components/carousel';
+import AudioPlayer from '../../components/audio-player';
 const RNFS = require('react-native-fs');
 const axios = require('../../../src/config/axios');
 const Sound = require('react-native-sound');
+
 
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
@@ -53,8 +55,13 @@ const datas = [
   'Nathaniel Clyne',
   'Dejan Lovren'
 ];
+interface State {
+  isLoading: String
+}
+interface Props {
 
-class MyScreen extends Component {
+}
+class MyScreen extends Component<State,Props> {
 
 	constructor(props) {
 		super(props);
@@ -85,6 +92,10 @@ class MyScreen extends Component {
         }
       ]
 		};
+  }
+
+  componentDidMount() {
+    Sound.setCategory('Playback');
   }
 
 	onValueChange(value) {
@@ -268,6 +279,10 @@ class MyScreen extends Component {
                   <Image
                     source={ { uri: this.state.imageLocalRoute } }
                     style={ {height: 100, width: 100, borderWidth: 1, alignSelf: 'center', marginTop: 10} }
+                  />
+                  <AudioPlayer
+                    title="Pianito"
+                    filepath='https://ccrma.stanford.edu/~jos/mp3/pno-cs.mp3'
                   />
 								</View>
 						}

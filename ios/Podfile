@@ -44,6 +44,7 @@ target 'Canvas' do
 
  pod 'RNSound', :path => '../node_modules/react-native-sound'
 
+
  target 'CanvasTests' do
    inherit! :search_paths
    # Pods for testing

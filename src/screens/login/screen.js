@@ -126,7 +126,7 @@ class Login extends Component {
             <Icon
               type={'MaterialIcons'}
               name={'chevron-left'}
-              style={{ color: '#fff', fontSize: platform === 'ios' ? 22 : 24 }}
+              style={{ color: colors.brandPrimary, fontSize: platform === 'ios' ? 22 : 24 }}
             />
           </TouchableOpacity>
         </View>
@@ -139,19 +139,6 @@ class Login extends Component {
     return {
       content: (
         <View>
-          <Title>
-            <Text
-              style={[
-                StyleSheet.titleBarContent,
-                {
-                  paddingLeft: platform === 'ios' ? 0 : 10,
-                  fontSize: platform === 'ios' ? 18 : 19.64
-                }
-              ]}
-            >
-              Sign In
-            </Text>
-          </Title>
         </View>
       )
     };
@@ -399,106 +386,101 @@ class Login extends Component {
   render() {
     return (
       <Root>
-        <Container style={{ backgroundColor: colors.brandSecondary }}>
+        <Container>
           <TitleBar
             noShadow
             left={this.titleBarLeft()}
             body={this.titleBarBody()}
+            backgroundColor="white"
           />
-          <View style={{ alignItems: 'center' }}>
-            <ImageBackground
-              source={appImages.Logo.uri}
-              style={[globalStyle.logoTag, { height: 80 }]}
-              resizeMode="contain"
-            />
-          </View>
-          <Content style={{ backgroundColor: colors.brandSecondary }}>
+          <Content style={{ backgroundColor: 'white' }}>
             {this.state.isLoading ? (
               <Spinner color={colors.brandWhite} />
             ) : (
               <View>
-                <View>
-                  <View>
-                    <View style={StyleSheet.containerView}>
-                      <Form>
-                        <Item
-                          floatingLabel
-                          last
-                          style={[StyleSheet.formItem, { marginTop: 0 }]}
+                <View style={StyleSheet.containerView}>
+                  <Text
+                    style={ StyleSheet.title }
+                  >
+                    Login
+                  </Text>
+                  <Form style={{ marginHorizontal: 24 }}>
+                    <Text style={globalStyle.formLabel}>Email</Text>
+                    <Item
+                      floatingLabel
+                      last
+                      style={ StyleSheet.formItem }
+                    >
+                      <Input
+                        onChangeText={userName =>
+                          this.setState({ username: userName })
+                        }
+                        style={globalStyle.formInput}
+                        keyboardType={'email-address'}
+                        autoCapitalize={'none'}
+                        onSubmitEditing={() => {
+                          this._inputDesc._root.focus();
+                        }}
+                      />
+                    </Item>
+                    <Text style={globalStyle.formLabel}>Password</Text>
+                    <Item floatingLabel last style={StyleSheet.formItem}>
+                      <Input
+                        onChangeText={password =>
+                          this.setState({ password: password })
+                        }
+                        style={globalStyle.formInput}
+                        secureTextEntry
+                        autoCapitalize={'none'}
+                        getRef={(input) => this._inputDesc = input}
+                        onSubmitEditing={() => {
+                          this.logIn();
+                        }}
+                      />
+                    </Item>
+                  </Form>
+                  {this.state.isLoginIn ? (
+                    <Spinner color={colors.brandWhite} />
+                  ) : (
+                    <Button
+                      block
+                      bordered
+                      primary
+                      onPress={() => this.logIn()}
+                      style={[StyleSheet.submitBtn, { marginTop: 30 }]}
+                    >
+                      <Text style={ StyleSheet.buttonText }>
+                        Enter Account
+                      </Text>
+                    </Button>
+                  )}
+                  {__DEV__ && !this.state.isLoginIn && (
+                    <Button
+                      block
+                      bordered
+                      primary
+                      style={StyleSheet.submitBtn}
+                      onPress={() => this.logInDevMode()}
+                    >
+                      <Text style={ StyleSheet.buttonText }>
+                        Development Mode
+                      </Text>
+                    </Button>
+                  )}
+                  {!this.state.isLoginIn && (
+                    <View>
+                      <Button transparent block>
+                        <Text
+                          style={StyleSheet.linkBTN}
+                          onPress={() =>
+                            Linking.openURL(FORGOT_PASSWORD_URL)
+                          }
                         >
-                          <Label style={globalStyle.formLabel}>Email</Label>
-                          <Input
-                            onChangeText={userName =>
-                              this.setState({ username: userName })
-                            }
-                            style={globalStyle.formInput}
-                            keyboardType={'email-address'}
-                            autoCapitalize={'none'}
-                            onSubmitEditing={() => {
-                              this._inputDesc._root.focus();
-                            }}
-                          />
-                        </Item>
-                        <Item floatingLabel last style={StyleSheet.formItem}>
-                          <Label style={globalStyle.formLabel}>Password</Label>
-                          <Input
-                            onChangeText={password =>
-                              this.setState({ password: password })
-                            }
-                            style={globalStyle.formInput}
-                            secureTextEntry
-                            autoCapitalize={'none'}
-                            getRef={(input) => this._inputDesc = input}
-                            onSubmitEditing={() => {
-                              this.logIn();
-                            }}
-                          />
-                        </Item>
-                        {this.state.isLoginIn ? (
-                          <Spinner color={colors.brandWhite} />
-                        ) : (
-                          <Button
-                            block
-                            bordered
-                            primary
-                            onPress={() => this.logIn()}
-                            style={[StyleSheet.submitBtn, { marginTop: 30 }]}
-                          >
-                            <Text style={{ color: colors.brandWhite }}>
-                              SIGN IN
-                            </Text>
-                          </Button>
-                        )}
-                        {__DEV__ && !this.state.isLoginIn && (
-                          <Button
-                            block
-                            bordered
-                            primary
-                            style={StyleSheet.submitBtn}
-                            onPress={() => this.logInDevMode()}
-                          >
-                            <Text style={{ color: colors.brandWhite }}>
-                              Development Mode
-                            </Text>
-                          </Button>
-                        )}
-                      </Form>
-                      {!this.state.isLoginIn && (
-                        <View>
-                          <Button transparent block>
-                            <Text
-                              style={StyleSheet.linkBTN}
-                              onPress={() =>
-                                Linking.openURL(FORGOT_PASSWORD_URL)
-                              }
-                            >
-                              Forgot Password?
-                            </Text>
-                          </Button>
-                        </View>
-                      )}
+                          Forgot Password?
+                        </Text>
+                      </Button>
                     </View>
-                  </View>
+                  )}
                 </View>
                 <View style={StyleSheet.btnContainer}>
                   <Button

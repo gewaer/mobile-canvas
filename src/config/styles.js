@@ -36,12 +36,15 @@ export const globalStyle = {
   },
   // Welcome Inputs
   formLabel: {
-    color: 'white',
-    top: platform === 'ios' ? 8 : 13
+    color: '#61C2CC',
+    marginTop: 12,
+    marginBottom: 8,
+    fontSize: 14
   },
   formInput: {
-    height: 60,
+    height: 30,
     color: 'white',
+    top: 0
   },
   pickerIcon: {
     paddingTop: 0,
@@ -52,7 +55,7 @@ export const globalStyle = {
 };
 
 export const colors = {
-  brandPrimary: '#e48c25',
+  brandPrimary: '#61C2CC',
   brandSecondary: '#3d3e44',
   bradSecondaryAlter: '#7f7f7f',
   background: '#F5F2F9',
