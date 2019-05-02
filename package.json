@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "lint": "node_modules/eslint/bin/eslint.js --ext .js src/ --fix",
+    "lint": "tslint --project tsconfig.json",
     "test": "jest",
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "android-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
@@ -16,8 +16,7 @@
     "playstore-test": "cd android && fastlane beta && cd ../",
     "screenshoot-android": "cd android && fastlane screenshots && cd ../ ",
     "release-android": "cd android && fastlane playstore && cd ../",
-    "test-android": "cd android && fastlane test && cd ../",
-    "postinstall": "sed -i.bak -e 's/design:26.1.0/design:28.0.0/g' ./node_modules/react-native-navigation/lib/android/app/build.gradle && sed -i.bak -e 's/targetSdkVersion 25/targetSdkVersion 28/g' ./node_modules/react-native-navigation/lib/android/app/build.gradle && sed -i.bak -e 's/compileSdkVersion 26/compileSdkVersion 28/g' ./node_modules/react-native-navigation/lib/android/app/build.gradle && sed -i.bak -e \"s/buildToolsVersion '27.0.3'/buildToolsVersion '28.0.3'/g\" ./node_modules/react-native-navigation/lib/android/app/build.gradle"
+    "test-android": "cd android && fastlane test && cd ../"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -46,42 +45,46 @@
     "typescript": "^3.4.3"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.9.1",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/jest": "^24.0.11",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "24.1.0",
-    "eslint": "^5.15.1",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^4.1.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-prettier": "^3.0.1",
-    "eslint-plugin-react": "^7.12.4",
-    "eslint-plugin-react-native": "^3.6.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
     "jest": "24.1.0",
     "metro-react-native-babel-preset": "0.52.0",
     "prettier": "^1.16.4",
+    "react-dom": "^16.8.6",
     "react-native-dotenv": "^0.2.0",
     "react-native-typescript-transformer": "^1.2.12",
     "react-test-renderer": "16.6.3",
-    "ts-jest": "^24.0.2"
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^4.0.0"
   },
   "jest": {
     "preset": "react-native",
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
+      "\\.(ts|tsx)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.jest.json"
+      }
+    },
     "moduleFileExtensions": [
       "ts",
       "tsx",
       "js"
     ],
-    "transform": {
-      "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
-      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "testPathIgnorePatterns": [
-      "\\.snap$",
-      "<rootDir>/node_modules/"
-    ],
-    "cacheDirectory": ".jest/cache"
+    "setupFiles": [
+      "./__tests__/setup.js"
+    ]
   }
 }
