@@ -99,7 +99,7 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "com.canvas"
+        applicationId "com.mctekk.canvas"
         minSdkVersion 21
         targetSdkVersion 28
         missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57_5"
