@@ -43,7 +43,15 @@ target 'Canvas' do
  pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
 
  pod 'RNSound', :path => '../node_modules/react-native-sound'
+ pod 'ReactNativeNavigation', :path => '../node_modules/react-native-navigation'
 
+ post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
+end
 
  target 'CanvasTests' do
    inherit! :search_paths
