@@ -12,14 +12,12 @@ import {
 } from "react-native";
 import Stylesheet from "./stylesheet";
 import { colors } from "../../config/styles";
-import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { getPercentage } from '../../lib/helpers';
 
 import Sound from 'react-native-sound';
 
 const deviceWidth = Dimensions.get("window").width;
 const itemWidth = getPercentage(deviceWidth, 80);
-const imageHeight = itemWidth;
 const img_speaker = require('./resources/ui_speaker.png');
 const img_pause = require('./resources/ui_pause.png');
 const img_play = require('./resources/ui_play.png');
@@ -158,38 +156,35 @@ class AudioPlayer extends Component<State,Props> {
     const durationString = this.getAudioTimeString(this.state.duration);
 
 		return (
-      <View style={{flex:1, justifyContent:'center', backgroundColor:'black'}}>
-        <Image source={img_speaker} style={{width:150, height:150, marginBottom:15, alignSelf:'center'}}/>
-        <View style={{flexDirection:'row', justifyContent:'center', marginVertical:15}}>
-          <TouchableOpacity onPress={this.jumpPrev15Seconds} style={{justifyContent:'center'}}>
-            <Image source={img_playjumpleft} style={{width:30, height:30}}/>
-            <Text style={{position:'absolute', alignSelf:'center', marginTop:1, color:'white', fontSize:12}}>15</Text>
+      <View style={ Stylesheet.container }>
+        <Image source={ img_speaker } style={ Stylesheet.coverImage }/>
+        <View style={ Stylesheet.topContainer }>
+          <TouchableOpacity onPress={ this.jumpPrev15Seconds } style={ Stylesheet.jumpIconContainer }>
+            <Image source={img_playjumpleft} style={ Stylesheet.jumpIcon }/>
+            <Text style={ Stylesheet.jumpLabel }>15</Text>
           </TouchableOpacity>
           {this.state.playState == 'playing' &&
-          <TouchableOpacity onPress={this.pause} style={{marginHorizontal:20}}>
-            <Image source={img_pause} style={{width:30, height:30}}/>
+          <TouchableOpacity onPress={this.pause} style={ Stylesheet.playPauseContainer }>
+            <Image source={img_pause} style={ Stylesheet.jumpIcon }/>
           </TouchableOpacity>}
           {this.state.playState == 'paused' &&
-          <TouchableOpacity onPress={this.play} style={{marginHorizontal:20}}>
-            <Image source={img_play} style={{width:30, height:30}}/>
+          <TouchableOpacity onPress={this.play} style={ Stylesheet.playPauseContainer }>
+            <Image source={img_play} style={ Stylesheet.jumpIcon }/>
           </TouchableOpacity>}
-          <TouchableOpacity onPress={this.jumpNext15Seconds} style={{justifyContent:'center'}}>
-            <Image source={img_playjumpright} style={{width:30, height:30}}/>
+          <TouchableOpacity onPress={this.jumpNext15Seconds} style={ Stylesheet.jumpIconContainer }>
+            <Image source={img_playjumpright} style={ Stylesheet.jumpIcon }/>
             <Text style={{position:'absolute', alignSelf:'center', marginTop:1, color:'white', fontSize:12}}>15</Text>
           </TouchableOpacity>
         </View>
-        <View style={{marginVertical:15, marginHorizontal:15, flexDirection:'row'}}>
-          <Text style={{color:'white', alignSelf:'center'}}>{currentTimeString}</Text>
+        <View style={ Stylesheet.bottomContanier }>
+          <Text style={ Stylesheet.sliderLabel }>{currentTimeString}</Text>
           <Slider
               onTouchStart={this.onSliderEditStart}
-              // onTouchMove={() => console.log('onTouchMove')}
               onTouchEnd={this.onSliderEditEnd}
-              // onTouchEndCapture={() => console.log('onTouchEndCapture')}
-              // onTouchCancel={() => console.log('onTouchCancel')}
               onValueChange={this.onSliderEditing}
               value={this.state.playSeconds} maximumValue={this.state.duration} maximumTrackTintColor='gray' minimumTrackTintColor='white' thumbTintColor='white'
-              style={{flex:1, alignSelf:'center', marginHorizontal:Platform.select({ios:5})}}/>
-          <Text style={{color:'white', alignSelf:'center'}}>{durationString}</Text>
+              style={ Stylesheet.slider }/>
+          <Text style={ Stylesheet.sliderLabel }>{durationString}</Text>
         </View>
       </View>
 		);
