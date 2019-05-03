@@ -124,9 +124,9 @@ class Login extends Component {
             onPress={() => this.pushScreen('canvas.Welcome')}
           >
             <Icon
-              type={'MaterialIcons'}
-              name={'chevron-left'}
-              style={{ color: colors.brandPrimary, fontSize: platform === 'ios' ? 22 : 24 }}
+              type={'Ionicons'}
+              name={'md-arrow-back'}
+              style={{ color: colors.brandPrimary, fontSize: 30, marginLeft: 5 }}
             />
           </TouchableOpacity>
         </View>
@@ -395,59 +395,61 @@ class Login extends Component {
           />
           <Content style={{ backgroundColor: 'white' }}>
             {this.state.isLoading ? (
-              <Spinner color={colors.brandWhite} />
+              <Spinner color={colors.brandPrimary} />
             ) : (
               <View>
                 <View style={StyleSheet.containerView}>
-                  <Text
-                    style={ StyleSheet.title }
-                  >
-                    Login
-                  </Text>
-                  <Form style={{ marginHorizontal: 24 }}>
-                    <Text style={globalStyle.formLabel}>Email</Text>
-                    <Item
-                      floatingLabel
-                      last
-                      style={ StyleSheet.formItem }
+                  <View style={StyleSheet.topContainerView}>
+                    <Text
+                      style={ StyleSheet.title }
                     >
-                      <Input
-                        onChangeText={userName =>
-                          this.setState({ username: userName })
-                        }
-                        style={globalStyle.formInput}
-                        keyboardType={'email-address'}
-                        autoCapitalize={'none'}
-                        onSubmitEditing={() => {
-                          this._inputDesc._root.focus();
-                        }}
-                      />
-                    </Item>
-                    <Text style={globalStyle.formLabel}>Password</Text>
-                    <Item floatingLabel last style={StyleSheet.formItem}>
-                      <Input
-                        onChangeText={password =>
-                          this.setState({ password: password })
-                        }
-                        style={globalStyle.formInput}
-                        secureTextEntry
-                        autoCapitalize={'none'}
-                        getRef={(input) => this._inputDesc = input}
-                        onSubmitEditing={() => {
-                          this.logIn();
-                        }}
-                      />
-                    </Item>
-                  </Form>
+                      Login
+                    </Text>
+                    <Form style={{ marginHorizontal: 24 }}>
+                      <Text style={globalStyle.formLabel}>Email</Text>
+                      <Item
+                        floatingLabel
+                        last
+                        style={ StyleSheet.formItem }
+                      >
+                        <Input
+                          onChangeText={userName =>
+                            this.setState({ username: userName })
+                          }
+                          style={globalStyle.formInput}
+                          keyboardType={'email-address'}
+                          autoCapitalize={'none'}
+                          onSubmitEditing={() => {
+                            this._inputDesc._root.focus();
+                          }}
+                        />
+                      </Item>
+                      <Text style={globalStyle.formLabel}>Password</Text>
+                      <Item floatingLabel last style={StyleSheet.formItem}>
+                        <Input
+                          onChangeText={password =>
+                            this.setState({ password: password })
+                          }
+                          style={globalStyle.formInput}
+                          secureTextEntry
+                          autoCapitalize={'none'}
+                          getRef={(input) => this._inputDesc = input}
+                          onSubmitEditing={() => {
+                            this.logIn();
+                          }}
+                        />
+                      </Item>
+                    </Form>
+                  </View>
                   {this.state.isLoginIn ? (
-                    <Spinner color={colors.brandWhite} />
+                    <Spinner color={colors.brandPrimary} />
                   ) : (
                     <Button
                       block
                       bordered
                       primary
                       onPress={() => this.logIn()}
-                      style={[StyleSheet.submitBtn, { marginTop: 30 }]}
+                      style={[StyleSheet.submitBtn ]}
                     >
                       <Text style={ StyleSheet.buttonText }>
                         Enter Account
@@ -467,7 +469,8 @@ class Login extends Component {
                       </Text>
                     </Button>
                   )}
-                  {!this.state.isLoginIn && (
+
+                  {/* {!this.state.isLoginIn && (
                     <View>
                       <Button transparent block>
                         <Text
@@ -480,36 +483,39 @@ class Login extends Component {
                         </Text>
                       </Button>
                     </View>
-                  )}
-                </View>
-                <View style={StyleSheet.btnContainer}>
-                  <Button
+                  )} */}
+                  <Text style={StyleSheet.textLabel}>
+                    Use Social Logins
+                  </Text>
+                  <View style={StyleSheet.btnContainer}>
+                    <Button
                       block
-                      style={StyleSheet.facebookBtn}
+                      style={[StyleSheet.submitBtnInv, { width: 155 }]}
+                      onPress={() => this.signInWithGoogleAsync()}
+                    >
+                      <Text style={StyleSheet.buttonTextPrimary}>
+                          Gmail
+                      </Text>
+                    </Button>
+                    <Button
+                      block
+                      style={[StyleSheet.submitBtn, { width: 155 }]}
                       onPress={() => this.signInWithFacebookAsync()}
-                  >
-                      <Text style={StyleSheet.facebookText}>
+                    >
+                      <Text style={StyleSheet.buttonText}>
                           Facebook
                       </Text>
-                  </Button>
-                  <Button
-                      block
-                      style={[StyleSheet.googleBtn, {marginTop: 20}]}
-                      onPress={() => this.signInWithGoogleAsync()}
-                  >
-                      <Text style={StyleSheet.googleText}>
-                          Google
-                      </Text>
-                  </Button>
-                  <Button
+                    </Button>
+                    {/* <Button
                       block
                       style={[StyleSheet.googleBtn, {marginTop: 20}]}
                       onPress={() => this.googleSignOut()}
-                  >
+                    >
                       <Text style={StyleSheet.googleText}>
                           Google Sign Out
                       </Text>
-                  </Button>
+                    </Button> */}
+                  </View>
                 </View>
               </View>
             )}
