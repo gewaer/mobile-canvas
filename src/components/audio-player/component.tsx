@@ -124,8 +124,8 @@ class AudioPlayer extends Component<State,Props> {
     this.setState({playState:'paused'});
   }
 
-  jumpPrev15Seconds = () => {this.jumpSeconds(-15);}
-  jumpNext15Seconds = () => {this.jumpSeconds(15);}
+  jumpPrev30Seconds = () => {this.jumpSeconds(-30);}
+  jumpNext30Seconds = () => {this.jumpSeconds(30);}
   jumpSeconds = (secsDelta) => {
     if(this.sound){
       this.sound.getCurrentTime((secs, isPlaying) => {
@@ -159,9 +159,9 @@ class AudioPlayer extends Component<State,Props> {
       <View style={ Stylesheet.container }>
         <Image source={ img_speaker } style={ Stylesheet.coverImage }/>
         <View style={ Stylesheet.topContainer }>
-          <TouchableOpacity onPress={ this.jumpPrev15Seconds } style={ Stylesheet.jumpIconContainer }>
+          <TouchableOpacity onPress={ this.jumpPrev30Seconds } style={ Stylesheet.jumpIconContainer }>
             <Image source={img_playjumpleft} style={ Stylesheet.jumpIcon }/>
-            <Text style={ Stylesheet.jumpLabel }>15</Text>
+            <Text style={ Stylesheet.jumpLabel }>30</Text>
           </TouchableOpacity>
           {this.state.playState == 'playing' &&
           <TouchableOpacity onPress={this.pause} style={ Stylesheet.playPauseContainer }>
@@ -171,9 +171,9 @@ class AudioPlayer extends Component<State,Props> {
           <TouchableOpacity onPress={this.play} style={ Stylesheet.playPauseContainer }>
             <Image source={img_play} style={ Stylesheet.jumpIcon }/>
           </TouchableOpacity>}
-          <TouchableOpacity onPress={this.jumpNext15Seconds} style={ Stylesheet.jumpIconContainer }>
+          <TouchableOpacity onPress={this.jumpNext30Seconds} style={ Stylesheet.jumpIconContainer }>
             <Image source={img_playjumpright} style={ Stylesheet.jumpIcon }/>
-            <Text style={{position:'absolute', alignSelf:'center', marginTop:1, color:'white', fontSize:12}}>15</Text>
+            <Text style={{position:'absolute', alignSelf:'center', marginTop:1, color:'white', fontSize:12}}>30</Text>
           </TouchableOpacity>
         </View>
         <View style={ Stylesheet.bottomContanier }>
