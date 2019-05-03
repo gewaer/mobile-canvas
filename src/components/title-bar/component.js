@@ -18,7 +18,7 @@ const TitleBar = props => {
   return (
     <Header style={[StyleSheet.bar, { backgroundColor } ]} noShadow>
       <StatusBar
-        backgroundColor={colors.brandGreen}
+        backgroundColor={colors.brandPrimary}
         barStyle="light-content"
       />
       <View style={StyleSheet.barContent}>

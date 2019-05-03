@@ -43,7 +43,7 @@ export const globalStyle = {
   },
   formInput: {
     height: 30,
-    color: 'white',
+    color: 'black',
     top: 0
   },
   pickerIcon: {
@@ -56,7 +56,8 @@ export const globalStyle = {
 
 export const colors = {
   brandPrimary: '#61C2CC',
-  brandSecondary: '#3d3e44',
+  brandPrimaryAlter: '#1F9AA7',
+  brandSecondary: '#AAE6E2',
   bradSecondaryAlter: '#7f7f7f',
   background: '#F5F2F9',
   errorText: '#FA3256',
