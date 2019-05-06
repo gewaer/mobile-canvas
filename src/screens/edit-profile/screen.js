@@ -33,7 +33,7 @@ import {
 import { colors } from '../../config/styles';
 import { changeActiveCompany } from '../../actions/SessionActions';
 import { connect } from 'react-redux';
-import { normalizeFile } from '../../../src/lib/helpers';
+import { normalizeFile } from '../../utils/helpers';
 const axios = require('../../../src/config/axios');
 
 import TitleBar from '../../components/title-bar'

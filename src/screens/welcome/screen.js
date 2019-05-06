@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 const axios = require('../../../src/config/axios');
 import { Navigation } from 'react-native-navigation';
 
-import { pushDashboard } from '../../navigation/flows'
+import { pushDashboard } from '../../config/flows'
 
 import {
   View,

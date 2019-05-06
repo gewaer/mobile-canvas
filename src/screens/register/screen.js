@@ -35,7 +35,7 @@ import {
   colors
 } from '../../config/styles';
 
-import { pushDashboard } from '../../navigation/flows';
+import { pushDashboard } from '../../config/flows';
 
 import TitleBar from '../../components/title-bar';
 import { API_KEY } from 'react-native-dotenv'

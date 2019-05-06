@@ -42,7 +42,7 @@ import {
   colors
 } from '../../config/styles';
 
-import { pushDashboard } from '../../navigation/flows'
+import { pushDashboard } from '../../config/flows'
 
 import StyleSheet from './stylesheet'
 

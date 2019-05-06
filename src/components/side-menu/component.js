@@ -23,7 +23,7 @@ import {
   pushSingleScreenAppWithSideMenu,
   pushDashboard,
   pushSingleScreenApp
-} from '../../navigation/flows';
+} from '../../config/flows';
 
 import StyleSheet from './stylesheet';
 

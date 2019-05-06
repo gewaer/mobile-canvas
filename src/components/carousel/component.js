@@ -8,7 +8,7 @@ import {
 import Stylesheet from "./stylesheet";
 import { colors } from "../../config/styles";
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { getPercentage } from '../../lib/helpers';
+import { getPercentage } from '../../utils/helpers';
 
 const deviceWidth = Dimensions.get("window").width;
 const itemWidth = getPercentage(deviceWidth, 80);
