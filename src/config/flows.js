@@ -1,6 +1,5 @@
 import { Navigation } from 'react-native-navigation';
-
-import { colors } from '../config/styles';
+import { colors } from './styles';
 
 export function pushSingleScreenAppWithSideMenu(screenName, screenProps, sideMenuProps) {
   Navigation.setRoot({
