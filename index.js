@@ -17,7 +17,8 @@ Navigation.events().registerAppLaunchedListener(() => {
               name: 'canvas.Welcome',
               options: {
                 topBar: {
-                  visible: false
+                  visible: false,
+                  height: 0
                 }
               }
             }

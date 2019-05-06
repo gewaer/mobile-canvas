@@ -21,7 +21,8 @@ export function pushSingleScreenAppWithSideMenu(screenName, screenProps, sideMen
                   name: screenName,
                   options: {
                     topBar: {
-                      visible: false
+                      visible: false,
+                      height: 0
                     }
                   },
                   passProps: screenProps
@@ -45,7 +46,8 @@ export function pushSingleScreenApp(screenName, screenProps) {
               name: screenName,
               options: {
                 topBar: {
-                  visible: false
+                  visible: false,
+                  height: 0
                 }
               },
               passProps: screenProps
@@ -95,7 +97,8 @@ export function pushDashboard(sideMenuProps) {
                       }
                     },
                     topBar: {
-                      visible: false
+                      visible: false,
+                      height: 0
                     }
                   }
                 }
@@ -118,7 +121,8 @@ export function pushDashboard(sideMenuProps) {
                       }
                     },
                     topBar: {
-                      visible: false
+                      visible: false,
+                      height: 0
                     }
                   }
                 }

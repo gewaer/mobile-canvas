@@ -129,7 +129,8 @@ class Welcome extends Component {
         name: activeScreen,
         options: {
           topBar: {
-            visible: false
+            visible: false,
+            height: 0
           }
         }
       }
