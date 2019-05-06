@@ -5,7 +5,7 @@ const initialState = {
   company: {}
 };
 
-const SessionReducer = (state = initialState, action) => {
+export default SessionReducer = (state = initialState, action) => {
   switch (action.type) {
   case 'CHANGE_ACTIVE_SCREEN':
     return { ...state, activeScreen: action.payload.activeScreen };
@@ -27,4 +27,37 @@ const SessionReducer = (state = initialState, action) => {
   }
 };
 
-export default SessionReducer;
+export const changeActiveScreen = (type) => {
+  return {
+    type: 'CHANGE_ACTIVE_SCREEN',
+    payload: type
+  };
+};
+
+export const changeUser = (type) => {
+  return {
+    type: 'CHANGE_USER',
+    payload: type
+  };
+};
+
+export const changeSessionToken = (type) => {
+  return {
+    type: 'CHANGE_SESSION_TOKEN',
+    payload: type
+  };
+};
+
+export const changeActiveFamily = (type) => {
+  return {
+    type: 'CHANGE_ACTIVE_FAMILY',
+    payload: type
+  };
+};
+
+export const changeActiveCompany = (type) => {
+  return {
+    type: 'CHANGE_ACTIVE_COMPANY',
+    payload: type
+  };
+};
