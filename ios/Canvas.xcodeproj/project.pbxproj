@@ -69,7 +69,6 @@
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B5E8AF7D44934308ABB08772 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6B570DD7F46441FA2B48FB4 /* MaterialIcons.ttf */; };
 		B6290EC72270A8EE007487F7 /* libRNImageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6290EC62270A8EE007487F7 /* libRNImageCropPicker.a */; };
-		B6290EE32270AF16007487F7 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6290EE22270AF0B007487F7 /* libRNSound.a */; };
 		B6290EE52270C973007487F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6290EE42270C973007487F7 /* GoogleService-Info.plist */; };
 		B629255C21DE5F0900A4F676 /* libRNDocumentPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B629255921DE5EB200A4F676 /* libRNDocumentPicker.a */; };
 		B641D4E3AC824B188D2AC689 /* libRNSentry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09264A8CE9B34A6D832DF556 /* libRNSentry.a */; };
@@ -82,6 +81,7 @@
 		B6CC783D21E3D7D00001AA70 /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6CC783B21E3D7D00001AA70 /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B6CC786A21E3D8550001AA70 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6CC786921E3D8550001AA70 /* RSKImageCropper.framework */; };
 		B6CC786B21E3D8550001AA70 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6CC786921E3D8550001AA70 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B73E4F56227B4DA800D107A6 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B73E4F55227B4DA800D107A6 /* libRNSound.a */; };
 		CD6214B1B8454892A39B47F1 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D75AE895254B06B8819041 /* libRNVectorIcons.a */; };
 		DFBB8E2FAF9342B082771C94 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04DC3854DBB44DE8B5D3ED64 /* AntDesign.ttf */; };
 		E00CFB4DF2FC4A3D862B9358 /* libAutoGrowTextInput.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3506102EAE804A088B773BBA /* libAutoGrowTextInput.a */; };
@@ -552,6 +552,7 @@
 		B6A59B6E226FB0F900F16927 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		B6CC783B21E3D7D00001AA70 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CC786921E3D8550001AA70 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B73E4F55227B4DA800D107A6 /* libRNSound.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNSound.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0D75AE895254B06B8819041 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		C6B570DD7F46441FA2B48FB4 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		C7BB40C87F97497EB1CEE1E4 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
@@ -582,7 +583,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6290EE32270AF16007487F7 /* libRNSound.a in Frameworks */,
+				B73E4F56227B4DA800D107A6 /* libRNSound.a in Frameworks */,
 				B6290EC72270A8EE007487F7 /* libRNImageCropPicker.a in Frameworks */,
 				B6A59B58226FAF9200F16927 /* libRNGoogleSignin.a in Frameworks */,
 				B6A59B50226FAF8A00F16927 /* libFBSDKCoreKit.a in Frameworks */,
@@ -774,6 +775,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B73E4F55227B4DA800D107A6 /* libRNSound.a */,
 				B6290EDD2270AF0B007487F7 /* RNSound.xcodeproj */,
 				B6290EC62270A8EE007487F7 /* libRNImageCropPicker.a */,
 				B6A59B6E226FB0F900F16927 /* ReactNativeNavigation.xcodeproj */,
@@ -1133,6 +1135,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1966,7 +1969,7 @@
 					"$(inherited)",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "-com.mctekk.canvas";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mctekk.canvas;
 				PRODUCT_NAME = Canvas;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2000,7 +2003,7 @@
 					"$(inherited)",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "-com.mctekk.canvas";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mctekk.canvas;
 				PRODUCT_NAME = Canvas;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";

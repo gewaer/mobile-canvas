@@ -1,4 +1,4 @@
-package com.canvas;
+package com.mctekk.canvas;
 
 import android.app.Application;
 

@@ -42,7 +42,6 @@ yarn-error.log
 yarn.lock
 ios/Pods
 podfile.lock
-GoogleService-indo.plist
 # BUCK
 buck-out/
 \.buckd/
@@ -80,5 +79,11 @@ buck-out/
 ./builds
 
 # Google Services
-GoogleService-into.plist
+GoogleService-info.plist
 google-services.json
+
+# Directory Fastlane
+/ios/fastlane/Appfile
+
+# Sentry Keys
+sentry.properties
