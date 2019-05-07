@@ -36,7 +36,7 @@ import {
   changeSessionToken,
   changeUser,
   changeActiveCompany
-} from '../../actions/SessionActions';
+} from '../../modules/Session';
 
 import StyleSheet from './stylesheet'
 

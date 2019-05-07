@@ -55,7 +55,7 @@ import {
   changeSessionToken,
   changeUser,
   changeActiveCompany
-} from '../../actions/SessionActions';
+} from '../../modules/Session';
 
 const axios = require('../../../src/config/axios');
 

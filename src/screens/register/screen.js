@@ -47,7 +47,7 @@ import {
   changeSessionToken,
   changeUser,
   changeActiveCompany
-} from '../../actions/SessionActions';
+} from '../../modules/Session';
 
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;

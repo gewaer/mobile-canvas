@@ -36,7 +36,7 @@ import {
 // Importing Redux's actions
 import {
 	changeActiveScreen
-} from '../../actions/SessionActions';
+} from '../../modules/Session';
 import Stylesheet from './stylesheet';
 import { Navigation } from 'react-native-navigation';
 import { pushSingleScreenApp } from '../../config/flows';

@@ -3,7 +3,7 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 import { Navigation } from 'react-native-navigation';
-import { registerScreens } from './src/screens/registerScreen';
+import registerScreens from './src/screens/registerScreen';
 import'./src/config/sentry';
 
 registerScreens();

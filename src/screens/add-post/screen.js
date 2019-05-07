@@ -35,7 +35,7 @@ import {
 // Importing Redux's actions
 import {
 	changeActiveScreen
-} from '../../actions/SessionActions';
+} from '../../modules/Session';
 import Stylesheet from './stylesheet';
 //import AddFileButton from '../../components/add-file-button';
 import FilePlaceholder from '../../components/file-placeholder';

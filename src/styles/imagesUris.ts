@@ -4,7 +4,7 @@
 
 export const icons = {
   createCard: {
-    uri: require("../assets/images/icons/credit-card.png")
+    uri: ""
   },
   apps: {
     uri: require("../assets/images/icons/apps.png")

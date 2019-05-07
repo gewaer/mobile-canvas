@@ -29,7 +29,7 @@ import {
   changeActiveScreen,
   changeActiveFamily,
   changeActiveCompany
-} from '../../actions/SessionActions';
+} from '../../modules/Session';
 import { connect } from 'react-redux';
 const axios = require('../../../src/config/axios');
 const platform = Platform.OS;

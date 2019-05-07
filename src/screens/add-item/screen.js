@@ -22,7 +22,7 @@ import {
   colors
 } from '../../config/styles';
 
-import { changeActiveScreen } from '../../actions/SessionActions';
+import { changeActiveScreen } from '../../modules/Session';
 import { connect } from 'react-redux';
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
