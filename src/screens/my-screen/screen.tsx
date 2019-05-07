@@ -8,7 +8,8 @@ import {
 	Alert,
   ScrollView,
   ListView,
-  Image
+  Image,
+  Modal
 } from "react-native";
 
 import {
@@ -42,9 +43,14 @@ import { Navigation } from 'react-native-navigation';
 import { pushSingleScreenApp } from '../../navigation/flows';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import MyCarousel from '../../components/carousel';
+import AudioPlayer from '../../components/audio-player';
+import ExampleRow from '../../components/example-swipe-row';
+import BackRow from '../../components/swipe-back-row';
+import ConfirmationCard from '../../components/confirmation-card';
 const RNFS = require('react-native-fs');
 const axios = require('../../../src/config/axios');
 const Sound = require('react-native-sound');
+
 
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
@@ -53,8 +59,13 @@ const datas = [
   'Nathaniel Clyne',
   'Dejan Lovren'
 ];
+interface State {
+  isLoading: String
+}
+interface Props {
 
-class MyScreen extends Component {
+}
+class MyScreen extends Component<State,Props> {
 
 	constructor(props) {
 		super(props);
@@ -83,8 +94,13 @@ class MyScreen extends Component {
         {
           uri: "https://i.pinimg.com/originals/9d/16/60/9d1660c1d5e9610c60cbdb99080b420a.jpg"
         }
-      ]
+      ],
+      isModalVisible: false
 		};
+  }
+
+  componentDidMount() {
+    Sound.setCategory('Playback');
   }
 
 	onValueChange(value) {
@@ -183,6 +199,37 @@ class MyScreen extends Component {
     this.setState({ listViewData: newData });
   }
 
+  displaySwipeList(){
+    return (
+      <SwipeListView
+        useFlatList
+        data={this.state.listViewData}
+        renderItem={ (data, rowMap) => (
+          <ExampleRow title={ data.item } style={ Stylesheet.rowFront }/>
+        )}
+        renderHiddenItem={ (data, rowMap) => (
+          <BackRow style={ Stylesheet.rowBack } canEdit={ true } buttonWidth={ 60 } onDeletePress={ () => { this.setState({ isModalVisible: true }) } } />
+        )}
+        leftOpenValue={ 0 }
+        rightOpenValue={ -120 }
+      />
+    )
+  }
+
+  modalView(){
+    return(
+      <Modal
+        transparent={ true }
+        visible={ this.state.isModalVisible }
+        animationType='slide'
+      >
+        <View style={ Stylesheet.modalContainer }>
+          <ConfirmationCard title='Delete Card' subTitle='Are you sure you want to erase this Card?' onCancelPress={ () => { this.setState({ isModalVisible: false }) } }/>
+        </View>
+      </Modal>
+    )
+  }
+
   _renderItem ({item, index}) {
     return (
         <View>
@@ -194,9 +241,9 @@ class MyScreen extends Component {
 	render() {
 		return (
 			<Root>
-				<Container style={{ backgroundColor: colors.normalWhite }}>
+				<Container style={{ backgroundColor: colors.brandPrimaryAlter }}>
 					<TitleBar noShadow left={this.titleBarLeft()} body={this.titleBarBody()} bgColor={colors.brandLightBlack} />
-					<ScrollView style={{ backgroundColor: colors.normalWhite }}>
+					<ScrollView style={{ backgroundColor: colors.brandSecondary }}>
 						{
 							this.state.isLoading ?
 								<Spinner color={colors.brandLightBlack} /> :
@@ -207,23 +254,8 @@ class MyScreen extends Component {
                     onSnapToItem={ (index) => this.setState({ sliderActiveSlide: index }) }
                   />
                   <View style={{ marginHorizontal: 12 }}>
-                    <SwipeListView
-                      useFlatList
-                      data={this.state.listViewData}
-                      renderItem={ (data, rowMap) => (
-                        <View style={ Stylesheet.rowFront }>
-                            <Text>I am {data.item} in a SwipeListView</Text>
-                        </View>
-                      )}
-                      renderHiddenItem={ (data, rowMap) => (
-                        <View style={ Stylesheet.rowBack }>
-                            <Text>Left</Text>
-                            <Text>Right</Text>
-                        </View>
-                      )}
-                      leftOpenValue={75}
-                      rightOpenValue={-75}
-                    />
+                    { this.displaySwipeList() }
+                    { this.modalView() }
                   </View>
 									<Button
 										block
@@ -268,6 +300,10 @@ class MyScreen extends Component {
                   <Image
                     source={ { uri: this.state.imageLocalRoute } }
                     style={ {height: 100, width: 100, borderWidth: 1, alignSelf: 'center', marginTop: 10} }
+                  />
+                  <AudioPlayer
+                    title="Pianito"
+                    filepath='https://ccrma.stanford.edu/~jos/mp3/tenor-sax.mp3'
                   />
 								</View>
 						}

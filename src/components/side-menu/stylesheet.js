@@ -44,11 +44,12 @@ export default StyleSheet.create({
   },
   navItemStyle: {
     padding: 10,
-    color: colors.brandBlack
+    color: '#5A5A5A',
+    fontSize: 14
     // fontFamily: "Akkurat-Bold",
   },
   navSectionStyle: {
-    backgroundColor: colors.brandWhite
+    backgroundColor: 'white'
   },
   sectionHeadingStyle: {
     paddingVertical: 10,
@@ -74,15 +75,6 @@ export default StyleSheet.create({
     top: 60,
     right: 15
   },
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    backgroundColor: '#000',
-    opacity: 0.6
-  },
   userInfoContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -98,5 +90,48 @@ export default StyleSheet.create({
     left: 0,
     bottom: 0,
     zIndex: 1
+  },
+  itemContainer: {
+    borderBottomWidth: 0.6,
+    borderBottomColor: "#707070",
+    paddingBottom: 16,
+    paddingHorizontal: 12,
+    flexDirection: 'row',
+    paddingTop: 25
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'white'
+  },
+  subTitle: {
+    color: '#1F9AA7',
+    fontSize: 12,
+    fontStyle: 'italic'
+  },
+  listItemDarkBorder: {
+    marginLeft: 0,
+    paddingLeft: 16,
+    paddingTop: 0,
+    paddingBottom: 0,
+    height: 40
+  },
+  userDataContainer: {
+    marginTop: 10,
+    justifyContent: 'center'
+  },
+  menuMiddleBar: {
+    marginLeft: 0,
+    paddingLeft: 16,
+    paddingTop: 0,
+    paddingBottom: 0,
+    height: 35,
+    backgroundColor: colors.brandPrimary
+  },
+  menuMiddleBarText: {
+    padding: 10,
+    color: 'white',
+    fontSize: 14,
+    fontSize: 12
   }
 });
