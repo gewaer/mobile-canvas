@@ -21,6 +21,7 @@
     "test-android": "cd android && fastlane test && cd ../"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.123",
     "@types/react-native": "^0.57.51",
     "@types/react-redux": "^7.0.8",
     "axios": "^0.18.0",
