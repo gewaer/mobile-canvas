@@ -13,7 +13,7 @@ import DangerButton from "@components/global-danger-button";
 import { globalStyles } from "@styles/globalStyles";
 import axios from "@config/axios";
 import { dismissModal } from "@utils/nav";
-import { convertFormData } from "@utils/convertFormData";
+import { convertFormData } from "@utils/helpers";
 interface Props {
   userId: string;
   selectedCompanyId: string;
