@@ -9,7 +9,8 @@ import {
   AsyncStorage,
   Platform,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
+  Keyboard
 } from 'react-native';
 
 import {
@@ -34,6 +35,8 @@ import {
   colors
 } from '../../config/styles';
 
+import { pushDashboard } from '../../config/flows';
+
 import TitleBar from '../../components/title-bar';
 import { API_KEY } from 'react-native-dotenv'
 
@@ -44,7 +47,7 @@ import {
   changeSessionToken,
   changeUser,
   changeActiveCompany
-} from '../../actions/SessionActions';
+} from '../../modules/Session';
 
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
@@ -100,6 +103,19 @@ class Register extends Component {
     });
   }
 
+  popScreen(activeScreen) {
+    Navigation.pop(this.props.componentId, {
+      component: {
+        name: activeScreen,
+        options: {
+          topBar: {
+            visible: false
+          }
+        }
+      }
+    });
+  }
+
   // Defines title bar's left content
   titleBarLeft() {
     if (this.state.isLoading) {
@@ -113,12 +129,12 @@ class Register extends Component {
         <View>
           <TouchableOpacity
             transparent
-            onPress={() => this.pushScreen('canvas.Welcome')}
+            onPress={() => this.popScreen('canvas.Welcome')}
           >
             <Icon
-              type={'MaterialIcons'}
-              name={'chevron-left'}
-              style={{ color: '#fff', fontSize: platform === 'ios' ? 22 : 24 }}
+              type={'Ionicons'}
+              name={'md-arrow-back'}
+              style={{ color: colors.brandPrimary, fontSize: 30, marginLeft: 5 }}
             />
           </TouchableOpacity>
         </View>
@@ -131,19 +147,6 @@ class Register extends Component {
     return {
       content: (
         <View>
-          <Title>
-            <Text
-              style={[
-                StyleSheet.titleBarContent,
-                {
-                  paddingLeft: platform === 'ios' ? 0 : 10,
-                  fontSize: platform === 'ios' ? 18 : 19.64
-                }
-              ]}
-            >
-              Sign Up
-            </Text>
-          </Title>
         </View>
       )
     };
@@ -163,6 +166,7 @@ class Register extends Component {
 
   // Handles user's account creation
   createUser() {
+    Keyboard.dismiss();
     // Displays an error notification if the password and confirm password fields are not equal
     if (this.state.password != this.state.confirmPassword) {
       Toast.show({
@@ -178,7 +182,7 @@ class Register extends Component {
     // Displays an error notification if any of the required feilds is empty
     if (!this.canCreate()) {
       Toast.show({
-        text: '¡Por favor, llene los campos vacíos!',
+        text: 'Please, fill empty fields!',
         buttonText: 'Ok',
         duration: 3000,
         type: 'danger'
@@ -189,16 +193,16 @@ class Register extends Component {
 
     this.setState({ isLoading: true });
 
-    let data = {
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
-      email: this.state.email,
-      password: this.state.password,
-      default_company: this.state.family
-    };
+    const data = new FormData();
+    data.append('firstname', this.state.firstname);
+    data.append('lastname', this.state.lastname);
+    data.append('email', this.state.email);
+    data.append('password', this.state.password);
+    data.append('default_company', this.state.family);
+    data.append('verify_password', this.state.confirmPassword);
 
     axios
-      .post(`/users`, this.formatFormData(data))
+      .post(`/users`, data)
       .then(response => {
         this.saveSessionData(
           'sessionData',
@@ -212,6 +216,7 @@ class Register extends Component {
         );
       })
       .catch(error => {
+        console.log(error)
         this.setState({ isLoading: false });
         Toast.show({
           text:
@@ -243,7 +248,7 @@ class Register extends Component {
       .get(`/companies?q=(id:${companyId})`)
       .then(response => {
         this.props.changeActiveCompany({ company: response.data[0] });
-        this.changeScreen('dashboard');
+        pushDashboard({ activeScreen: 'canvas.Dashboard' });
       })
       .catch(function(error) {
         // handle error
@@ -275,63 +280,94 @@ class Register extends Component {
             noShadow
             left={this.titleBarLeft()}
             body={this.titleBarBody()}
+            backgroundColor="white"
           />
-          <Content style={{ backgroundColor: colors.brandSecondary }}>
+          <Content style={{ backgroundColor: 'white' }}>
             <View>
               <View>
                 <View>
                   <View style={StyleSheet.containerView}>
+                    <Text
+                      style={ StyleSheet.title }
+                    >
+                      Create an Account
+                    </Text>
                     <Form>
+                      <Text style={globalStyle.formLabel}>Name</Text>
                       <Item
                         floatingLabel
                         last
-                        style={[StyleSheet.formItem, { marginTop: 0 }]}
+                        style={ StyleSheet.formItem }
                       >
-                        <Label style={globalStyle.formLabel}>Name</Label>
                         <Input
                           value={this.state.firstname}
                           onChangeText={firstname =>
                             this.setState({ firstname })
                           }
                           style={globalStyle.formInput}
+                          onSubmitEditing={() => {
+                            this.lastName._root.focus();
+                          }}
                         />
                       </Item>
+                      <Text style={globalStyle.formLabel}>Lastname</Text>
                       <Item
                         floatingLabel
                         last
-                        style={[StyleSheet.formItem, { marginTop: 0 }]}
+                        style={ StyleSheet.formItem }
                       >
-                        <Label style={globalStyle.formLabel}>Lastname</Label>
                         <Input
                           value={this.state.lastname}
                           onChangeText={lastname => this.setState({ lastname })}
                           style={globalStyle.formInput}
+                          getRef={(input) => {this.lastName = input}}
+                          onSubmitEditing={() => {
+                            this.email._root.focus();
+                          }}
                         />
                       </Item>
-                      <Item floatingLabel last style={StyleSheet.formItem}>
-                        <Label style={globalStyle.formLabel}>Email</Label>
+                      <Text style={globalStyle.formLabel}>Email</Text>
+                      <Item
+                        floatingLabel
+                        last
+                        style={ StyleSheet.formItem }
+                      >
                         <Input
                           value={this.state.email}
                           onChangeText={email => this.setState({ email })}
                           style={globalStyle.formInput}
                           keyboardType={'email-address'}
                           autoCapitalize={'none'}
+                          getRef={(input) => {this.email = input}}
+                          onSubmitEditing={() => {
+                            this.password._root.focus();
+                          }}
                         />
                       </Item>
-                      <Item floatingLabel last style={StyleSheet.formItem}>
-                        <Label style={globalStyle.formLabel}>Password</Label>
+                      <Text style={globalStyle.formLabel}>Password</Text>
+                      <Item
+                        floatingLabel
+                        last
+                        style={ StyleSheet.formItem }
+                      >
                         <Input
                           value={this.state.password}
                           onChangeText={password => this.setState({ password })}
                           style={globalStyle.formInput}
                           secureTextEntry
                           autoCapitalize={'none'}
+                          getRef={(input) => {this.password = input}}
+                          onSubmitEditing={() => {
+                            this.confirmPassword._root.focus();
+                          }}
                         />
                       </Item>
-                      <Item floatingLabel last style={StyleSheet.formItem}>
-                        <Label style={globalStyle.formLabel}>
-                          Confirm Password
-                        </Label>
+                      <Text style={globalStyle.formLabel}>Confirm Password</Text>
+                      <Item
+                        floatingLabel
+                        last
+                        style={ StyleSheet.formItem }
+                      >
                         <Input
                           value={this.state.confirmPassword}
                           onChangeText={confirmPassword =>
@@ -340,16 +376,36 @@ class Register extends Component {
                           style={globalStyle.formInput}
                           secureTextEntry
                           autoCapitalize={'none'}
+                          getRef={(input) => {this.confirmPassword = input}}
+                          onSubmitEditing={() => {
+                            this.company._root.focus();
+                          }}
                         />
                       </Item>
-                      <Item floatingLabel last style={StyleSheet.formItem}>
-                        <Label style={globalStyle.formLabel}>Company</Label>
+                      <Text style={globalStyle.formLabel}>Company</Text>
+                      <Item
+                        floatingLabel
+                        last
+                        style={ StyleSheet.formItem }
+                      >
                         <Input
                           value={this.state.family}
                           onChangeText={family => this.setState({ family })}
                           style={globalStyle.formInput}
+                          getRef={(input) => {this.company = input}}
+                          onSubmitEditing={() => {
+                            this.createUser();
+                          }}
                         />
                       </Item>
+                      <View style={ StyleSheet.textLabelContainer }>
+                        <Text style={StyleSheet.textLabel}>
+                          By creating an account you agree to our
+                        </Text>
+                        <Text style={StyleSheet.textLabel}>
+                          Terms of Service and Privacy Policy
+                        </Text>
+                      </View>
                       {// If the app is creating the user hide the register button and show a loading spinner
                         this.state.isLoading ? (
                           <Spinner color={colors.brandWhite} />
@@ -359,10 +415,10 @@ class Register extends Component {
                             bordered
                             primary
                             onPress={() => this.createUser()}
-                            style={[StyleSheet.submitBtn, { marginTop: 30 }]}
+                            style={[StyleSheet.submitBtn]}
                           >
-                            <Text style={{ color: colors.brandWhite }}>
-                            SIGN UP
+                            <Text style={ StyleSheet.buttonText }>
+                             CREATE ACCOUNT
                             </Text>
                           </Button>
                         )}

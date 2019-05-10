@@ -8,7 +8,8 @@ import {
   AsyncStorage,
   Platform,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
+  Keyboard
 } from 'react-native';
 
 import {
@@ -34,16 +35,19 @@ import { connect } from 'react-redux';
 // Importing local assets and components.
 import { appImages } from '../../config/imagesRoutes';
 import TitleBar from '../../components/title-bar';
-import { FORGOT_PASSWORD_URL } from 'react-native-dotenv';
+import { FORGOT_PASSWORD_URL, GOOGLE_CLIENT_ID } from 'react-native-dotenv';
 
 import {
   globalStyle,
   colors
 } from '../../config/styles';
 
-import { pushDashboard } from '../../navigation/flows'
+import { pushDashboard } from '../../config/flows'
 
 import StyleSheet from './stylesheet'
+
+import { LoginManager, GraphRequest,GraphRequestManager } from 'react-native-fbsdk';
+import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 
 // Importing Redux's actions
 import {
@@ -51,7 +55,7 @@ import {
   changeSessionToken,
   changeUser,
   changeActiveCompany
-} from '../../actions/SessionActions';
+} from '../../modules/Session';
 
 const axios = require('../../../src/config/axios');
 
@@ -77,6 +81,11 @@ class Login extends Component {
   componentDidMount() {
     // Creates an event listener for Android's back button
     BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
+    GoogleSignin.configure({
+      scopes: ['https://www.googleapis.com/auth/plus.login'], // what API you want to access on behalf of the user, default is email and profile
+      webClientId: GOOGLE_CLIENT_ID, // client ID of type WEB for your server (needed to verify user ID and offline access)
+      offlineAccess: true
+    });
   }
 
   // Handles Android's back button's action
@@ -105,6 +114,19 @@ class Login extends Component {
     });
   }
 
+  popScreen(activeScreen) {
+    Navigation.pop(this.props.componentId, {
+      component: {
+        name: activeScreen,
+        options: {
+          topBar: {
+            visible: false
+          }
+        }
+      }
+    });
+  }
+
   // Defines title bar's left content
   titleBarLeft() {
     return {
@@ -112,12 +134,12 @@ class Login extends Component {
         <View>
           <TouchableOpacity
             transparent
-            onPress={() => this.pushScreen('canvas.Welcome')}
+            onPress={() => this.popScreen('canvas.Welcome')}
           >
             <Icon
-              type={'MaterialIcons'}
-              name={'chevron-left'}
-              style={{ color: '#fff', fontSize: platform === 'ios' ? 22 : 24 }}
+              type={'Ionicons'}
+              name={'md-arrow-back'}
+              style={{ color: colors.brandPrimary, fontSize: 30, marginLeft: 5 }}
             />
           </TouchableOpacity>
         </View>
@@ -130,19 +152,6 @@ class Login extends Component {
     return {
       content: (
         <View>
-          <Title>
-            <Text
-              style={[
-                StyleSheet.titleBarContent,
-                {
-                  paddingLeft: platform === 'ios' ? 0 : 10,
-                  fontSize: platform === 'ios' ? 18 : 19.64
-                }
-              ]}
-            >
-              Sign In
-            </Text>
-          </Title>
         </View>
       )
     };
@@ -150,6 +159,7 @@ class Login extends Component {
 
   // Process LogIn
   logIn() {
+    Keyboard.dismiss();
     if (this.state.username && this.state.password) {
       this.setState({ isLoginIn: true });
       let formData = new FormData();
@@ -268,128 +278,258 @@ class Login extends Component {
       });
   }
 
+  signInWithFacebookAsync = async () => {
+    LoginManager.logInWithReadPermissions(["email"]).then(loginState => {
+          if (loginState.isCancelled) {
+          } else {
+              const infoRequest = new GraphRequest('/me?fields=name,picture,email', null,(error, user) => {
+                  console.log(user)
+                  if (error) {
+                      console.log('Error fetching data: ' + error.toString());
+                  } else {
+                      const userData = new FormData();
+                      userData.append('email', user.email);
+                      userData.append('social_id', user.id);
+
+                      this.saveItem('email', user.email);
+                      this.saveItem('social_id', user.id);
+
+                      axios.post(`/auth`, userData).then(({ data: login }) => {
+                          if (login.token) {
+                              this.saveItem('login_type', 'facebook');
+                              this.saveItem('id_token', login.token);
+                              this.saveItem('user_id', login.id.toString());
+
+                              this.props.saveFacebookLoginData({
+                                  userEmail: user.email,
+                                  userSessionToken: login.token,
+                                  userId: login.id.toString(),
+                                  socialId: user.id,
+                                  loginType: 'facebook'
+                              })
+
+                              this.changeScreen('dashboard');
+                          }
+                      }).catch(error => {
+                          console.log(error.response);
+                          Alert.alert("Your email is not associated with an account.")
+                      });
+                  }
+              });
+              new GraphRequestManager().addRequest(infoRequest).start();
+          }
+      }, error => {
+        console.log(error);
+          Alert.alert("Error while trying to authenticate with your Facebook account.")
+      }
+    );
+  }
+
+  signInWithGoogleAsync = async () => {
+      GoogleSignin.hasPlayServices().then(() => {
+        GoogleSignin.signIn().then(result => {
+            console.log(result)
+            if (result.accessToken) {
+              var data = new FormData();
+              data.append('email', result.user.email);
+              data.append('social_id', result.user.id);
+              this.saveItem('social_id', result.user.id);
+              this.saveItem('code', result.serverAuthCode);
+              this.saveItem('email', result.user.email);
+              //data.append('access_token', result.accessToken);
+              //data.append('refresh_token', result.refreshToken);
+              //data.append('code', result.serverAuthCode);
+
+              axios.post(`/auth`, data)
+              .then(response => {
+                if (response.data.token) {
+                  this.saveItem('login_type', 'google');
+                  this.saveItem('id_token', response.data.token);
+                  this.saveItem('user_id', response.data.id.toString());
+
+                  this.props.saveGoogleLoginData({
+                      userEmail: result.user.email,
+                      userSessionToken: response.data.token,
+                      userId: response.data.id.toString(),
+                      socialId: result.user.id,
+                      loginType: 'google',
+                      serverAuthCode: result.serverAuthCode
+                  })
+                  this.changeScreen('dashboard');
+                }
+              })
+              .catch(function (error) {
+                console.log(error.response);
+              });
+            }
+        });
+      }).catch (error => {
+        console.log("ERROR")
+        console.log(JSON.stringify(error))
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (f.e. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    })
+  };
+
+  async saveItem(item, selectedValue) {
+    try {
+      await AsyncStorage.setItem(item, selectedValue);
+    } catch (error) {
+      console.error('AsyncStorage error: ' + error.message);
+    }
+  }
+
+  googleSignOut = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      this.setState({ user: null }); // Remember to remove the user from your app's state as well
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   render() {
     return (
       <Root>
-        <Container style={{ backgroundColor: colors.brandSecondary }}>
+        <Container>
           <TitleBar
             noShadow
             left={this.titleBarLeft()}
             body={this.titleBarBody()}
+            backgroundColor="white"
           />
-          <View style={{ alignItems: 'center' }}>
-            <ImageBackground
-              source={appImages.Logo.uri}
-              style={[globalStyle.logoTag, { height: 80 }]}
-              resizeMode="contain"
-            />
-          </View>
-          <Content style={{ backgroundColor: colors.brandSecondary }}>
+          <Content style={{ backgroundColor: 'white' }}>
             {this.state.isLoading ? (
-              <Spinner color={colors.brandWhite} />
+              <Spinner color={colors.brandPrimary} />
             ) : (
               <View>
-                <View>
-                  <View>
-                    <View style={StyleSheet.containerView}>
-                      <Form>
-                        <Item
-                          floatingLabel
-                          last
-                          style={[StyleSheet.formItem, { marginTop: 0 }]}
+                <View style={StyleSheet.containerView}>
+                  <View style={StyleSheet.topContainerView}>
+                    <Text
+                      style={ StyleSheet.title }
+                    >
+                      Login
+                    </Text>
+                    <Form style={{ marginHorizontal: 24 }}>
+                      <Text style={globalStyle.formLabel}>Email</Text>
+                      <Item
+                        floatingLabel
+                        last
+                        style={ StyleSheet.formItem }
+                      >
+                        <Input
+                          onChangeText={userName =>
+                            this.setState({ username: userName })
+                          }
+                          style={globalStyle.formInput}
+                          keyboardType={'email-address'}
+                          autoCapitalize={'none'}
+                          onSubmitEditing={() => {
+                            this._inputDesc._root.focus();
+                          }}
+                        />
+                      </Item>
+                      <Text style={globalStyle.formLabel}>Password</Text>
+                      <Item floatingLabel last style={StyleSheet.formItem}>
+                        <Input
+                          onChangeText={password =>
+                            this.setState({ password: password })
+                          }
+                          style={globalStyle.formInput}
+                          secureTextEntry
+                          autoCapitalize={'none'}
+                          getRef={(input) => this._inputDesc = input}
+                          onSubmitEditing={() => {
+                            this.logIn();
+                          }}
+                        />
+                      </Item>
+                    </Form>
+                  </View>
+                  {this.state.isLoginIn ? (
+                    <Spinner color={colors.brandPrimary} />
+                  ) : (
+                    <Button
+                      block
+                      bordered
+                      primary
+                      onPress={() => this.logIn()}
+                      style={[StyleSheet.submitBtn ]}
+                    >
+                      <Text style={ StyleSheet.buttonText }>
+                        Enter Account
+                      </Text>
+                    </Button>
+                  )}
+                  {__DEV__ && !this.state.isLoginIn && (
+                    <Button
+                      block
+                      bordered
+                      primary
+                      style={StyleSheet.submitBtn}
+                      onPress={() => this.logInDevMode()}
+                    >
+                      <Text style={ StyleSheet.buttonText }>
+                        Development Mode
+                      </Text>
+                    </Button>
+                  )}
+
+                  {/* {!this.state.isLoginIn && (
+                    <View>
+                      <Button transparent block>
+                        <Text
+                          style={StyleSheet.linkBTN}
+                          onPress={() =>
+                            Linking.openURL(FORGOT_PASSWORD_URL)
+                          }
                         >
-                          <Label style={globalStyle.formLabel}>Email</Label>
-                          <Input
-                            onChangeText={userName =>
-                              this.setState({ username: userName })
-                            }
-                            style={globalStyle.formInput}
-                            keyboardType={'email-address'}
-                            autoCapitalize={'none'}
-                          />
-                        </Item>
-                        <Item floatingLabel last style={StyleSheet.formItem}>
-                          <Label style={globalStyle.formLabel}>Password</Label>
-                          <Input
-                            onChangeText={password =>
-                              this.setState({ password: password })
-                            }
-                            style={globalStyle.formInput}
-                            secureTextEntry
-                            autoCapitalize={'none'}
-                          />
-                        </Item>
-                        {this.state.isLoginIn ? (
-                          <Spinner color={colors.brandWhite} />
-                        ) : (
-                          <Button
-                            block
-                            bordered
-                            primary
-                            onPress={() => this.logIn()}
-                            style={[StyleSheet.submitBtn, { marginTop: 30 }]}
-                          >
-                            <Text style={{ color: colors.brandWhite }}>
-                              SIGN IN
-                            </Text>
-                          </Button>
-                        )}
-                        {__DEV__ && !this.state.isLoginIn && (
-                          <Button
-                            block
-                            bordered
-                            primary
-                            style={StyleSheet.submitBtn}
-                            onPress={() => this.logInDevMode()}
-                          >
-                            <Text style={{ color: colors.brandWhite }}>
-                              Development Mode
-                            </Text>
-                          </Button>
-                        )}
-                      </Form>
-                      {!this.state.isLoginIn && (
-                        <View>
-                          <Button transparent block>
-                            <Text
-                              style={StyleSheet.linkBTN}
-                              onPress={() =>
-                                Linking.openURL(FORGOT_PASSWORD_URL)
-                              }
-                            >
-                              Forgot Password?
-                            </Text>
-                          </Button>
-                        </View>
-                      )}
+                          Forgot Password?
+                        </Text>
+                      </Button>
                     </View>
+                  )} */}
+                  <Text style={StyleSheet.textLabel}>
+                    Use Social Logins
+                  </Text>
+                  <View style={StyleSheet.btnContainer}>
+                    <Button
+                      block
+                      style={[StyleSheet.googleBtn, { width: 155 }]}
+                      onPress={() => this.signInWithGoogleAsync()}
+                    >
+                      <Text style={StyleSheet.googleText}>
+                          Gmail
+                      </Text>
+                    </Button>
+                    <Button
+                      block
+                      style={[StyleSheet.facebookBtn, { width: 155 }]}
+                      onPress={() => this.signInWithFacebookAsync()}
+                    >
+                      <Text style={StyleSheet.buttonText}>
+                          Facebook
+                      </Text>
+                    </Button>
+                    {/* <Button
+                      block
+                      style={[StyleSheet.googleBtn, {marginTop: 20}]}
+                      onPress={() => this.googleSignOut()}
+                    >
+                      <Text style={StyleSheet.googleText}>
+                          Google Sign Out
+                      </Text>
+                    </Button> */}
                   </View>
                 </View>
-                {/* <View style={StyleSheet.containerViewBack}>
-                                        <View style={StyleSheet.textContainer}>
-                                            <H3 style={[globalStyle.text, {color: colors.brandBlack}]}> OR SIGN IN WITH </H3>
-                                        </View>
-                                        <View style={StyleSheet.btnContainer}>
-                                            <Button
-                                                block
-                                                style={StyleSheet.facebookBtn}
-                                                onPress={() => this.logIn()}
-                                            >
-                                                <Text style={StyleSheet.facebookText}>
-                                                    Facebook
-                                                </Text>
-                                            </Button>
-                                            <Button
-                                                block
-                                                style={[StyleSheet.googleBtn, {marginTop: 20}]}
-                                                onPress={() => this.signInWithGoogleAsync()}
-                                            >
-                                                <Text style={StyleSheet.googleText}>
-                                                    Google+
-                                                </Text>
-                                            </Button>
-                                        </View>
-                                    </View> */}
               </View>
             )}
           </Content>
@@ -402,7 +542,7 @@ class Login extends Component {
 // Maps redux's state variables to this class' props
 const mapStateToProps = state => {
   return {
-    
+
   };
 };
 

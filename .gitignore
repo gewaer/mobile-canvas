@@ -1,6 +1,8 @@
 # OSX
 #
 .DS_Store
+.vscode
+
 
 # Xcode
 #
@@ -37,7 +39,9 @@ node_modules/
 package-lock.json
 npm-debug.log
 yarn-error.log
-
+yarn.lock
+ios/Pods
+podfile.lock
 # BUCK
 buck-out/
 \.buckd/
@@ -50,9 +54,36 @@ buck-out/
 # For more information about the recommended setup visit:
 # https://docs.fastlane.tools/best-practices/source-control/
 
-*/fastlane/report.xml
-*/fastlane/Preview.html
-*/fastlane/screenshots
+# fastlane specific
+**/fastlane/report.xml
+
+# deliver temporary files
+**/fastlane/Preview.html
+
+# snapshot generated screenshots
+**/fastlane/screenshots
+
+# scan temporary files
+**/fastlane/test_output
 
 # Bundle artifact
 *.jsbundle
+
+# Env
+.env
+.env.development
+.env.stagin
+.env.production
+
+# Transpiler
+./builds
+
+# Google Services
+GoogleService-info.plist
+google-services.json
+
+# Directory Fastlane
+/ios/fastlane/Appfile
+
+# Sentry Keys
+sentry.properties

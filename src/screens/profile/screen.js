@@ -22,7 +22,7 @@ import {
 } from 'native-base';
 
 import { colors  } from '../../config/styles';
-import { changeActiveScreen } from '../../actions/SessionActions';
+import { changeActiveScreen } from '../../modules/Session';
 import { connect } from 'react-redux';
 const axios = require('../../../src/config/axios');
 import { API_KEY } from 'react-native-dotenv'
@@ -96,7 +96,7 @@ class Profile extends Component {
         this.setState({ families: response.data, isLoading: false }, () => {
           if (this.props.profileInfoChanged) {
             Toast.show({
-              text: '¡Perfil actualizado correctamente!',
+              text: 'Profile successfully updated!',
               buttonText: 'Ok',
               duration: 3000,
               type: 'success'
@@ -105,6 +105,7 @@ class Profile extends Component {
         });
       })
       .catch(function(error) {
+        this.setState({ isLoading: false })
         console.log(error);
       });
   };

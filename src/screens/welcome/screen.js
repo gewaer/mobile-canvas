@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 const axios = require('../../../src/config/axios');
 import { Navigation } from 'react-native-navigation';
 
-import { pushDashboard } from '../../navigation/flows'
+import { pushDashboard } from '../../config/flows'
 
 import {
   View,
@@ -36,7 +36,7 @@ import {
   changeSessionToken,
   changeUser,
   changeActiveCompany
-} from '../../actions/SessionActions';
+} from '../../modules/Session';
 
 import StyleSheet from './stylesheet'
 
@@ -95,7 +95,6 @@ class Welcome extends Component {
       })
       .catch((error) => {
         console.log(error.response);
-        debugger;
         Alert.alert('Sesión expirada');
         this.removeSessionData();
         this.setState({ isLoading: false })

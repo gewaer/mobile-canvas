@@ -1,37 +1,66 @@
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet, Platform } from 'react-native';
 import {
   colors,
   paddingHelpers
 } from '../../config/styles';
+const platform = Platform.OS;
 
 
 export default StyleSheet.create({
   linkBTN: {
-    color: colors.brandWhite,
+    color: colors.brandPrimary,
     textDecorationLine: 'underline'
   },
   submitBtn: {
     marginTop: paddingHelpers.S,
     marginBottom: paddingHelpers.S,
-    borderColor: colors.brandWhite
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    height: 48,
+    borderRadius: 3,
+    backgroundColor: colors.brandPrimary
+  },
+  submitBtnInv: {
+    marginTop: paddingHelpers.S,
+    marginBottom: paddingHelpers.S,
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: colors.brandPrimary,
+    height: 48,
+    borderRadius: 3,
+    backgroundColor: 'white'
   },
   googleBtn: {
-    backgroundColor: colors.gmail,
-    width: '100%',
-    alignItems: 'center'
+    marginTop: paddingHelpers.S,
+    marginBottom: paddingHelpers.S,
+    borderBottomWidth: 2,
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+    borderColor: colors.gmail,
+    height: 48,
+    borderRadius: 3,
+    backgroundColor: 'white'
   },
   googleText: {
-    color: '#fff',
-    textAlign: 'center',
-    width: '100%'
+    color: colors.gmail,
+    fontWeight: 'bold',
+    fontSize: 12
   },
   facebookBtn: {
     marginTop: paddingHelpers.S,
-    marginBottom: paddingHelpers.XS,
-    backgroundColor: colors.facebook,
-    width: '100%',
-    alignItems: 'center'
+    marginBottom: paddingHelpers.S,
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    height: 48,
+    borderRadius: 3,
+    backgroundColor: colors.facebook
   },
   facebookText: {
     color: '#fff',
@@ -39,12 +68,21 @@ export default StyleSheet.create({
     width: '100%'
   },
   formItem: {
-    borderBottomWidth: 2,
-    borderBottomColor: colors.brandWhite
+    borderBottomColor: colors.brandWhite,
+    marginTop: 0,
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderRadius: 3,
+    borderBottomColor: colors.brandPrimary,
+    borderColor: colors.brandPrimary
   },
-  titleBarContent: {
-    color: 'white',
-    fontWeight: '600'
+  title: {
+    color: colors.brandPrimary,
+    fontWeight: 'bold',
+    fontSize: 20,
+    alignSelf: 'center'
   },
   containerView: {
     marginTop: paddingHelpers.XS,
@@ -64,5 +102,30 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
     backgroundColor: 'transparent'
+  },
+  buttonText: {
+    color: colors.brandWhite,
+    fontWeight: 'bold',
+    fontSize: 12
+  },
+  buttonTextPrimary: {
+    color: colors.brandPrimary,
+    fontWeight: 'bold',
+    fontSize: 12
+  },
+  textLabel: {
+    color: colors.brandPrimary,
+    alignSelf: 'center',
+    fontSize: 12,
+    marginTop: 20,
+    marginBottom: 5
+  },
+  topContainerView: {
+    paddingTop: 35,
+    paddingBottom: 80
+  },
+  btnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 });

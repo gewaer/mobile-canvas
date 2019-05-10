@@ -29,16 +29,16 @@ import {
   changeActiveScreen,
   changeActiveFamily,
   changeActiveCompany
-} from '../../actions/SessionActions';
+} from '../../modules/Session';
 import { connect } from 'react-redux';
 const axios = require('../../../src/config/axios');
 const platform = Platform.OS;
 import TitleBar from '../../components/title-bar';
-import getStore from '../../store/store';
+import getStore from '../../modules/store';
 import StyleSheet from './stylesheet';
 
 import { Navigation } from 'react-native-navigation';
-import { pushSingleScreenApp } from '../../navigation/flows';
+import { pushSingleScreenApp } from '../../config/flows';
 
 class Family extends Component {
   constructor(props) {
@@ -131,7 +131,7 @@ class Family extends Component {
   }
 
   showDrawer = () => {
-    Navigation.mergeOptions('navigation.drawer.left', {
+    Navigation.mergeOptions('navigation.drawer.left.tab', {
       sideMenu: {
         left: {
           visible: true

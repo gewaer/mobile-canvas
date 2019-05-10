@@ -15,7 +15,7 @@ import { Body, Icon, Text, ListItem, List, Right } from 'native-base';
 import { paddingHelpers, colors } from '../../config/styles';
 
 // Importing Redux's actions
-import { changeActiveScreen } from '../../actions/SessionActions';
+import { changeActiveScreen } from '../../modules/Session';
 
 import { Navigation } from 'react-native-navigation';
 
@@ -23,7 +23,7 @@ import {
   pushSingleScreenAppWithSideMenu,
   pushDashboard,
   pushSingleScreenApp
-} from '../../navigation/flows';
+} from '../../config/flows';
 
 import StyleSheet from './stylesheet';
 
@@ -32,6 +32,33 @@ import StyleSheet from './stylesheet';
 	Description: Is declared as a screen but is used as a side menu component. This screen is used as a navigator.
 */
 class SideMenu extends Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+       menuObjects: [
+         {
+          text: 'Dashboard',
+          iconType: 'MaterialIcons',
+          iconName: 'dashboard',
+          navigateTo: 'canvas.Dashboard'
+         },
+         {
+          text: 'My Profile',
+          iconType: 'FontAwesome',
+          iconName: 'user',
+          navigateTo: 'canvas.Profile'
+         },
+         {
+          text: 'Settings',
+          iconType: 'MaterialIcons',
+          iconName: 'settings',
+          navigateTo: 'canvas.Settings'
+         }
+       ]
+    }
+  }
 
   // Changes the active screen using redux.
   changeScreen(activeScreen) {
@@ -85,148 +112,74 @@ class SideMenu extends Component {
     return (
       <View style={[StyleSheet.container, StyleSheet.navSectionStyle]}>
         <View>
-          <View
-            style={{
-              paddingVertical: paddingHelpers.S,
-              backgroundColor: colors.brandSecondary
-            }}
-          />
-          <ScrollView style={{ paddingTop: paddingHelpers.N }}>
+          <View style={[ StyleSheet.itemContainer, { backgroundColor: colors.brandPrimary }]}>
+            <TouchableOpacity
+              //onPress={ () => { !this.props.isExpired && this.changeScreen('profile') } }
+            >
+              <Icon type={'Ionicons'} name={'ios-contact'} style={ { color: 'white',  fontSize: 48, marginRight: 12, marginBottom: -9} } />
+            </TouchableOpacity>
+            <View style={ StyleSheet.userDataContainer }>
+              <Text style={ StyleSheet.title }>Joanne Doe</Text>
+              <Text style={ StyleSheet.subTitle }>{
+                this.props.company
+                  ? this.props.company.name
+                  : 'Familia no disponible'
+              }</Text>
+            </View>
+          </View>
+          <ScrollView style={{ paddingTop: 10 }}>
             <List>
-              <ListItem style={StyleSheet.listItemDarkBorder}>
-                <Body style={{ flexGrow: 2 }}>
-                  <View
-                    style={[StyleSheet.navSectionStyle, { paddingLeft: 0 }]}
-                  >
-                    <Text
-                      style={[
-                        {
-                          paddingLeft: 0,
-                          marginLeft: 0,
-                          marginRight: 0,
-                          color: colors.brandBlack,
-                          fontSize: 18,
-                          fontWeight: '900'
-                        }
-                      ]}
+              {
+                this.state.menuObjects.map((element) => {
+                  return(
+                    <ListItem
+                      key={ element.id }
+                      style={StyleSheet.listItemDarkBorder}
+                      onPress={() => this.changeScreen(element.navigateTo)}
                     >
-                      {this.props.company
-                        ? this.props.company.name
-                        : 'Familia no disponible'}
-                    </Text>
-                  </View>
-                </Body>
-                <Right style={{ flexGrow: 1 }}>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: colors.brandGold,
-                      borderRadius: 3,
-                      padding: 5
-                    }}
-                    onPress={() => this.changeScreen('canvas.Dashboard')}
-                  >
-                    <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 13,
-                        fontWeight: '900'
-                      }}
-                      t
-                    >
-                      Change
-                    </Text>
-                  </TouchableOpacity>
-                </Right>
-              </ListItem>
+                      <View style={{ width: 30, alignItems: 'center' }}>
+                        <Icon
+                          type={ element.iconType }
+                          name={ element.iconName }
+                          style={{ fontSize: 18, color: colors.brandPrimaryAlter }}
+                        />
+                      </View>
+                      <Body>
+                        <View style={StyleSheet.navSectionStyle}>
+                          <Text style={StyleSheet.navItemStyle}>{ element.text }</Text>
+                        </View>
+                      </Body>
+                    </ListItem>
+                  )
+                })
+              }
               <ListItem
-                style={StyleSheet.listItemDarkBorder}
-                onPress={() => this.changeScreen('canvas.Dashboard')}
+                style={ StyleSheet.menuMiddleBar }
               >
-                <View style={{ width: 30, alignItems: 'center' }}>
-                  <Icon
-                    type={'MaterialIcons'}
-                    name={'dashboard'}
-                    style={{ fontSize: 22 }}
-                  />
-                </View>
                 <Body>
-                  <View style={StyleSheet.navSectionStyle}>
-                    <Text style={StyleSheet.navItemStyle}>Dashboard</Text>
-                  </View>
+                  <Text style={StyleSheet.menuMiddleBarText}>Configurations</Text>
                 </Body>
               </ListItem>
               <ListItem
                 style={StyleSheet.listItemDarkBorder}
-                onPress={() => this.changeScreen('canvas.Profile')}
+                onPress={() => this.logOut()}
               >
                 <View style={{ width: 30, alignItems: 'center' }}>
                   <Icon
-                    type={'FontAwesome'}
-                    name={'user'}
-                    style={{ fontSize: 22 }}
+                    type={ 'MaterialCommunityIcons' }
+                    name={ 'logout-variant' }
+                    style={{ fontSize: 18, color: colors.brandPrimaryAlter }}
                   />
                 </View>
                 <Body>
                   <View style={StyleSheet.navSectionStyle}>
-                    <Text style={StyleSheet.navItemStyle}>My Profile</Text>
-                  </View>
-                </Body>
-              </ListItem>
-              <ListItem
-                style={StyleSheet.listItemDarkBorder}
-                onPress={() => this.changeScreen('canvas.Settings')}
-              >
-                <View style={{ width: 30, alignItems: 'center' }}>
-                  <Icon
-                    type={'MaterialIcons'}
-                    name={'settings'}
-                    style={{ fontSize: 22 }}
-                  />
-                </View>
-                <Body>
-                  <View style={StyleSheet.navSectionStyle}>
-                    <Text style={StyleSheet.navItemStyle}>Settings</Text>
+                    <Text style={StyleSheet.navItemStyle}>Log out</Text>
                   </View>
                 </Body>
               </ListItem>
             </List>
-            <View style={{ marginTop: paddingHelpers.XL3 }}>
-              <List>
-                <ListItem style={StyleSheet.listItemNoBorder}>
-                  <Body>
-                    <View
-                      style={[
-                        StyleSheet.navSectionStyle,
-                        { paddingLeft: 0 }
-                      ]}
-                    >
-                      <TouchableOpacity onPress={() => this.logOut()}>
-                        <Text
-                          style={{
-                            paddingLeft: 0,
-                            marginLeft: 0,
-                            marginRight: 0
-                          }}
-                        >
-                          Log Out
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </Body>
-                  <Right>
-                    <Icon
-                      onPress={() => this.logOut()}
-                      type={'MaterialCommunityIcons'}
-                      name={'logout-variant'}
-                      style={{ color: colors.brandBlack }}
-                    />
-                  </Right>
-                </ListItem>
-              </List>
-            </View>
           </ScrollView>
         </View>
-        <View style={[StyleSheet.footerContainer, StyleSheet.footer]} />
       </View>
     );
   }

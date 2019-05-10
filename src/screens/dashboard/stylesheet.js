@@ -19,7 +19,7 @@ export default StyleSheet.create({
     margin: 5
   },
   buttonText: {
-    color: colors.buttonText,
+    color: colors.white,
     fontSize: 16,
     fontWeight: '500'
   },

@@ -7,7 +7,8 @@ import {
   View,
   Platform,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
+  Keyboard
 } from 'react-native';
 
 import {
@@ -31,7 +32,7 @@ import { API_KEY } from 'react-native-dotenv';
 import TitleBar from '../../components/title-bar';
 
 // Importing Redux's actions
-import { changeActiveCompany } from '../../actions/SessionActions';
+import { changeActiveCompany } from '../../modules/Session';
 
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
@@ -117,6 +118,7 @@ class EditCompany extends Component {
 
   // Handles company info update process.
   updateCompanyInfo() {
+    Keyboard.dismiss();
     if (!this.canEdit()) {
       Toast.show({
         text: 'Please fill the empty fields!',
@@ -275,6 +277,9 @@ class EditCompany extends Component {
                     value={this.state.companyName}
                     autoCapitalize
                     onChangeText={name => this.setState({ companyName: name })}
+                    onSubmitEditing={() => {
+                      this.website._root.focus();
+                    }}
                   />
                 </Item>
                 <Item stackedLabel style={StyleSheet.formItem}>
@@ -293,6 +298,7 @@ class EditCompany extends Component {
                     onChangeText={website =>
                       this.setState({ companyWebsite: website })
                     }
+                    ref={(input) => {this.website = input}}
                   />
                 </Item>
               </View>
