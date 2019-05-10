@@ -60,7 +60,6 @@
 		B6290EC72270A8EE007487F7 /* libRNImageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6290EC62270A8EE007487F7 /* libRNImageCropPicker.a */; };
 		B6290EE52270C973007487F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6290EE42270C973007487F7 /* GoogleService-Info.plist */; };
 		B629255C21DE5F0900A4F676 /* libRNDocumentPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B629255921DE5EB200A4F676 /* libRNDocumentPicker.a */; };
-		B63328EF2278C7A500A37E24 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63328C02278C7A500A37E24 /* JavaScriptCore.framework */; };
 		B63328F02278CFEC00A37E24 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63328C02278C7A500A37E24 /* JavaScriptCore.framework */; };
 		B641D4E3AC824B188D2AC689 /* libRNSentry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09264A8CE9B34A6D832DF556 /* libRNSentry.a */; };
 		B6A59B50226FAF8A00F16927 /* libFBSDKCoreKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6A59B4F226FAF8A00F16927 /* libFBSDKCoreKit.a */; };
@@ -915,6 +914,7 @@
 				85D88B093817400E88D158CC /* libimageCropPicker.a */,
 				09264A8CE9B34A6D832DF556 /* libRNSentry.a */,
 				AA4DD1973A8540AEB294577D /* libRNSentry-tvOS.a */,
+				B63328C02278C7A500A37E24 /* JavaScriptCore.framework */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
