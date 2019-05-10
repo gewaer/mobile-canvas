@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./stylesheet";
-import { Item, Label, Input, Button, Text } from "native-base";
+import { Button, Text } from "native-base";
 import _ from "lodash";
 
 interface Props {
@@ -8,12 +8,25 @@ interface Props {
   onPress: () => void;
 }
 
-function DangerButton(props: Props) {
+const DangerButton = ({ name, onPress }: Props) => {
   return (
-    <Button bordered danger onPress={props.onPress()}>
-      <Text>{props.name}</Text>
+    <Button
+      bordered
+      block
+      danger
+      onPress={onPress}
+      style={styles.buttonContainer}
+    >
+      <Text uppercase style={styles.buttonText}>
+        {name}
+      </Text>
     </Button>
   );
-}
+};
+
+DangerButton.defaultProps = {
+  onPress: () => {},
+  name: "cancel"
+};
 
 export default DangerButton;
