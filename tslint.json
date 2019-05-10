@@ -10,6 +10,8 @@
     "interface-name": false,
     "jsx-no-lambda": false,
     "object-literal-sort-keys": false,
-    "quotemark": [true, "single", "jsx-double"]
+    "ordered-imports": false,
+    "member-access": false,
+    "jsx-boolean-value": false
   }
 }

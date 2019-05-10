@@ -32,7 +32,7 @@ import { API_KEY } from 'react-native-dotenv';
 import TitleBar from '../../components/title-bar';
 
 // Importing Redux's actions
-import { changeActiveCompany } from '../../actions/SessionActions';
+import { changeActiveCompany } from '../../modules/Session';
 
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;

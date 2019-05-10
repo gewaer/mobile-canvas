@@ -14,12 +14,12 @@ import {
   Root
 } from 'native-base';
 import { colors } from '../../config/styles';
-import { changeActiveScreen } from '../../actions/SessionActions';
+import { changeActiveScreen } from '../../modules/Session';
 import { connect } from 'react-redux';
 const platform = Platform.OS;
 import TitleBar from '../../components/title-bar';
 import { Navigation } from 'react-native-navigation';
-import { pushSingleScreenApp } from '../../navigation/flows';
+import { pushSingleScreenApp } from '../../config/flows';
 import StyleSheet from './stylesheet';
 
 const axios = require('../../../src/config/axios');

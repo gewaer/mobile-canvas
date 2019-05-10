@@ -60,7 +60,6 @@
 		B6290EC72270A8EE007487F7 /* libRNImageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6290EC62270A8EE007487F7 /* libRNImageCropPicker.a */; };
 		B6290EE52270C973007487F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6290EE42270C973007487F7 /* GoogleService-Info.plist */; };
 		B629255C21DE5F0900A4F676 /* libRNDocumentPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B629255921DE5EB200A4F676 /* libRNDocumentPicker.a */; };
-		B63328EF2278C7A500A37E24 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63328C02278C7A500A37E24 /* JavaScriptCore.framework */; };
 		B63328F02278CFEC00A37E24 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63328C02278C7A500A37E24 /* JavaScriptCore.framework */; };
 		B641D4E3AC824B188D2AC689 /* libRNSentry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09264A8CE9B34A6D832DF556 /* libRNSentry.a */; };
 		B6A59B50226FAF8A00F16927 /* libFBSDKCoreKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6A59B4F226FAF8A00F16927 /* libFBSDKCoreKit.a */; };
@@ -564,11 +563,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< Updated upstream
 				B73E4F56227B4DA800D107A6 /* libRNSound.a in Frameworks */,
-=======
-				B63328EF2278C7A500A37E24 /* JavaScriptCore.framework in Frameworks */,
->>>>>>> Stashed changes
 				B6290EC72270A8EE007487F7 /* libRNImageCropPicker.a in Frameworks */,
 				B6A59B58226FAF9200F16927 /* libRNGoogleSignin.a in Frameworks */,
 				B6A59B50226FAF8A00F16927 /* libFBSDKCoreKit.a in Frameworks */,
@@ -760,12 +755,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< Updated upstream
 				B73E4F55227B4DA800D107A6 /* libRNSound.a */,
-=======
-				B63328C02278C7A500A37E24 /* JavaScriptCore.framework */,
-				B630C2CF22720BE700D206E1 /* RNTrackPlayer.xcodeproj */,
->>>>>>> Stashed changes
 				B6290EDD2270AF0B007487F7 /* RNSound.xcodeproj */,
 				B6290EC62270A8EE007487F7 /* libRNImageCropPicker.a */,
 				B6A59B6E226FB0F900F16927 /* ReactNativeNavigation.xcodeproj */,
@@ -924,6 +914,7 @@
 				85D88B093817400E88D158CC /* libimageCropPicker.a */,
 				09264A8CE9B34A6D832DF556 /* libRNSentry.a */,
 				AA4DD1973A8540AEB294577D /* libRNSentry-tvOS.a */,
+				B63328C02278C7A500A37E24 /* JavaScriptCore.framework */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1942,11 +1933,7 @@
 					"$(inherited)",
 					"-lc++",
 				);
-<<<<<<< Updated upstream
 				PRODUCT_BUNDLE_IDENTIFIER = com.mctekk.canvas;
-=======
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.CanvasMobile;
->>>>>>> Stashed changes
 				PRODUCT_NAME = Canvas;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1979,11 +1966,7 @@
 					"$(inherited)",
 					"-lc++",
 				);
-<<<<<<< Updated upstream
 				PRODUCT_BUNDLE_IDENTIFIER = com.mctekk.canvas;
-=======
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.CanvasMobile;
->>>>>>> Stashed changes
 				PRODUCT_NAME = Canvas;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";

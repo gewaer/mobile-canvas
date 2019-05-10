@@ -15,7 +15,7 @@ import { Body, Icon, Text, ListItem, List, Right } from 'native-base';
 import { paddingHelpers, colors } from '../../config/styles';
 
 // Importing Redux's actions
-import { changeActiveScreen } from '../../actions/SessionActions';
+import { changeActiveScreen } from '../../modules/Session';
 
 import { Navigation } from 'react-native-navigation';
 
@@ -23,7 +23,7 @@ import {
   pushSingleScreenAppWithSideMenu,
   pushDashboard,
   pushSingleScreenApp
-} from '../../navigation/flows';
+} from '../../config/flows';
 
 import StyleSheet from './stylesheet';
 

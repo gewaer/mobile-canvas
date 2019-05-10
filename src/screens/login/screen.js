@@ -42,7 +42,7 @@ import {
   colors
 } from '../../config/styles';
 
-import { pushDashboard } from '../../navigation/flows'
+import { pushDashboard } from '../../config/flows'
 
 import StyleSheet from './stylesheet'
 
@@ -55,7 +55,7 @@ import {
   changeSessionToken,
   changeUser,
   changeActiveCompany
-} from '../../actions/SessionActions';
+} from '../../modules/Session';
 
 const axios = require('../../../src/config/axios');
 

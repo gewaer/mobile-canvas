@@ -27,7 +27,7 @@ import {
   Item
 } from 'native-base';
 
-import { changeActiveScreen } from '../../actions/SessionActions';
+import { changeActiveScreen } from '../../modules/Session';
 import { connect } from 'react-redux';
 const platform = Platform.OS;
 import TitleBar from '../../components/title-bar'

@@ -39,7 +39,7 @@ const platform = Platform.OS;
 
 import { Navigation } from 'react-native-navigation';
 
-import { pushDashboard } from '../../navigation/flows';
+import { pushDashboard } from '../../config/flows';
 
 class CompanyInfo extends Component {
   constructor(props) {

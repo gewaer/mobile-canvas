@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_KEY } from "react-native-dotenv";
-import getStore from "../store/store";
+import getStore from "../modules/store";
 
 const store = getStore();
 
@@ -22,7 +22,12 @@ instance.interceptors.response.use(function (response) {
   //DO SOMETHING
   return response;
 }, function (error) {
+  /**
+   * TODO: Refreshing token validation
+   */
+  if (error.response.status === 401 || error.response.status === 403) {
 
+  }
   return Promise.reject(error);
 });
 

@@ -1,51 +1,40 @@
 // Importing package modules.
 import React, { Component } from "react";
-import {
-	View,
-  Image,
-  Dimensions,
-  Text,
-  TouchableOpacity
-} from "react-native";
+import { View, Image, Dimensions, Text, TouchableOpacity } from "react-native";
 import Stylesheet from "./stylesheet";
 import { colors } from "../../config/styles";
-import { getPercentage } from '../../lib/helpers';
+import { getPercentage } from "../../utils/helpers";
 
 const deviceWidth = Dimensions.get("window").width;
 const itemWidth = getPercentage(deviceWidth, 80);
 
-interface State {
-}
+interface State {}
 interface Props {
-  title: string,
-  style: object
+  title: string;
+  style: object;
 }
 
 class ExampleRow extends Component<Props, State> {
+  static defaultProps = {};
 
-	static defaultProps = {}
-
-  constructor(props: Props){
+  constructor(props: Props) {
     super(props);
-    this.state = {}
+    this.state = {};
   }
 
-  componentDidMount(){}
+  componentDidMount() {}
 
-  componentWillUnmount(){}
+  componentWillUnmount() {}
 
-	render() {
-    const {
-      title,
-      style
-    } = this.props;
+  render() {
+    const { title, style } = this.props;
 
-		return (
-      <View style={ style }>
-        <Text>I am { title } in a SwipeListView</Text>
+    return (
+      <View style={style}>
+        <Text>I am {title} in a SwipeListView</Text>
       </View>
-		);
-	}
+    );
+  }
 }
 
 export default ExampleRow;

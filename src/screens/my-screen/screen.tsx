@@ -37,10 +37,10 @@ import {
 // Importing Redux's actions
 import {
 	changeActiveScreen
-} from '../../actions/SessionActions';
+} from '../../modules/Session';
 import Stylesheet from './stylesheet';
 import { Navigation } from 'react-native-navigation';
-import { pushSingleScreenApp } from '../../navigation/flows';
+import { pushSingleScreenApp } from '../../config/flows';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import MyCarousel from '../../components/carousel';
 import AudioPlayer from '../../components/audio-player';

@@ -35,7 +35,7 @@ import {
   colors
 } from '../../config/styles';
 
-import { pushDashboard } from '../../navigation/flows';
+import { pushDashboard } from '../../config/flows';
 
 import TitleBar from '../../components/title-bar';
 import { API_KEY } from 'react-native-dotenv'
@@ -47,7 +47,7 @@ import {
   changeSessionToken,
   changeUser,
   changeActiveCompany
-} from '../../actions/SessionActions';
+} from '../../modules/Session';
 
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
