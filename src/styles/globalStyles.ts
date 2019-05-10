@@ -15,4 +15,22 @@ import { colors } from "./colors";
 import { iosTypes } from "./types";
 import { pmHelpers } from "./marginLayout";
 
-export const globalStyles = {};
+export const globalStyles = {
+  //Button Row Contianer
+  buttonContainer: {
+    marginTop: pmHelpers.S,
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  //Centered Item
+  centered: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  // Main Container to Screens in Portrait
+  mainContainer: {
+    flex: 1,
+    flexDirection: "column",
+    padding: pmHelpers.S
+  }
+};

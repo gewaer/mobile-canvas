@@ -95,7 +95,6 @@ class Welcome extends Component {
       })
       .catch((error) => {
         console.log(error.response);
-        debugger;
         Alert.alert('Sesión expirada');
         this.removeSessionData();
         this.setState({ isLoading: false })
