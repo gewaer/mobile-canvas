@@ -241,8 +241,7 @@ class EditProfile extends Component {
     return (
       this.state.userName &&
       this.state.userLastName &&
-      this.state.userEmail &&
-      this.state.userPassword
+      this.state.userEmail
     );
   }
 
@@ -260,20 +259,21 @@ class EditProfile extends Component {
 
     this.setState({ isLoading: true });
 
-    let data = {
+    const data = {
       firstname: this.state.userName,
       lastname: this.state.userLastName,
       email: this.state.userEmail,
-      password: this.state.userPassword,
       default_company: this.state.userDefaultFamily
     };
 
+    const headers= {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }
+
     axios
-      .put(
-        `/users/${this.props.userInfo.id}`,
-        this.formatFormData(data)
-      )
+      .put(`/users/${this.props.userInfo.id}`, data, headers)
       .then(response => {
+        console.log(response.data);
         let userSelectedFamilty = this.getDefaultFamilyName();
         if (userSelectedFamilty) {
           this.changeActiveFamily(userSelectedFamilty);
@@ -282,7 +282,8 @@ class EditProfile extends Component {
         console.log(response.data);
       })
       .catch(function(error) {
-        console.log(error.response);
+        console.log(error.message);
+        this.setState({ isLoading: false });
       });
   }
 

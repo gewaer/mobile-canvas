@@ -35,21 +35,32 @@ export default StyleSheet.create({
     backgroundColor: 'white'
   },
   googleBtn: {
-    backgroundColor: colors.gmail,
-    width: '70%',
-    alignSelf: 'center'
+    marginTop: paddingHelpers.S,
+    marginBottom: paddingHelpers.S,
+    borderBottomWidth: 2,
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+    borderColor: colors.gmail,
+    height: 48,
+    borderRadius: 3,
+    backgroundColor: 'white'
   },
   googleText: {
-    color: '#fff',
-    textAlign: 'center',
-    width: '100%'
+    color: colors.gmail,
+    fontWeight: 'bold',
+    fontSize: 12
   },
   facebookBtn: {
     marginTop: paddingHelpers.S,
-    marginBottom: paddingHelpers.XS,
-    backgroundColor: colors.facebook,
-    width: '70%',
-    alignSelf: 'center'
+    marginBottom: paddingHelpers.S,
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    height: 48,
+    borderRadius: 3,
+    backgroundColor: colors.facebook
   },
   facebookText: {
     color: '#fff',

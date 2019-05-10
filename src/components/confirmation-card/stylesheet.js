@@ -59,14 +59,25 @@ export default StyleSheet.create({
     fontSize: 14
   },
   title: {
-    alignSelf: 'center',
     fontSize: 18,
     fontWeight: 'bold',
-    color: colors.brandPrimary
+    color: colors.brandPrimary,
+    marginTop: 5
+  },
+  topContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 25,
+    paddingBottom: 10
   },
   bottomContainer: {
     borderTopWidth: 2,
     borderColor: colors.brandLightGray,
     paddingBottom: 35
+  },
+  logo: {
+    //alignSelf: 'center',
+    width: 56,
+    height: 48
   }
 });

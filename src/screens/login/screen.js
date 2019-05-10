@@ -114,6 +114,19 @@ class Login extends Component {
     });
   }
 
+  popScreen(activeScreen) {
+    Navigation.pop(this.props.componentId, {
+      component: {
+        name: activeScreen,
+        options: {
+          topBar: {
+            visible: false
+          }
+        }
+      }
+    });
+  }
+
   // Defines title bar's left content
   titleBarLeft() {
     return {
@@ -121,7 +134,7 @@ class Login extends Component {
         <View>
           <TouchableOpacity
             transparent
-            onPress={() => this.pushScreen('canvas.Welcome')}
+            onPress={() => this.popScreen('canvas.Welcome')}
           >
             <Icon
               type={'Ionicons'}
@@ -490,16 +503,16 @@ class Login extends Component {
                   <View style={StyleSheet.btnContainer}>
                     <Button
                       block
-                      style={[StyleSheet.submitBtnInv, { width: 155 }]}
+                      style={[StyleSheet.googleBtn, { width: 155 }]}
                       onPress={() => this.signInWithGoogleAsync()}
                     >
-                      <Text style={StyleSheet.buttonTextPrimary}>
+                      <Text style={StyleSheet.googleText}>
                           Gmail
                       </Text>
                     </Button>
                     <Button
                       block
-                      style={[StyleSheet.submitBtn, { width: 155 }]}
+                      style={[StyleSheet.facebookBtn, { width: 155 }]}
                       onPress={() => this.signInWithFacebookAsync()}
                     >
                       <Text style={StyleSheet.buttonText}>
