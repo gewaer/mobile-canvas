@@ -2,29 +2,31 @@ import React from "react";
 import styles from "./stylesheet";
 import { Item, Label, Input } from "native-base";
 import _ from "lodash";
+import { colors } from "../../styles/colors";
 
 interface Props {
   name: string;
   value: string;
   label: string;
-  onChangeText: (name: string) => (text: string) => void;
-  onSubmitEditing?: () => void | null;
   secure?: boolean;
+  autoCapitalize?: string;
+  autoCorrect?: boolean;
+  keyboardAppearance?: string;
+  keyboardType?: string;
+  maxLength?: number;
+  onBlur?: () => void;
+  placeholder?: string;
+  placeholderTextColor?: string;
+  returnKeyLabel?: string;
+  selectionColor?: string;
+  onChangeText: (name: string) => (e: string) => any;
 }
 
-const GlobalInput = (props: Props) => {
+const GlobalInput = ({ label, onChangeText, name }: Props) => {
   return (
-    <Item floating Label>
-      <Label style={styles.formLabel}>{props.label}</Label>
-      <Input
-        value={props.value}
-        onChangeText={props.onChangeText(props.name)}
-        style={styles.input}
-        secureTextEntry={props.secure}
-        onSubmitEditing={
-          _.has(props, "onSubmitEditing") && props.onSubmitEditing(props.name)
-        }
-      />
+    <Item floatingLabel style={styles.itemContainer}>
+      <Label style={styles.formLabel}>{label.toUpperCase()}</Label>
+      <Input style={styles.input} onChangeText={onChangeText(name)} />
     </Item>
   );
 };
