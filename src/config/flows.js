@@ -73,7 +73,10 @@ export function pushDashboard(sideMenuProps) {
         center: {
           bottomTabs: {
             options: {
-              currentTabIndex: 1
+              bottomTabs: {  
+                backgroundColor: colors.brandSecondary,
+                currentTabIndex: 0,
+              }
             },
             children: [
               {
@@ -82,8 +85,8 @@ export function pushDashboard(sideMenuProps) {
                   name: 'canvas.Dashboard',
                   options: {
                     bottomTab: {
-                      iconColor: colors.brandSecondary,
-                      selectedIconColor: colors.brandPrimary,
+                      iconColor: 'white',
+                      selectedIconColor: colors.brandPrimaryAlter,
                       icon: require('../assets/images/icons/apps.png'),
                       // add this to change icon position (optional, iOS only).
                       iconInsets: {
@@ -91,7 +94,7 @@ export function pushDashboard(sideMenuProps) {
                         left: 0, // optional, default is 0.
                         bottom: -6, // optional, default is 0.
                         right: 0 // optional, default is 0.
-                      }
+                      },
                     },
                     topBar: {
                       visible: false
@@ -105,8 +108,8 @@ export function pushDashboard(sideMenuProps) {
                   name: 'canvas.Companies',
                   options: {
                     bottomTab: {
-                      iconColor: colors.brandSecondary,
-                      selectedIconColor: colors.brandPrimary,
+                      iconColor: 'white',
+                      selectedIconColor: colors.brandPrimaryAlter,
                       icon: require('../assets/images/icons/family.png'),
                       // add this to change icon position (optional, iOS only).
                       iconInsets: {
@@ -128,8 +131,8 @@ export function pushDashboard(sideMenuProps) {
                   name: 'canvas.AddPost',
                   options: {
                     bottomTab: {
-                      iconColor: colors.brandSecondary,
-                      selectedIconColor: colors.brandPrimary,
+                      iconColor: 'white',
+                      selectedIconColor: colors.brandPrimaryAlter,
                       icon: require('../assets/images/icons/family.png'),
                       // add this to change icon position (optional, iOS only).
                       iconInsets: {
@@ -151,8 +154,8 @@ export function pushDashboard(sideMenuProps) {
                   name: 'canvas.MyScreen',
                   options: {
                     bottomTab: {
-                      iconColor: colors.brandSecondary,
-                      selectedIconColor: colors.brandPrimary,
+                      iconColor: 'white',
+                      selectedIconColor: colors.brandPrimaryAlter,
                       icon: require('../assets/images/icons/apps.png'),
                       // add this to change icon position (optional, iOS only).
                       iconInsets: {

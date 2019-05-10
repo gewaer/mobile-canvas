@@ -36,12 +36,15 @@ export const globalStyle = {
   },
   // Welcome Inputs
   formLabel: {
-    color: 'white',
-    top: platform === 'ios' ? 8 : 13
+    color: '#61C2CC',
+    marginTop: 12,
+    marginBottom: 8,
+    fontSize: 14
   },
   formInput: {
-    height: 60,
-    color: 'white',
+    height: 30,
+    color: 'black',
+    top: 0
   },
   pickerIcon: {
     paddingTop: 0,
@@ -52,9 +55,12 @@ export const globalStyle = {
 };
 
 export const colors = {
-  brandPrimary: '#e48c25',
-  brandSecondary: '#3d3e44',
+  brandPrimary: '#61C2CC',
+  brandPrimaryAlter: '#1F9AA7',
+  brandPrimaryAlterTrans: 'rgba(31, 154, 168, 0.6)',
+  brandSecondary: '#AAE6E2',
   bradSecondaryAlter: '#7f7f7f',
+  deleteColor: '#F55753',
   background: '#F5F2F9',
   errorText: '#FA3256',
   headerText: '#444444',
@@ -69,8 +75,8 @@ export const colors = {
   brandWhite: '#ededed',
   brandBlack: '#1c1d1d',
   brandGrey: '#c2c1c0',
-  brandLightGray: '#b5b5b5',
-  brandDarkGrey: '#4b4b4b',
+  brandLightGray: '#EAEAEA',
+  brandDarkGrey: '#5A5A5A',
   brandGreen: '#189687',
   brandGold: '#f1ac2f',
   brandGoldDisable: '#f1ac2f',

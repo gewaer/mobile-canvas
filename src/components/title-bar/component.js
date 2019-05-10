@@ -14,11 +14,11 @@ import { colors } from '../../config/styles';
 
 // Define Component for Header
 const TitleBar = props => {
-  const { left, body, right } = props;
+  const { left, body, right, backgroundColor } = props;
   return (
-    <Header style={StyleSheet.bar} noShadow>
+    <Header style={[StyleSheet.bar, { backgroundColor } ]} noShadow>
       <StatusBar
-        backgroundColor={colors.brandGreen}
+        backgroundColor={colors.brandPrimary}
         barStyle="light-content"
       />
       <View style={StyleSheet.barContent}>
@@ -40,7 +40,8 @@ const TitleBar = props => {
 TitleBar.propTypes = {
   left: PropTypes.object,
   body: PropTypes.object,
-  right: PropTypes.object
+  right: PropTypes.object,
+  backgroundColor: PropTypes.string
 };
 // Prop Types content
 TitleBar.defaultProps = {
@@ -70,7 +71,8 @@ TitleBar.defaultProps = {
         </Title>
       </View>
     )
-  }
+  },
+  backgroundColor: colors.brandSecondary
 };
 
 export default TitleBar;

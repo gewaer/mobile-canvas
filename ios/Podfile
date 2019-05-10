@@ -43,7 +43,6 @@ target 'Canvas' do
  pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
 
  pod 'RNSound', :path => '../node_modules/react-native-sound'
-
  pod 'ReactNativeNavigation', :path => '../node_modules/react-native-navigation'
 
  post_install do |installer|
