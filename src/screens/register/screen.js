@@ -103,6 +103,19 @@ class Register extends Component {
     });
   }
 
+  popScreen(activeScreen) {
+    Navigation.pop(this.props.componentId, {
+      component: {
+        name: activeScreen,
+        options: {
+          topBar: {
+            visible: false
+          }
+        }
+      }
+    });
+  }
+
   // Defines title bar's left content
   titleBarLeft() {
     if (this.state.isLoading) {
@@ -116,12 +129,12 @@ class Register extends Component {
         <View>
           <TouchableOpacity
             transparent
-            onPress={() => this.pushScreen('canvas.Welcome')}
+            onPress={() => this.popScreen('canvas.Welcome')}
           >
             <Icon
-              type={'MaterialIcons'}
-              name={'chevron-left'}
-              style={{ color: '#fff', fontSize: platform === 'ios' ? 22 : 24 }}
+              type={'Ionicons'}
+              name={'md-arrow-back'}
+              style={{ color: colors.brandPrimary, fontSize: 30, marginLeft: 5 }}
             />
           </TouchableOpacity>
         </View>
@@ -134,19 +147,6 @@ class Register extends Component {
     return {
       content: (
         <View>
-          <Title>
-            <Text
-              style={[
-                StyleSheet.titleBarContent,
-                {
-                  paddingLeft: platform === 'ios' ? 0 : 10,
-                  fontSize: platform === 'ios' ? 18 : 19.64
-                }
-              ]}
-            >
-              Sign Up
-            </Text>
-          </Title>
         </View>
       )
     };
@@ -280,19 +280,25 @@ class Register extends Component {
             noShadow
             left={this.titleBarLeft()}
             body={this.titleBarBody()}
+            backgroundColor="white"
           />
-          <Content style={{ backgroundColor: colors.brandSecondary }}>
+          <Content style={{ backgroundColor: 'white' }}>
             <View>
               <View>
                 <View>
                   <View style={StyleSheet.containerView}>
+                    <Text
+                      style={ StyleSheet.title }
+                    >
+                      Create an Account
+                    </Text>
                     <Form>
+                      <Text style={globalStyle.formLabel}>Name</Text>
                       <Item
                         floatingLabel
                         last
-                        style={[StyleSheet.formItem, { marginTop: 0 }]}
+                        style={ StyleSheet.formItem }
                       >
-                        <Label style={globalStyle.formLabel}>Name</Label>
                         <Input
                           value={this.state.firstname}
                           onChangeText={firstname =>
@@ -304,12 +310,12 @@ class Register extends Component {
                           }}
                         />
                       </Item>
+                      <Text style={globalStyle.formLabel}>Lastname</Text>
                       <Item
                         floatingLabel
                         last
-                        style={[StyleSheet.formItem, { marginTop: 0 }]}
+                        style={ StyleSheet.formItem }
                       >
-                        <Label style={globalStyle.formLabel}>Lastname</Label>
                         <Input
                           value={this.state.lastname}
                           onChangeText={lastname => this.setState({ lastname })}
@@ -320,8 +326,12 @@ class Register extends Component {
                           }}
                         />
                       </Item>
-                      <Item floatingLabel last style={StyleSheet.formItem}>
-                        <Label style={globalStyle.formLabel}>Email</Label>
+                      <Text style={globalStyle.formLabel}>Email</Text>
+                      <Item
+                        floatingLabel
+                        last
+                        style={ StyleSheet.formItem }
+                      >
                         <Input
                           value={this.state.email}
                           onChangeText={email => this.setState({ email })}
@@ -334,8 +344,12 @@ class Register extends Component {
                           }}
                         />
                       </Item>
-                      <Item floatingLabel last style={StyleSheet.formItem}>
-                        <Label style={globalStyle.formLabel}>Password</Label>
+                      <Text style={globalStyle.formLabel}>Password</Text>
+                      <Item
+                        floatingLabel
+                        last
+                        style={ StyleSheet.formItem }
+                      >
                         <Input
                           value={this.state.password}
                           onChangeText={password => this.setState({ password })}
@@ -348,10 +362,12 @@ class Register extends Component {
                           }}
                         />
                       </Item>
-                      <Item floatingLabel last style={StyleSheet.formItem}>
-                        <Label style={globalStyle.formLabel}>
-                          Confirm Password
-                        </Label>
+                      <Text style={globalStyle.formLabel}>Confirm Password</Text>
+                      <Item
+                        floatingLabel
+                        last
+                        style={ StyleSheet.formItem }
+                      >
                         <Input
                           value={this.state.confirmPassword}
                           onChangeText={confirmPassword =>
@@ -366,8 +382,12 @@ class Register extends Component {
                           }}
                         />
                       </Item>
-                      <Item floatingLabel last style={StyleSheet.formItem}>
-                        <Label style={globalStyle.formLabel}>Company</Label>
+                      <Text style={globalStyle.formLabel}>Company</Text>
+                      <Item
+                        floatingLabel
+                        last
+                        style={ StyleSheet.formItem }
+                      >
                         <Input
                           value={this.state.family}
                           onChangeText={family => this.setState({ family })}
@@ -378,6 +398,14 @@ class Register extends Component {
                           }}
                         />
                       </Item>
+                      <View style={ StyleSheet.textLabelContainer }>
+                        <Text style={StyleSheet.textLabel}>
+                          By creating an account you agree to our
+                        </Text>
+                        <Text style={StyleSheet.textLabel}>
+                          Terms of Service and Privacy Policy
+                        </Text>
+                      </View>
                       {// If the app is creating the user hide the register button and show a loading spinner
                         this.state.isLoading ? (
                           <Spinner color={colors.brandWhite} />
@@ -387,10 +415,10 @@ class Register extends Component {
                             bordered
                             primary
                             onPress={() => this.createUser()}
-                            style={[StyleSheet.submitBtn, { marginTop: 30 }]}
+                            style={[StyleSheet.submitBtn]}
                           >
-                            <Text style={{ color: colors.brandWhite }}>
-                            SIGN UP
+                            <Text style={ StyleSheet.buttonText }>
+                             CREATE ACCOUNT
                             </Text>
                           </Button>
                         )}

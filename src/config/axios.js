@@ -12,7 +12,6 @@ instance.interceptors.request.use(function (config) {
     if(!config.url.includes('auth')){
       const token = store.getState().session.token;
       config.headers.Authorization = token;
-      config.headers["Content-Type"] = "application/json";
     }
     return config;
   }, function (error) {

@@ -5,6 +5,7 @@ import { Button } from "native-base";
 import Stylesheet from "./stylesheet";
 import { colors } from "../../config/styles";
 import { getPercentage } from "../../utils/helpers";
+import { appImages } from '../../config/imagesRoutes';
 
 const deviceWidth = Dimensions.get("window").width;
 const itemWidth = getPercentage(deviceWidth, 80);
@@ -30,11 +31,14 @@ class ConfirmationCard extends Component<Props, State> {
 
   render() {
     const { title, subTitle, onCancelPress, onConfirmPress } = this.props;
-
-    return (
-      <View style={Stylesheet.container}>
-        <View>
-          <Text style={Stylesheet.title}>{title}</Text>
+		return (
+      <View style={ Stylesheet.container }>
+        <View style={ Stylesheet.topContainer }>
+          <Image
+            source={ appImages.GinnyLogo.uri }
+            style={Stylesheet.logo}
+          />
+          <Text style={ Stylesheet.title }>{ title }</Text>
         </View>
         <View style={Stylesheet.bottomContainer}>
           <Text style={Stylesheet.subTitle}>{subTitle}</Text>

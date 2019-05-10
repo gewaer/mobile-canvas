@@ -94,18 +94,16 @@ class AudioPlayer extends Component<State, Props> {
     } else {
       const filepath = this.props.filepath;
       console.log("[Play]", filepath);
-
       this.sound = new Sound(filepath, "", error => {
         if (error) {
-          console.log("failed to load the sound", error);
-          Alert.alert("Notice", "audio file error. (Error code : 1)");
-          this.setState({ playState: "paused" });
+          console.log('failed to load the sound', error);
+          Alert.alert('Notice', 'audio file error. (Error code : 1)');
+          this.setState({playState:'paused'});
         } else {
-          this.setState({
-            playState: "playing",
-            duration: this.sound.getDuration()
-          });
-          this.sound.play(this.playComplete);
+          if(this.sound){
+            this.setState({playState:'playing', duration:this.sound.getDuration()});
+            this.sound.play(this.playComplete);
+          }
         }
       });
     }
