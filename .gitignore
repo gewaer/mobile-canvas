@@ -87,3 +87,8 @@ google-services.json
 
 # Sentry Keys
 sentry.properties
+
+# Pods
+Podfile.lock
+Pods
+*.xcworkspace
