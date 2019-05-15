@@ -20,9 +20,7 @@ import { changeActiveScreen } from '../../modules/Session';
 import { Navigation } from 'react-native-navigation';
 
 import {
-  pushSingleScreenAppWithSideMenu,
   pushDashboard,
-  pushSingleScreenApp
 } from '../../config/flows';
 
 import StyleSheet from './stylesheet';
@@ -67,7 +65,7 @@ class SideMenu extends Component {
     } else if (activeScreen == 'canvas.Dashboard') {
       pushDashboard({ activeScreen: 'canvas.Dashboard' });
     } else {
-      pushSingleScreenAppWithSideMenu(activeScreen, {}, { activeScreen });
+      // Use Push Navigation to the app
     }
   }
 
@@ -101,7 +99,7 @@ class SideMenu extends Component {
     try {
       AsyncStorage.removeItem('sessionData', () => {
         this.props.changeActiveScreen({ activeScreen: 'welcome' });
-        pushSingleScreenApp('canvas.Welcome', {});
+        // Use Nav to reset the stack in Login
       });
     } catch (error) {
       console.error(error);

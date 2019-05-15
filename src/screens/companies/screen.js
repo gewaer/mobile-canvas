@@ -38,7 +38,6 @@ import getStore from '../../modules/store';
 import StyleSheet from './stylesheet';
 
 import { Navigation } from 'react-native-navigation';
-import { pushSingleScreenApp } from '../../config/flows';
 
 class Family extends Component {
   constructor(props) {
@@ -68,7 +67,7 @@ class Family extends Component {
   }
 
   changeScreen(family) {
-    pushSingleScreenApp('canvas.CompanyInfo', { family: family });
+    // Push Navigation to Company Info
   }
 
   changeActiveFamily(family) {

@@ -19,7 +19,6 @@ import { connect } from 'react-redux';
 const platform = Platform.OS;
 import TitleBar from '../../components/title-bar';
 import { Navigation } from 'react-native-navigation';
-import { pushSingleScreenApp } from '../../config/flows';
 import StyleSheet from './stylesheet';
 
 const axios = require('../../../src/config/axios');
@@ -41,7 +40,7 @@ class Dashboard extends PureComponent {
   }
 
   changeScreen(card) {
-    pushSingleScreenApp('canvas.ItemInfo', { item: card });
+    // Push Navigation to Leads info
   }
 
   onItemCreated = () => {
