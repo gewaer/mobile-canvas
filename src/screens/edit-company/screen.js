@@ -40,6 +40,7 @@ const platform = Platform.OS;
 import StyleSheet from './stylesheet';
 
 import { Navigation } from 'react-native-navigation';
+import { COMPANY_INFO } from '..';
 
 /*
 	Screen Name: Edit Company.
@@ -89,7 +90,7 @@ class EditCompany extends Component {
   changeScreen(companyUpdated, newCompanyInfo) {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'canvas.CompanyInfo',
+        name: COMPANY_INFO,
         passProps: {
           companyUpdated: companyUpdated,
           family: newCompanyInfo ? newCompanyInfo : this.state.company

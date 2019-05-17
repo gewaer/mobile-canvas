@@ -56,6 +56,7 @@ import {
   changeUser,
   changeActiveCompany
 } from '../../modules/Session';
+import { WELCOME, DASHBOARD } from '..';
 
 const axios = require('../../../src/config/axios');
 
@@ -90,14 +91,15 @@ class Login extends Component {
 
   // Handles Android's back button's action
   backAndroid() {
-    this.pushScreen('canvas.Welcome');
+    this.pushScreen(WELCOME);
     return true;
   }
 
   // Changes the active screen using redux.
   changeScreen(activeScreen) {
     this.props.changeActiveScreen({ activeScreen });
-    pushDashboard({ activeScreen: 'canvas.Dashboard' });
+    // TODO: Change Logic To hanlde Naigation
+    pushDashboard({ activeScreen: DASHBOARD });
   }
 
   // Pushes to another screen in the navigator stack.
@@ -134,7 +136,7 @@ class Login extends Component {
         <View>
           <TouchableOpacity
             transparent
-            onPress={() => this.popScreen('canvas.Welcome')}
+            onPress={() => this.popScreen(WELCOME)}
           >
             <Icon
               type={'Ionicons'}

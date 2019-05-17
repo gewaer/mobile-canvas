@@ -248,7 +248,8 @@ class Register extends Component {
       .get(`/companies?q=(id:${companyId})`)
       .then(response => {
         this.props.changeActiveCompany({ company: response.data[0] });
-        pushDashboard({ activeScreen: 'canvas.Dashboard' });
+        // TODO: Use Function to return to Process
+        // pushDashboard({ activeScreen: 'canvas.Dashboard' });
       })
       .catch(function(error) {
         // handle error

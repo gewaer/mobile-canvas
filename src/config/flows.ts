@@ -156,12 +156,6 @@ export function auth() {
         children: [
           {
             component: {
-              id: screens.WELCOME,
-              name: screens.WELCOME
-            }
-          },
-          {
-            component: {
               id: screens.LOGIN,
               name: screens.LOGIN
             }
@@ -171,8 +165,15 @@ export function auth() {
               id: screens.REGISTER,
               name: screens.REGISTER
             }
+          },
+          {
+            component: {
+              id: screens.WELCOME,
+              name: screens.WELCOME
+            }
           }
-        ]
+        ],
+        options: {}
       }
     }
   });
@@ -216,25 +217,23 @@ export function defaultProps() {
       animate: true, // Controls whether BottomTabs visibility changes should be animated
       currentTabIndex: 0,
       drawBehind: false,
-      backgroundColor: colors.brandSecondary,
+      backgroundColor: colors.brandGreen,
       barStyle: "default", // 'black',
       translucent: false,
       hideShadow: false
     },
     sideMenu: {
-      openGestureMode: "entireScreen", // it can be "bezel"
-      animationType: "parallax", // defaults to none if not provided, options are 'parallax', 'door', 'slide', or 'slide-and-scale'
       left: {
         shouldStretchDrawer: false, // defaults to true, when false sideMenu contents not stretched when opened past the width
-        animationVelocity: 2500, // defaults to 840, high number is a faster sideMenu open/close animation
+        // animationVelocity: 2500, // defaults to 840, high number is a faster sideMenu open/close animation
         width: deviceWidth * 0.8,
         height: deviceHeight * 0.8,
-        visible: true,
+        visible: false,
         enabled: true
       },
       right: {
-        shouldStretchDrawer: false, // defaults to true, when false sideMenu contents not stretched when opened past the width
-        animationVelocity: 2500, // defaults to 840, high number is a faster sideMenu open/close animation
+        shouldStretchDrawerk: false, // defaults to true, when false sideMenu contents not stretched when opened past the width
+        // animationVelocity: 2500, // defaults to 840, high number is a faster sideMenu open/close animation
         visible: false,
         enabled: false
       }

@@ -20,6 +20,8 @@ const platform = Platform.OS;
 import TitleBar from '../../components/title-bar';
 import { Navigation } from 'react-native-navigation';
 import StyleSheet from './stylesheet';
+import { SIDEMENU, ADD_LEADS, LEADS_INFO, DASHBOARD } from '..';
+import { push } from '../../utils/nav';
 
 const axios = require('../../../src/config/axios');
 
@@ -40,7 +42,22 @@ class Dashboard extends PureComponent {
   }
 
   changeScreen(card) {
-    // Push Navigation to Leads info
+    // TODO: Push Navigation to Leads info
+    console.log(card)
+    Navigation.showModal({
+      stack: {
+        children:[{
+          component: {
+            name: LEADS_INFO,
+            passProps: {
+              item: card
+            }
+          }
+
+        }]
+      }
+    })
+    // push(DASHBOARD,LEADS_INFO, {item: card})
   }
 
   onItemCreated = () => {
@@ -77,7 +94,7 @@ class Dashboard extends PureComponent {
         children: [
           {
             component: {
-              name: 'canvas.AddItem',
+              name: ADD_LEADS,
               passProps: {
                 itemCreatedAction: this.onItemCreated
               },
@@ -103,7 +120,7 @@ class Dashboard extends PureComponent {
   }
 
   showDrawer = () => {
-    Navigation.mergeOptions('navigation.drawer.left.tab', {
+    Navigation.mergeOptions(SIDEMENU, {
       sideMenu: {
         left: {
           visible: true

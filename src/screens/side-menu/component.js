@@ -24,6 +24,7 @@ import {
 } from '../../config/flows';
 
 import StyleSheet from './stylesheet';
+import { DASHBOARD, PROFILE_INFO, SETTINGS, SIDEMENU } from '..';
 
 /*
 	Screen Name: SideMenu.
@@ -40,19 +41,19 @@ class SideMenu extends Component {
           text: 'Dashboard',
           iconType: 'MaterialIcons',
           iconName: 'dashboard',
-          navigateTo: 'canvas.Dashboard'
+          navigateTo: DASHBOARD
          },
          {
           text: 'My Profile',
           iconType: 'FontAwesome',
           iconName: 'user',
-          navigateTo: 'canvas.Profile'
+          navigateTo: PROFILE_INFO
          },
          {
           text: 'Settings',
           iconType: 'MaterialIcons',
           iconName: 'settings',
-          navigateTo: 'canvas.Settings'
+          navigateTo: SETTINGS
          }
        ]
     }
@@ -62,15 +63,15 @@ class SideMenu extends Component {
   changeScreen(activeScreen) {
     if (this.props.activeScreen == activeScreen) {
       this.hideDrawer();
-    } else if (activeScreen == 'canvas.Dashboard') {
-      pushDashboard({ activeScreen: 'canvas.Dashboard' });
+    } else if (activeScreen == DASHBOARD) {
+      pushDashboard({ activeScreen: DASHBOARD});
     } else {
       // Use Push Navigation to the app
     }
   }
 
   hideDrawer = () => {
-    Navigation.mergeOptions('navigation.drawer.left', {
+    Navigation.mergeOptions(SIDEMENU, {
       sideMenu: {
         left: {
           visible: false
@@ -87,10 +88,10 @@ class SideMenu extends Component {
 
   // Changes to dashboard
   changeToDashboard = () => {
-    if (this.props.activeScreen == 'canvas.Dashboard') {
+    if (this.props.activeScreen == DASHBOARD) {
       this.hideDrawer();
     } else {
-      pushDashboard({ activeScreen: 'canvas.Dashboard' });
+      pushDashboard({ activeScreen: DASHBOARD });
     }
   };
 

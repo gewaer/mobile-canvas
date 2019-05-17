@@ -1,9 +1,14 @@
 import { Navigation } from "react-native-navigation";
 
-export function push(componentId: string, screenName: string) {
+export function push(
+  componentId: string,
+  screenName: string,
+  passProps: object
+) {
   Navigation.push(componentId, {
     component: {
       name: screenName,
+      passProps,
       options: {}
     }
   });

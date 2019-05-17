@@ -37,6 +37,7 @@ const platform = Platform.OS;
 import { Navigation } from 'react-native-navigation';
 
 import StyleSheet from './stylesheet';
+import { LEADS_INFO } from '..';
 
 class EditInfo extends Component {
   constructor(props) {
@@ -102,7 +103,7 @@ class EditInfo extends Component {
   changeScreen(itemUpdated, updatedData) {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'canvas.ItemInfo',
+        name: LEADS_INFO,
         passProps: {
           item: updatedData ? updatedData : this.state.item,
           itemUpdated: itemUpdated

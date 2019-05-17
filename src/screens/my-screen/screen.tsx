@@ -374,10 +374,10 @@ class MyScreen extends Component<State, Props> {
                     marginTop: 10
                   }}
                 />
-                <AudioPlayer
+                {/* <AudioPlayer
                   title="Pianito"
                   filepath="https://ccrma.stanford.edu/~jos/mp3/tenor-sax.mp3"
-                />
+                /> */}
               </View>
             )}
           </ScrollView>
