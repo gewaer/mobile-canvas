@@ -43,21 +43,14 @@ class Dashboard extends PureComponent {
 
   changeScreen(card) {
     // TODO: Push Navigation to Leads info
-    console.log(card)
-    Navigation.showModal({
-      stack: {
-        children:[{
-          component: {
-            name: LEADS_INFO,
-            passProps: {
-              item: card
-            }
-          }
-
-        }]
+    Navigation.push(DASHBOARD, {
+      component: {
+        name: LEADS_INFO,
+        passProps: {
+          item: card
+        }
       }
     })
-    // push(DASHBOARD,LEADS_INFO, {item: card})
   }
 
   onItemCreated = () => {

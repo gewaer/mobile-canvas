@@ -217,7 +217,7 @@ export function defaultProps() {
       animate: true, // Controls whether BottomTabs visibility changes should be animated
       currentTabIndex: 0,
       drawBehind: false,
-      backgroundColor: colors.brandGreen,
+      backgroundColor: colors.brandSecondary,
       barStyle: "default", // 'black',
       translucent: false,
       hideShadow: false
