@@ -1,7 +1,3 @@
-platform :ios, '10.0'
-
-require_relative '../node_modules/react-native-unimodules/cocoapods.rb'
-
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
@@ -31,9 +27,6 @@ target 'Canvas' do
  pod 'FBSDKCoreKit', '~> 4.38.0'
  pod 'FBSDKLoginKit', '~> 4.38.0'
  pod 'GoogleSignIn', '~> 4.4.0'
-
-
- use_unimodules!
 
  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
