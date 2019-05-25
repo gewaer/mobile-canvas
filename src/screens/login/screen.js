@@ -13,7 +13,7 @@ import StyleSheet from './stylesheet'
 import { LoginManager, GraphRequest,GraphRequestManager } from 'react-native-fbsdk';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 import { changeActiveScreen, changeSessionToken, changeUser, changeActiveCompany } from '../../modules/Session';
-import { WELCOME, DASHBOARD } from '..';
+import { WELCOME, DASHBOARD, LOGIN } from '..';
 import { pop } from '../../utils/nav';
 const axios = require('../../../src/config/axios');
 // Gets the operating system's name where the app is running (Android or iOS).
@@ -46,7 +46,7 @@ class Login extends Component {
 
   // Handles Android's back button's action
   backAndroid() {
-    pop(WELCOME);
+    Navigation.pop(WELCOME);
     return true;
   }
 
@@ -61,12 +61,9 @@ class Login extends Component {
   titleBarLeft() {
     return {
       content: (
-        <View>
-          <TouchableOpacity  transparent  onPress={() => pop(WELCOME)} >
-            <Icon type={'Ionicons'} name={'md-arrow-back'} style={{ color: colors.brandPrimary, fontSize: 30, marginLeft: 5 }}
-            />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity  transparent  onPress={() => Navigation.popTo(WELCOME)}>
+          <Icon type={'Ionicons'} name={'md-arrow-back'} style={{ color: colors.brandPrimary, fontSize: 30, marginLeft: 5 }} />
+        </TouchableOpacity>
       )
     };
   }
@@ -75,8 +72,7 @@ class Login extends Component {
   titleBarBody() {
     return {
       content: (
-        <View>
-        </View>
+        <View />
       )
     };
   }

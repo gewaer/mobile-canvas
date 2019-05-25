@@ -1,30 +1,14 @@
 // Importing package modules.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import {
-  ScrollView,
-  View,
-  TouchableOpacity,
-  AsyncStorage
-} from 'react-native';
-
+import { ScrollView, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Body, Icon, Text, ListItem, List, Right } from 'native-base';
-
-// Importing local assets and components.
 import { paddingHelpers, colors } from '../../config/styles';
-
-// Importing Redux's actions
 import { changeActiveScreen } from '../../modules/Session';
-
 import { Navigation } from 'react-native-navigation';
-
-import {
-  pushDashboard,
-} from '../../config/flows';
-
+import { pushDashboard,auth } from '../../config/flows';
 import StyleSheet from './stylesheet';
-import { DASHBOARD, PROFILE_INFO, SETTINGS, SIDEMENU } from '..';
+import { DASHBOARD, PROFILE_INFO, SETTINGS, SIDEMENU, WELCOME } from '..';
 
 /*
 	Screen Name: SideMenu.
@@ -67,6 +51,7 @@ class SideMenu extends Component {
       pushDashboard({ activeScreen: DASHBOARD});
     } else {
       // Use Push Navigation to the app
+      Navigation.pop(WELCOME)
     }
   }
 
@@ -101,6 +86,7 @@ class SideMenu extends Component {
       AsyncStorage.removeItem('sessionData', () => {
         this.props.changeActiveScreen({ activeScreen: 'welcome' });
         // Use Nav to reset the stack in Login
+      auth()
       });
     } catch (error) {
       console.error(error);

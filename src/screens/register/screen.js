@@ -3,57 +3,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 const axios = require('../../../src/config/axios');
 import { Navigation } from 'react-native-navigation';
-
-import {
-  View,
-  AsyncStorage,
-  Platform,
-  TouchableOpacity,
-  BackHandler,
-  Keyboard
-} from 'react-native';
-
-import {
-  Button,
-  Title,
-  Text,
-  Content,
-  Container,
-  Form,
-  Item,
-  Input,
-  Label,
-  Spinner,
-  Icon,
-  Root,
-  Toast
-} from 'native-base';
-
+import { View, AsyncStorage, Platform, TouchableOpacity, BackHandler, Keyboard} from 'react-native';
+import { Button, Title, Text, Content, Container, Form, Item, Input, Label, Spinner, Icon, Root, Toast } from 'native-base';
 // Importing local assets and components.
-import {
-  globalStyle,
-  colors
-} from '../../config/styles';
-
+import { globalStyle, colors } from '../../config/styles';
 import { pushDashboard } from '../../config/flows';
-
 import TitleBar from '../../components/title-bar';
 import { API_KEY } from 'react-native-dotenv'
-
-
-// Importing Redux's actions
-import {
-  changeActiveScreen,
-  changeSessionToken,
-  changeUser,
-  changeActiveCompany
-} from '../../modules/Session';
-
-// Gets the operating system's name where the app is running (Android or iOS).
+import { changeActiveScreen, changeSessionToken, changeUser, changeActiveCompany } from '../../modules/Session';
 const platform = Platform.OS;
-
 import StyleSheet from './stylesheet'
-
+import { pop } from '../../utils/nav';
+import { DASHBOARD } from '..';
 /*
 	Screen Name: Register.
 	Description: This screen is used to let the user create an account.
@@ -250,6 +211,7 @@ class Register extends Component {
         this.props.changeActiveCompany({ company: response.data[0] });
         // TODO: Use Function to return to Process
         // pushDashboard({ activeScreen: 'canvas.Dashboard' });
+        pop(DASHBOARD)
       })
       .catch(function(error) {
         // handle error
