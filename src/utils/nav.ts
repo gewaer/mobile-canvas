@@ -13,7 +13,10 @@ export function push(
     }
   });
 }
-
+/**
+ * go back to preview screen
+ * @param componentId - actual screen id
+ */
 export function pop(componentId: string) {
   Navigation.pop(componentId);
 }
