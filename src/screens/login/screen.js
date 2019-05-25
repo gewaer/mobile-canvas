@@ -1,67 +1,23 @@
 // Importing package modules.
 import React, { Component } from 'react';
-
-import {
-  View,
-  ImageBackground,
-  Linking,
-  AsyncStorage,
-  Platform,
-  TouchableOpacity,
-  BackHandler,
-  Keyboard
-} from 'react-native';
-
-import {
-  Button,
-  Title,
-  Text,
-  Content,
-  Container,
-  Form,
-  Item,
-  Input,
-  Label,
-  Spinner,
-  Icon,
-  Root,
-  Toast
-} from 'native-base';
-
+import { View, ImageBackground, Linking, AsyncStorage, Platform, TouchableOpacity, BackHandler, Keyboard } from 'react-native';
+import { Button, Title, Text, Content, Container, Form, Item, Input, Label, Spinner, Icon, Root, Toast } from 'native-base';
 import { Navigation } from 'react-native-navigation';
-
 import { connect } from 'react-redux';
-
-// Importing local assets and components.
 import { appImages } from '../../config/imagesRoutes';
 import TitleBar from '../../components/title-bar';
 import { FORGOT_PASSWORD_URL, GOOGLE_CLIENT_ID } from 'react-native-dotenv';
-
-import {
-  globalStyle,
-  colors
-} from '../../config/styles';
-
+import { globalStyle, colors } from '../../config/styles';
 import { pushDashboard } from '../../config/flows'
-
 import StyleSheet from './stylesheet'
-
 import { LoginManager, GraphRequest,GraphRequestManager } from 'react-native-fbsdk';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
-
-// Importing Redux's actions
-import {
-  changeActiveScreen,
-  changeSessionToken,
-  changeUser,
-  changeActiveCompany
-} from '../../modules/Session';
-
+import { changeActiveScreen, changeSessionToken, changeUser, changeActiveCompany } from '../../modules/Session';
+import { WELCOME, DASHBOARD, LOGIN } from '..';
+import { pop } from '../../utils/nav';
 const axios = require('../../../src/config/axios');
-
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
-
 /*
 	Screen Name: Login.
 	Description: This screen is used to let the user log in with his/her email or with social options.
@@ -90,59 +46,24 @@ class Login extends Component {
 
   // Handles Android's back button's action
   backAndroid() {
-    this.pushScreen('canvas.Welcome');
+    Navigation.pop(WELCOME);
     return true;
   }
 
   // Changes the active screen using redux.
   changeScreen(activeScreen) {
     this.props.changeActiveScreen({ activeScreen });
-    pushDashboard({ activeScreen: 'canvas.Dashboard' });
-  }
-
-  // Pushes to another screen in the navigator stack.
-  pushScreen(activeScreen) {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: activeScreen,
-        options: {
-          topBar: {
-            visible: false
-          }
-        }
-      }
-    });
-  }
-
-  popScreen(activeScreen) {
-    Navigation.pop(this.props.componentId, {
-      component: {
-        name: activeScreen,
-        options: {
-          topBar: {
-            visible: false
-          }
-        }
-      }
-    });
+    // TODO: Change Logic To hanlde Naigation
+    pushDashboard({ activeScreen: DASHBOARD });
   }
 
   // Defines title bar's left content
   titleBarLeft() {
     return {
       content: (
-        <View>
-          <TouchableOpacity
-            transparent
-            onPress={() => this.popScreen('canvas.Welcome')}
-          >
-            <Icon
-              type={'Ionicons'}
-              name={'md-arrow-back'}
-              style={{ color: colors.brandPrimary, fontSize: 30, marginLeft: 5 }}
-            />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity  transparent  onPress={() => Navigation.popTo(WELCOME)}>
+          <Icon type={'Ionicons'} name={'md-arrow-back'} style={{ color: colors.brandPrimary, fontSize: 30, marginLeft: 5 }} />
+        </TouchableOpacity>
       )
     };
   }
@@ -151,8 +72,7 @@ class Login extends Component {
   titleBarBody() {
     return {
       content: (
-        <View>
-        </View>
+        <View />
       )
     };
   }
@@ -400,12 +320,7 @@ class Login extends Component {
     return (
       <Root>
         <Container>
-          <TitleBar
-            noShadow
-            left={this.titleBarLeft()}
-            body={this.titleBarBody()}
-            backgroundColor="white"
-          />
+          <TitleBar noShadow left={this.titleBarLeft()} body={this.titleBarBody()} backgroundColor="white" />
           <Content style={{ backgroundColor: 'white' }}>
             {this.state.isLoading ? (
               <Spinner color={colors.brandPrimary} />
@@ -413,18 +328,12 @@ class Login extends Component {
               <View>
                 <View style={StyleSheet.containerView}>
                   <View style={StyleSheet.topContainerView}>
-                    <Text
-                      style={ StyleSheet.title }
-                    >
+                    <Text style={StyleSheet.title}>
                       Login
                     </Text>
                     <Form style={{ marginHorizontal: 24 }}>
                       <Text style={globalStyle.formLabel}>Email</Text>
-                      <Item
-                        floatingLabel
-                        last
-                        style={ StyleSheet.formItem }
-                      >
+                      <Item floatingLabel last style={ StyleSheet.formItem } >
                         <Input
                           onChangeText={userName =>
                             this.setState({ username: userName })
@@ -546,10 +455,14 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    changeActiveScreen,
+    changeSessionToken,
+    changeUser,
+    changeActiveCompany
+  }
+}
+
 // Connects redux actions to this class' props
-export default connect(mapStateToProps, {
-  changeActiveScreen,
-  changeSessionToken,
-  changeUser,
-  changeActiveCompany
-})(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

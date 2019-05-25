@@ -89,5 +89,9 @@ export const titles = {
     fontWeight: "bold",
     color: colors.black,
     fontStyle: "normal"
+  },
+  titleButton: {
+    fontSizes: 22,
+    color: colors.white
   }
 };

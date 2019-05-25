@@ -40,6 +40,7 @@ const platform = Platform.OS;
 import { Navigation } from 'react-native-navigation';
 
 import { pushDashboard } from '../../config/flows';
+import { DASHBOARD, EDIT_COMPANY } from '..';
 
 class CompanyInfo extends Component {
   constructor(props) {
@@ -76,13 +77,13 @@ class CompanyInfo extends Component {
   }
 
   changeScreen() {
-    pushDashboard({ activeScreen: 'canvas.Dashboard' });
+    pushDashboard({ activeScreen: DASHBOARD });
   }
 
   changeToEditScreen() {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'canvas.EditCompany',
+        name: EDIT_COMPANY,
         passProps: {
           company: this.state.company
         },

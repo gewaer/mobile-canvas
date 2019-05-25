@@ -1,26 +1,15 @@
 import React, { PureComponent } from 'react';
 import { View, Platform, FlatList } from 'react-native';
-import {
-  Button,
-  Text,
-  Icon,
-  ListItem,
-  Body,
-  Right,
-  Container,
-  Spinner,
-  Thumbnail,
-  Toast,
-  Root
-} from 'native-base';
+import { Button, Text, Icon, ListItem, Body, Right, Container, Spinner, Thumbnail, Toast, Root} from 'native-base';
 import { colors } from '../../config/styles';
 import { changeActiveScreen } from '../../modules/Session';
 import { connect } from 'react-redux';
 const platform = Platform.OS;
 import TitleBar from '../../components/title-bar';
 import { Navigation } from 'react-native-navigation';
-import { pushSingleScreenApp } from '../../config/flows';
 import StyleSheet from './stylesheet';
+import { SIDEMENU, ADD_LEADS, LEADS_INFO, DASHBOARD } from '..';
+import { push } from '../../utils/nav';
 
 const axios = require('../../../src/config/axios');
 
@@ -41,44 +30,27 @@ class Dashboard extends PureComponent {
   }
 
   changeScreen(card) {
-    pushSingleScreenApp('canvas.ItemInfo', { item: card });
+    Navigation.push(DASHBOARD, {
+      component: {
+        name: LEADS_INFO,
+        passProps: {
+          item: card
+        }
+      }
+    })
   }
 
   onItemCreated = () => {
-    this.setState(
-      {
-        isLoading: true,
-        data: [],
-        page: 1,
-        itemWasCreated: true
-      },
-      () => {
-        this.getItems();
-      }
-    );
+    this.setState({ isLoading: true, data: [],  page: 1, itemWasCreated: true }, () => this.getItems()  )
   };
 
   openAddItemModal() {
-    // this.props.navigator.showLightBox({
-    //     screen: 'dac.AddItem',
-    //     passProps: {
-    //         itemCreatedAction: this.onItemCreated
-    //     },
-    //     style: {
-    //         backgroundBlur: 'none',
-    //         backgroundColor: 'rgba(34, 34, 34, 0.8)',
-    //         width: 320,
-    //         justifyContent: 'center',
-    //         alignItems: 'center',
-    //         tapBackgroundToDismiss: true
-    //     }
-    // })
     Navigation.showModal({
       stack: {
         children: [
           {
             component: {
-              name: 'canvas.AddItem',
+              name: ADD_LEADS,
               passProps: {
                 itemCreatedAction: this.onItemCreated
               },
@@ -104,7 +76,7 @@ class Dashboard extends PureComponent {
   }
 
   showDrawer = () => {
-    Navigation.mergeOptions('navigation.drawer.left.tab', {
+    Navigation.mergeOptions(SIDEMENU, {
       sideMenu: {
         left: {
           visible: true
@@ -134,11 +106,7 @@ class Dashboard extends PureComponent {
       content: (
         <View style={StyleSheet.titleBarContent}>
           <Button transparent onPress={() => this.openAddItemModal()}>
-            <Icon
-              type={'MaterialIcons'}
-              name={'add'}
-              style={{ color: '#fff', fontSize: platform === 'ios' ? 22 : 24 }}
-            />
+            <Icon type={'MaterialIcons'} name={'add'} style={{ color: '#fff', fontSize: platform === 'ios' ? 22 : 24 }} />
           </Button>
         </View>
       )

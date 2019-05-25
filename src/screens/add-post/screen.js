@@ -44,6 +44,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import * as mime from 'react-native-mime-types';
 import { normalizeFile } from '../../utils/helpers';
 import { Navigation } from 'react-native-navigation';
+import { SIDEMENU } from '..';
 
 const axios = require('../../../src/config/axios');
 
@@ -122,7 +123,7 @@ class AddPost extends Component {
 	}
 
 	showDrawer = () => {
-		Navigation.mergeOptions('navigation.drawer.left.tab', {
+		Navigation.mergeOptions(SIDEMENU, {
 		  sideMenu: {
 			left: {
 			  visible: true

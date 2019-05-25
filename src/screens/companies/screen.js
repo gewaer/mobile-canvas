@@ -38,7 +38,7 @@ import getStore from '../../modules/store';
 import StyleSheet from './stylesheet';
 
 import { Navigation } from 'react-native-navigation';
-import { pushSingleScreenApp } from '../../config/flows';
+import { ADD_COMPANY, SIDEMENU } from '..';
 
 class Family extends Component {
   constructor(props) {
@@ -68,7 +68,7 @@ class Family extends Component {
   }
 
   changeScreen(family) {
-    pushSingleScreenApp('canvas.CompanyInfo', { family: family });
+    // Push Navigation to Company Info
   }
 
   changeActiveFamily(family) {
@@ -100,7 +100,7 @@ class Family extends Component {
         children: [
           {
             component: {
-              name: 'canvas.AddCompany',
+              name: ADD_COMPANY,
               passProps: {
                 companyCreatedAction: this.getCompanies
               },
@@ -131,7 +131,7 @@ class Family extends Component {
   }
 
   showDrawer = () => {
-    Navigation.mergeOptions('navigation.drawer.left.tab', {
+    Navigation.mergeOptions(SIDEMENU, {
       sideMenu: {
         left: {
           visible: true

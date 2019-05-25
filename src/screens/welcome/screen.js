@@ -39,6 +39,7 @@ import {
 } from '../../modules/Session';
 
 import StyleSheet from './stylesheet'
+import { DASHBOARD, LOGIN, REGISTER } from '..';
 
 /*
 	Screen Name: Welcome.
@@ -108,7 +109,7 @@ class Welcome extends Component {
         // Sets user's active company in redux state.
         this.props.changeActiveCompany({ company: response.data[0] });
         // Since all user and session data are in the redux's state, change to Dashboard screen.
-        this.changeScreen('canvas.Dashboard');
+        this.changeScreen(DASHBOARD);
       })
       .catch(function (error) {
         console.log(error);
@@ -118,7 +119,7 @@ class Welcome extends Component {
   // Changes the active screen using redux.
   changeScreen(activeScreen) {
     this.props.changeActiveScreen({ activeScreen });
-    pushDashboard({ activeScreen: 'canvas.Dashboard' });
+    pushDashboard({ activeScreen: DASHBOARD });
   }
 
   // Pushes to another screen in the navigator stack.
@@ -167,7 +168,7 @@ class Welcome extends Component {
               <Button
                 block
                 style={{ marginVertical: paddingHelpers.S, backgroundColor: colors.bradSecondaryAlter }}
-                onPress={() => this.pushScreen('canvas.Login')}
+                onPress={() => this.pushScreen(LOGIN)}
               >
                 <Text style={StyleSheet.btnTextStyle}>
                                     Ingresar
@@ -176,7 +177,7 @@ class Welcome extends Component {
               <Button
                 block
                 style={{ marginVertical: paddingHelpers.S, backgroundColor: colors.brandPrimary }}
-                onPress={() => this.pushScreen('canvas.Register')}
+                onPress={() => this.pushScreen(REGISTER)}
               >
                 <Text style={StyleSheet.btnTextStyle}>
                                     Crear Cuenta

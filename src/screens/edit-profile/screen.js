@@ -45,6 +45,7 @@ import StyleSheet from './stylesheet'
 import { Navigation } from 'react-native-navigation';
 
 import ImagePicker from 'react-native-image-crop-picker';
+import { PROFILE_INFO } from '..';
 
 class EditProfile extends Component {
   constructor(props) {
@@ -155,7 +156,7 @@ class EditProfile extends Component {
   changeScreen(infoChanged) {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'canvas.Profile',
+        name: PROFILE_INFO,
         passProps: {
           profileInfoChanged: infoChanged
         },
@@ -227,7 +228,7 @@ class EditProfile extends Component {
   returnToProfileScreen() {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'canvas.Profile',
+        name: PROFILE_INFO,
         options: {
           topBar: {
             visible: false

@@ -1,31 +1,14 @@
 // Importing package modules.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import {
-  ScrollView,
-  View,
-  TouchableOpacity,
-  AsyncStorage
-} from 'react-native';
-
+import { ScrollView, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Body, Icon, Text, ListItem, List, Right } from 'native-base';
-
-// Importing local assets and components.
 import { paddingHelpers, colors } from '../../config/styles';
-
-// Importing Redux's actions
 import { changeActiveScreen } from '../../modules/Session';
-
 import { Navigation } from 'react-native-navigation';
-
-import {
-  pushSingleScreenAppWithSideMenu,
-  pushDashboard,
-  pushSingleScreenApp
-} from '../../config/flows';
-
+import { pushDashboard,auth } from '../../config/flows';
 import StyleSheet from './stylesheet';
+import { DASHBOARD, PROFILE_INFO, SETTINGS, SIDEMENU, WELCOME } from '..';
 
 /*
 	Screen Name: SideMenu.
@@ -42,19 +25,19 @@ class SideMenu extends Component {
           text: 'Dashboard',
           iconType: 'MaterialIcons',
           iconName: 'dashboard',
-          navigateTo: 'canvas.Dashboard'
+          navigateTo: DASHBOARD
          },
          {
           text: 'My Profile',
           iconType: 'FontAwesome',
           iconName: 'user',
-          navigateTo: 'canvas.Profile'
+          navigateTo: PROFILE_INFO
          },
          {
           text: 'Settings',
           iconType: 'MaterialIcons',
           iconName: 'settings',
-          navigateTo: 'canvas.Settings'
+          navigateTo: SETTINGS
          }
        ]
     }
@@ -64,15 +47,16 @@ class SideMenu extends Component {
   changeScreen(activeScreen) {
     if (this.props.activeScreen == activeScreen) {
       this.hideDrawer();
-    } else if (activeScreen == 'canvas.Dashboard') {
-      pushDashboard({ activeScreen: 'canvas.Dashboard' });
+    } else if (activeScreen == DASHBOARD) {
+      pushDashboard({ activeScreen: DASHBOARD});
     } else {
-      pushSingleScreenAppWithSideMenu(activeScreen, {}, { activeScreen });
+      // Use Push Navigation to the app
+      Navigation.pop(WELCOME)
     }
   }
 
   hideDrawer = () => {
-    Navigation.mergeOptions('navigation.drawer.left', {
+    Navigation.mergeOptions(SIDEMENU, {
       sideMenu: {
         left: {
           visible: false
@@ -89,10 +73,10 @@ class SideMenu extends Component {
 
   // Changes to dashboard
   changeToDashboard = () => {
-    if (this.props.activeScreen == 'canvas.Dashboard') {
+    if (this.props.activeScreen == DASHBOARD) {
       this.hideDrawer();
     } else {
-      pushDashboard({ activeScreen: 'canvas.Dashboard' });
+      pushDashboard({ activeScreen: DASHBOARD });
     }
   };
 
@@ -101,7 +85,8 @@ class SideMenu extends Component {
     try {
       AsyncStorage.removeItem('sessionData', () => {
         this.props.changeActiveScreen({ activeScreen: 'welcome' });
-        pushSingleScreenApp('canvas.Welcome', {});
+        // Use Nav to reset the stack in Login
+      auth()
       });
     } catch (error) {
       console.error(error);

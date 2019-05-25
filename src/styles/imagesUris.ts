@@ -24,5 +24,8 @@ export const brands = {
   gewaer: {
     whiteUri: require("../assets/images/companyBranding/primary-logo.1a128f8c.png"),
     blackUri: require("../assets/images/companyBranding/secondary-logo.10e49eac.png")
+  },
+  GinnyLogo: {
+    uri: require("../assets/images/ginny/logo.png")
   }
 };
