@@ -50,3 +50,4 @@ const loadingRequest = (payload) => ({
     type: LOADING_REQUEST,
     payload
 })
+

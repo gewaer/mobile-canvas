@@ -1,27 +1,19 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import createStore from '../modules/store';
-let store;
-
+import configureStore from '../modules/store';
+import { PersistGate } from 'redux-persist/integration/react'
 class AppStoreProvider extends PureComponent {
-    static childContextTypes = {
-      store: PropTypes.shape({})
-    };
-
-    getChildContext() {
-      return {
-        store,
-      };
-    }
 
     render() {
       const { children } = this.props;
-      store = store || createStore();
+      const { store, persistor } = configureStore()
       console.log(store)
       return (
         <Provider store={store}>
-          {children}
+          <PersistGate loading={null} persistor={persistor}>
+            {children}
+          </PersistGate>
         </Provider>
       );
     }
