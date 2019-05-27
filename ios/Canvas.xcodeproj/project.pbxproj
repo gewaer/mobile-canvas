@@ -72,6 +72,13 @@
 		B6CC786A21E3D8550001AA70 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6CC786921E3D8550001AA70 /* RSKImageCropper.framework */; };
 		B6CC786B21E3D8550001AA70 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6CC786921E3D8550001AA70 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B73E4F56227B4DA800D107A6 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B73E4F55227B4DA800D107A6 /* libRNSound.a */; };
+		B7BE763A229C7AA4000F1800 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
+		B7BE763B229C7AA4000F1800 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EFCC7180A2984235BAE77A7D /* Entypo.ttf */; };
+		B7BE763C229C7AA4000F1800 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6CCE41E287E14A958A133EB3 /* Feather.ttf */; };
+		B7BE763D229C7AA4000F1800 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D49C3B8DB55F41EF9B579550 /* Foundation.ttf */; };
+		B7BE763E229C7AA4000F1800 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2B5523DABFD49529F014B16 /* SimpleLineIcons.ttf */; };
+		B7BE763F229C7AA4000F1800 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C7BB40C87F97497EB1CEE1E4 /* Zocial.ttf */; };
+		B7BE766F229C7C78000F1800 /* libPods-CanvasTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7BE766E229C7C78000F1800 /* libPods-CanvasTests.a */; };
 		CD6214B1B8454892A39B47F1 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D75AE895254B06B8819041 /* libRNVectorIcons.a */; };
 		DFBB8E2FAF9342B082771C94 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04DC3854DBB44DE8B5D3ED64 /* AntDesign.ttf */; };
 		FD6846B62EB04A549A1306AD /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24C49E77C3444FACA24B92CB /* libRNSVG-tvOS.a */; };
@@ -536,6 +543,7 @@
 		B6CC783B21E3D7D00001AA70 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CC786921E3D8550001AA70 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B73E4F55227B4DA800D107A6 /* libRNSound.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNSound.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7BE766E229C7C78000F1800 /* libPods-CanvasTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-CanvasTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0D75AE895254B06B8819041 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		C6B570DD7F46441FA2B48FB4 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		C7BB40C87F97497EB1CEE1E4 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
@@ -563,6 +571,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7BE766F229C7C78000F1800 /* libPods-CanvasTests.a in Frameworks */,
 				B73E4F56227B4DA800D107A6 /* libRNSound.a in Frameworks */,
 				B6290EC72270A8EE007487F7 /* libRNImageCropPicker.a in Frameworks */,
 				B6A59B58226FAF9200F16927 /* libRNGoogleSignin.a in Frameworks */,
@@ -755,6 +764,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B7BE766E229C7C78000F1800 /* libPods-CanvasTests.a */,
 				B73E4F55227B4DA800D107A6 /* libRNSound.a */,
 				B6290EDD2270AF0B007487F7 /* RNSound.xcodeproj */,
 				B6290EC62270A8EE007487F7 /* libRNImageCropPicker.a */,
@@ -1576,6 +1586,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7BE763A229C7AA4000F1800 /* main.jsbundle in Resources */,
+				B7BE763B229C7AA4000F1800 /* Entypo.ttf in Resources */,
+				B7BE763C229C7AA4000F1800 /* Feather.ttf in Resources */,
+				B7BE763D229C7AA4000F1800 /* Foundation.ttf in Resources */,
+				B7BE763E229C7AA4000F1800 /* SimpleLineIcons.ttf in Resources */,
+				B7BE763F229C7AA4000F1800 /* Zocial.ttf in Resources */,
 				ADB05734218367B600548F61 /* Ionicons.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,

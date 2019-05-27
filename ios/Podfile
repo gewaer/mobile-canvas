@@ -29,12 +29,10 @@ target 'Canvas' do
  pod 'GoogleSignIn', '~> 4.4.0'
 
  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
-
+ pod 'ReactNativeNavigation', :path => '../node_modules/react-native-navigation'
  pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
-
  pod 'RNFS', :path => '../node_modules/react-native-fs'
  pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
-
  pod 'RNSound', :path => '../node_modules/react-native-sound'
 
  post_install do |installer|
