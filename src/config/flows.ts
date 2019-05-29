@@ -5,7 +5,7 @@ import { colors } from "@styles/colors";
 import { deviceWidth } from "@styles/globalStyles";
 import { deviceHeight } from "@styles/marginLayout";
 
-export function SingleScreenAppWithSideMenu() {
+export function SingleScreenAppWithSideMenu(nextScreen: string) {
   Navigation.setRoot({
     root: {
       sideMenu: {
@@ -21,7 +21,7 @@ export function SingleScreenAppWithSideMenu() {
             children: [
               {
                 component: {
-                  name: screens.DASHBOARD,
+                  name: nextScreen,
                   options: {
                     topBar: {
                       visible: false

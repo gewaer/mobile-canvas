@@ -54,7 +54,7 @@ class Login extends Component {
   changeScreen(activeScreen) {
     this.props.changeActiveScreen({ activeScreen });
     // TODO: Change Logic To hanlde Naigation
-    pushDashboard({ activeScreen: DASHBOARD });
+    pushDashboard();
   }
 
   // Defines title bar's left content
@@ -91,7 +91,7 @@ class Login extends Component {
         .then(response => {
           this.saveSessionData('sessionData', JSON.stringify(response.data));
           this.props.changeSessionToken({ token: response.data.token });
-          this.getUserInfo(response.data.id, response.data.token);
+          this.getUserInfo(response.data.id);
         })
         .catch(error => {
           this.setState({ isLoginIn: false });
@@ -139,10 +139,9 @@ class Login extends Component {
       .then(response => {
         this.saveSessionData('sessionData', JSON.stringify(response.data));
         this.props.changeSessionToken({ token: response.data.token });
-        this.getUserInfo(response.data.id, response.data.token);
+        this.getUserInfo(response.data.id);
       })
       .catch(error => {
-        console.log(error);
         this.setState({ isLoginIn: false });
         Toast.show({
           text: error.response.data.errors.message

@@ -6,7 +6,7 @@ import { Body, Icon, Text, ListItem, List, Right } from 'native-base';
 import { paddingHelpers, colors } from '../../config/styles';
 import { changeActiveScreen } from '../../modules/Session';
 import { Navigation } from 'react-native-navigation';
-import { pushDashboard,auth } from '../../config/flows';
+import { pushDashboard, auth, SingleScreenAppWithSideMenu } from '../../config/flows';
 import StyleSheet from './stylesheet';
 import { DASHBOARD, PROFILE_INFO, SETTINGS, SIDEMENU, WELCOME } from '..';
 
@@ -48,15 +48,15 @@ class SideMenu extends Component {
     if (this.props.activeScreen == activeScreen) {
       this.hideDrawer();
     } else if (activeScreen == DASHBOARD) {
-      pushDashboard({ activeScreen: DASHBOARD});
+      pushDashboard();
     } else {
       // Use Push Navigation to the app
-      Navigation.pop(WELCOME)
+      SingleScreenAppWithSideMenu(activeScreen);
     }
   }
 
   hideDrawer = () => {
-    Navigation.mergeOptions(SIDEMENU, {
+    Navigation.mergeOptions(this.props.componentId, {
       sideMenu: {
         left: {
           visible: false
@@ -71,22 +71,12 @@ class SideMenu extends Component {
     });
   };
 
-  // Changes to dashboard
-  changeToDashboard = () => {
-    if (this.props.activeScreen == DASHBOARD) {
-      this.hideDrawer();
-    } else {
-      pushDashboard({ activeScreen: DASHBOARD });
-    }
-  };
-
   // Removes session data from the storage and changes to welcome scren
   async logOut() {
     try {
       AsyncStorage.removeItem('sessionData', () => {
         this.props.changeActiveScreen({ activeScreen: 'welcome' });
-        // Use Nav to reset the stack in Login
-      auth()
+        auth()
       });
     } catch (error) {
       console.error(error);
@@ -97,18 +87,14 @@ class SideMenu extends Component {
     return (
       <View style={[StyleSheet.container, StyleSheet.navSectionStyle]}>
         <View>
-          <View style={[ StyleSheet.itemContainer, { backgroundColor: colors.brandPrimary }]}>
-            <TouchableOpacity
-              //onPress={ () => { !this.props.isExpired && this.changeScreen('profile') } }
-            >
-              <Icon type={'Ionicons'} name={'ios-contact'} style={ { color: 'white',  fontSize: 48, marginRight: 12, marginBottom: -9} } />
+          <View style={[StyleSheet.itemContainer,{ backgroundColor: colors.brandPrimary }]}>
+            <TouchableOpacity  onPress={ () => {!this.props.isExpired && this.changeScreen('profile')}}>
+              <Icon type={'Ionicons'} name={'ios-contact'} style={{ color: 'white',  fontSize: 48, marginRight: 12, marginBottom: -9}} />
             </TouchableOpacity>
             <View style={ StyleSheet.userDataContainer }>
               <Text style={ StyleSheet.title }>Joanne Doe</Text>
               <Text style={ StyleSheet.subTitle }>{
-                this.props.company
-                  ? this.props.company.name
-                  : 'Familia no disponible'
+                this.props.company ? this.props.company.name : 'Familia no disponible'
               }</Text>
             </View>
           </View>
@@ -117,17 +103,9 @@ class SideMenu extends Component {
               {
                 this.state.menuObjects.map((element) => {
                   return(
-                    <ListItem
-                      key={ element.id }
-                      style={StyleSheet.listItemDarkBorder}
-                      onPress={() => this.changeScreen(element.navigateTo)}
-                    >
+                    <ListItem key={ element.id }  style={StyleSheet.listItemDarkBorder} onPress={() => this.changeScreen(element.navigateTo)}>
                       <View style={{ width: 30, alignItems: 'center' }}>
-                        <Icon
-                          type={ element.iconType }
-                          name={ element.iconName }
-                          style={{ fontSize: 18, color: colors.brandPrimaryAlter }}
-                        />
+                        <Icon type={element.iconType}  name={element.iconName} style={{ fontSize: 18, color: colors.brandPrimaryAlter }}/>
                       </View>
                       <Body>
                         <View style={StyleSheet.navSectionStyle}>
@@ -138,23 +116,14 @@ class SideMenu extends Component {
                   )
                 })
               }
-              <ListItem
-                style={ StyleSheet.menuMiddleBar }
-              >
+              <ListItem  style={ StyleSheet.menuMiddleBar }  >
                 <Body>
                   <Text style={StyleSheet.menuMiddleBarText}>Configurations</Text>
                 </Body>
               </ListItem>
-              <ListItem
-                style={StyleSheet.listItemDarkBorder}
-                onPress={() => this.logOut()}
-              >
+              <ListItem style={StyleSheet.listItemDarkBorder} onPress={() => this.logOut()}>
                 <View style={{ width: 30, alignItems: 'center' }}>
-                  <Icon
-                    type={ 'MaterialCommunityIcons' }
-                    name={ 'logout-variant' }
-                    style={{ fontSize: 18, color: colors.brandPrimaryAlter }}
-                  />
+                  <Icon type={'MaterialCommunityIcons'} name={'logout-variant'} style={{ fontSize: 18, color: colors.brandPrimaryAlter }}/>
                 </View>
                 <Body>
                   <View style={StyleSheet.navSectionStyle}>

@@ -1,3 +1,3 @@
-import Component from './component';
+import screen from './screen';
 
-export default Component;
+export default screen;
