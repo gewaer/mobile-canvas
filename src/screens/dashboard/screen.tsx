@@ -1,17 +1,29 @@
-import React, { PureComponent } from 'react';
-import { View, Platform, FlatList } from 'react-native';
-import { Button, Text, Icon, ListItem, Body, Right, Container, Spinner, Thumbnail, Toast, Root} from 'native-base';
-import { colors } from '../../config/styles';
-import { changeActiveScreen } from '../../modules/Session';
-import { connect } from 'react-redux';
+import React, { PureComponent } from "react";
+import { View, Platform, FlatList } from "react-native";
+import {
+  Button,
+  Text,
+  Icon,
+  ListItem,
+  Body,
+  Right,
+  Container,
+  Spinner,
+  Thumbnail,
+  Toast,
+  Root
+} from "native-base";
+import { colors } from "../../config/styles";
+import { changeActiveScreen } from "../../modules/Session";
+import { connect } from "react-redux";
 const platform = Platform.OS;
-import TitleBar from '../../components/title-bar';
-import { Navigation } from 'react-native-navigation';
-import StyleSheet from './stylesheet';
-import { SIDEMENU, ADD_LEADS, LEADS_INFO, DASHBOARD } from '..';
-import { push } from '../../utils/nav';
+import TitleBar from "../../components/title-bar";
+import { Navigation } from "react-native-navigation";
+import StyleSheet from "./stylesheet";
+import { SIDEMENU, ADD_LEADS, LEADS_INFO, DASHBOARD } from "..";
+import { push, showModal, setNewStack } from "../../utils/nav";
 
-const axios = require('../../../src/config/axios');
+const axios = require("../../config/axios");
 
 class Dashboard extends PureComponent {
   constructor(props) {
@@ -32,16 +44,28 @@ class Dashboard extends PureComponent {
   changeScreen(card) {
     Navigation.push(DASHBOARD, {
       component: {
+        id: LEADS_INFO,
         name: LEADS_INFO,
         passProps: {
           item: card
+        },
+        options: {
+          topBar: {
+            visible: false
+          },
+          bottomTabs: {
+            visible: false
+          }
         }
       }
-    })
+    });
   }
 
   onItemCreated = () => {
-    this.setState({ isLoading: true, data: [],  page: 1, itemWasCreated: true }, () => this.getItems()  )
+    this.setState(
+      { isLoading: true, data: [], page: 1, itemWasCreated: true },
+      () => this.getItems()
+    );
   };
 
   openAddItemModal() {
@@ -50,6 +74,7 @@ class Dashboard extends PureComponent {
         children: [
           {
             component: {
+              id: ADD_LEADS,
               name: ADD_LEADS,
               passProps: {
                 itemCreatedAction: this.onItemCreated
@@ -67,10 +92,10 @@ class Dashboard extends PureComponent {
   }
 
   formatPhoneNumber(phoneNumberString) {
-    var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+    var cleaned = ("" + phoneNumberString).replace(/\D/g, "");
     var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
     if (match) {
-      return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+      return "(" + match[1] + ") " + match[2] + "-" + match[3];
     }
     return null;
   }
@@ -91,9 +116,9 @@ class Dashboard extends PureComponent {
         <View style={StyleSheet.titleBarContent}>
           <Button transparent onPress={() => this.showDrawer()}>
             <Icon
-              type={'MaterialIcons'}
-              name={'menu'}
-              style={{ color: '#fff', fontSize: platform === 'ios' ? 22 : 24 }}
+              type={"MaterialIcons"}
+              name={"menu"}
+              style={{ color: "#fff", fontSize: platform === "ios" ? 22 : 24 }}
             />
           </Button>
         </View>
@@ -106,7 +131,11 @@ class Dashboard extends PureComponent {
       content: (
         <View style={StyleSheet.titleBarContent}>
           <Button transparent onPress={() => this.openAddItemModal()}>
-            <Icon type={'MaterialIcons'} name={'add'} style={{ color: '#fff', fontSize: platform === 'ios' ? 22 : 24 }} />
+            <Icon
+              type={"MaterialIcons"}
+              name={"add"}
+              style={{ color: "#fff", fontSize: platform === "ios" ? 22 : 24 }}
+            />
           </Button>
         </View>
       )
@@ -119,14 +148,14 @@ class Dashboard extends PureComponent {
         <View style={StyleSheet.titleBarContent}>
           <Text
             style={{
-              color: '#fff',
-              paddingLeft: platform === 'ios' ? 0 : 10,
-              fontSize: platform === 'ios' ? 18 : 19.64
+              color: "#fff",
+              paddingLeft: platform === "ios" ? 0 : 10,
+              fontSize: platform === "ios" ? 18 : 19.64
             }}
           >
             {this.props.company
               ? this.props.company.name
-              : 'Familia no disponible'}
+              : "Familia no disponible"}
           </Text>
         </View>
       )
@@ -143,13 +172,13 @@ class Dashboard extends PureComponent {
         }&q=(is_deleted:0,is_duplicated:0)`
       )
       .then(response => {
-        console.log('Updated');
+        console.log("Updated");
         if (this.state.itemWasCreated) {
           Toast.show({
-            text: 'Item successfully created!',
-            buttonText: 'Ok',
+            text: "Item successfully created!",
+            buttonText: "Ok",
             duration: 3000,
-            type: 'success'
+            type: "success"
           });
         }
         this.setState({
@@ -163,21 +192,24 @@ class Dashboard extends PureComponent {
         Toast.show({
           text: error.response.data.status.message
             ? error.response.data.status.message
-            : 'Error',
-          buttonText: 'Ok',
+            : "Error",
+          buttonText: "Ok",
           duration: 3000,
-          type: 'danger'
+          type: "danger"
         });
       });
   };
 
   getImageCover() {
-    return 'https://banner2.kisspng.com/20180406/sve/kisspng-computer-icons-user-material-design-business-login-dizzy-5ac7f1c61041c2.5160856515230529980666.jpg';
+    return "https://banner2.kisspng.com/20180406/sve/kisspng-computer-icons-user-material-design-business-login-dizzy-5ac7f1c61041c2.5160856515230529980666.jpg";
   }
 
   rowContent(lead) {
     return (
-      <ListItem style={StyleSheet.listItem} onPress={() => this.changeScreen(lead)}>
+      <ListItem
+        style={StyleSheet.listItem}
+        onPress={() => this.changeScreen(lead)}
+      >
         <View>
           <Thumbnail source={{ uri: this.getImageCover() }} />
         </View>
@@ -200,14 +232,8 @@ class Dashboard extends PureComponent {
       return;
     }
 
-    this.setState(
-      {
-        page: this.state.page + 1,
-        isLoading: true
-      },
-      () => {
-        this.getItems();
-      }
+    this.setState({ page: this.state.page + 1, isLoading: true }, () =>
+      this.getItems()
     );
   };
 
@@ -219,7 +245,7 @@ class Dashboard extends PureComponent {
         style={{
           paddingVertical: 20,
           borderTopWidth: 1,
-          borderColor: '#CED0CE'
+          borderColor: "#CED0CE"
         }}
       >
         <Spinner color={colors.brandPrimary} />
@@ -262,9 +288,13 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    changeActiveScreen
+  };
+};
+
 export default connect(
   mapStateToProps,
-  {
-    changeActiveScreen
-  }
+  mapDispatchToProps
 )(Dashboard);

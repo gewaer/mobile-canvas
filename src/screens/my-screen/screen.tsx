@@ -41,6 +41,7 @@ import AudioPlayer from "../../components/audio-player";
 import ExampleRow from "../../components/example-swipe-row";
 import BackRow from "../../components/swipe-back-row";
 import ConfirmationCard from "../../components/confirmation-card";
+import { SIDEMENU } from "..";
 const RNFS = require("react-native-fs");
 const axios = require("../../../src/config/axios");
 const Sound = require("react-native-sound");
@@ -124,7 +125,7 @@ class MyScreen extends Component<State, Props> {
   }
 
   showDrawer = () => {
-    Navigation.mergeOptions("navigation.drawer.left.tab", {
+    Navigation.mergeOptions(SIDEMENU, {
       sideMenu: {
         left: {
           visible: true

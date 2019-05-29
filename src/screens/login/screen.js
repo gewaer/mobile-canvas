@@ -77,6 +77,15 @@ class Login extends Component {
     };
   }
 
+  setNotification(message : string, type : string = 'danger') {
+    Toast.show({
+      text: message,
+      buttonText: 'Ok',
+      duration: 3000,
+      type: 'danger'
+    });
+  }
+
   // Process LogIn
   logIn() {
     Keyboard.dismiss();
@@ -88,10 +97,10 @@ class Login extends Component {
 
       axios
         .post(`/auth`, formData)
-        .then(response => {
-          this.saveSessionData('sessionData', JSON.stringify(response.data));
-          this.props.changeSessionToken({ token: response.data.token });
-          this.getUserInfo(response.data.id);
+        .then(({ data }) => {
+          this.saveSessionData('sessionData', JSON.stringify(data));
+          this.props.changeSessionToken({ token: data.token });
+          this.getUserInfo(data.id);
         })
         .catch(error => {
           this.setState({ isLoginIn: false });
@@ -105,12 +114,7 @@ class Login extends Component {
           });
         });
     } else {
-      Toast.show({
-        text: 'Email and password are required!',
-        buttonText: 'Ok',
-        duration: 3000,
-        type: 'danger'
-      });
+      this.setNotification('Email and password are required!')
     }
   }
 
@@ -143,36 +147,24 @@ class Login extends Component {
       })
       .catch(error => {
         this.setState({ isLoginIn: false });
-        Toast.show({
-          text: error.response.data.errors.message
-            ? error.response.data.errors.message
-            : 'Error',
-          buttonText: 'Ok',
-          duration: 3000,
-          type: 'danger'
-        });
+        console.clear()
+        console.log('login', error)
+        this.setNotification(error.response.data.errors.message)
       });
   }
 
   // Tries to get the user's information using the stored token.
   // If the response is an error then the token is expired and removes the session data.
   getUserInfo(userId) {
-    axios
-      .get(`/users/${userId}`)
+    axios.get(`/users/${userId}`)
       .then(response => {
         this.props.changeUser({ user: response.data });
         this.getUserDefaultCompany(response.data.default_company);
       })
       .catch(error => {
         this.setState({ isLoginIn: false });
-        Toast.show({
-          text: error.response.data.errors.message
-            ? error.response.data.errors.message
-            : 'Error',
-          buttonText: 'Ok',
-          duration: 3000,
-          type: 'danger'
-        });
+        console.log('get info', error)
+        this.setNotification(error.response.data.errors.message)
       });
   }
 
@@ -186,14 +178,8 @@ class Login extends Component {
       })
       .catch(error => {
         this.setState({ isLoginIn: false });
-        Toast.show({
-          text: error.response.data.errors.message
-            ? error.response.data.errors.message
-            : 'Error',
-          buttonText: 'Ok',
-          duration: 3000,
-          type: 'danger'
-        });
+        console.log('get info', error)
+        this.setNotification(error.response.data.errors.message)
       });
   }
 
@@ -450,7 +436,7 @@ class Login extends Component {
 // Maps redux's state variables to this class' props
 const mapStateToProps = state => {
   return {
-
+    token: state.session.token
   };
 };
 

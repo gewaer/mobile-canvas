@@ -45,56 +45,66 @@ export function pushDashboard() {
         left: {
           component: {
             id: screens.SIDEMENU,
-            name: screens.SIDEMENU,
-            passProps: {},
-            options: {}
+            name: screens.SIDEMENU
           }
         },
         center: {
           bottomTabs: {
             children: [
               {
-                component: {
-                  id: screens.DASHBOARD,
-                  name: screens.DASHBOARD,
-                  options: {
-                    bottomTab: {
-                      iconColor: colors.white,
-                      selectedIconColor: colors.brandGreenDeep,
-                      icon: icons.apps.uri,
-                      iconInsets: {
-                        top: 6,
-                        left: 0,
-                        bottom: -6,
-                        right: 0
+                stack: {
+                  children: [
+                    {
+                      component: {
+                        id: screens.DASHBOARD,
+                        name: screens.DASHBOARD,
+                        options: {
+                          bottomTab: {
+                            iconColor: colors.white,
+                            selectedIconColor: colors.brandGreenDeep,
+                            icon: icons.apps.uri,
+                            iconInsets: {
+                              top: 6,
+                              left: 0,
+                              bottom: -6,
+                              right: 0
+                            }
+                          },
+                          topBar: {
+                            visible: false
+                          }
+                        }
                       }
-                    },
-                    topBar: {
-                      visible: false
                     }
-                  }
+                  ]
                 }
               },
               {
-                component: {
-                  id: screens.BROWSE_COMPANIES,
-                  name: screens.BROWSE_COMPANIES,
-                  options: {
-                    bottomTab: {
-                      iconColor: colors.white,
-                      selectedIconColor: colors.brandGreenDeep,
-                      icon: icons.family.uri,
-                      iconInsets: {
-                        top: 6,
-                        left: 0,
-                        bottom: -6,
-                        right: 0
+                stack: {
+                  children: [
+                    {
+                      component: {
+                        id: screens.BROWSE_COMPANIES,
+                        name: screens.BROWSE_COMPANIES,
+                        options: {
+                          bottomTab: {
+                            iconColor: colors.white,
+                            selectedIconColor: colors.brandGreenDeep,
+                            icon: icons.family.uri,
+                            iconInsets: {
+                              top: 6,
+                              left: 0,
+                              bottom: -6,
+                              right: 0
+                            }
+                          },
+                          topBar: {
+                            visible: false
+                          }
+                        }
                       }
-                    },
-                    topBar: {
-                      visible: false
                     }
-                  }
+                  ]
                 }
               },
               {

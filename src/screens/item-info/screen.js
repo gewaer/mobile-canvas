@@ -40,6 +40,7 @@ import { pushDashboard } from '../../config/flows';
 
 import StyleSheet from './stylesheet';
 import { DASHBOARD, EDIT_LEADS } from '..';
+import { popTo } from '@utils/nav';
 
 class ItemInfo extends Component {
   constructor(props) {
@@ -102,7 +103,7 @@ class ItemInfo extends Component {
   }
 
   changeScreen() {
-    pushDashboard({ activeScreen: DASHBOARD });
+   Navigation.pop(this.props.componentId)
   }
 
   changeToEditScreen() {

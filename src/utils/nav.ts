@@ -28,11 +28,17 @@ export function popTo(componentId: string) {
 export function popToRoot(componentId: string) {
   Navigation.popToRoot(componentId);
 }
-export function setNewStack(componentId: string, screenName: string) {
+export function setNewStack(
+  componentId: string,
+  screenName: string,
+  passProps: any
+) {
   Navigation.setStackRoot(componentId, [
     {
       component: {
+        id: screenName,
         name: screenName,
+        passProps,
         options: {
           animations: {
             setStackRoot: {
@@ -45,15 +51,23 @@ export function setNewStack(componentId: string, screenName: string) {
   ]);
 }
 
-export function showModal(componentId: string, screenName: string) {
+export function showModal(
+  componentId: string,
+  screenName: string,
+  passProps: any
+) {
   Navigation.showModal({
     stack: {
       children: [
         {
           component: {
             name: screenName,
-            passProps: {},
-            options: {}
+            passProps,
+            options: {
+              topBar: {
+                visible: false
+              }
+            }
           }
         }
       ]
