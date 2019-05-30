@@ -111,7 +111,6 @@ class EditProfile extends Component {
   }
 
   changeActiveFamily(family) {
-    console.log('Company Id: ', family.id);
     //this.setState({ isLoading: true })
     this.props.changeActiveCompany({ company: family });
   }
@@ -125,9 +124,7 @@ class EditProfile extends Component {
         image.mime,
         Platform.OS == 'ios' ? image.filename : image.path.split('/').pop()
       );
-      console.log(normalizeFile);
       this.setState({ profilePhotoSelection: normalizedFile }, () => {
-        console.log(this.state.profilePhotoSelection)
         //this.uploadPhoto();
       });
     });
@@ -139,7 +136,6 @@ class EditProfile extends Component {
     }).then(image => {
       const normalizedFile = normalizeFile(image.path, image.mime, image.path.split('/').pop());
       this.setState({ profilePhotoSelection: normalizedFile }, () => {
-        console.log(this.state.profilePhotoSelection)
         this.uploadPhoto();
       });
     });
@@ -274,13 +270,12 @@ class EditProfile extends Component {
     axios
       .put(`/users/${this.props.userInfo.id}`, data, headers)
       .then(response => {
-        console.log(response.data);
+        (response.data);
         let userSelectedFamilty = this.getDefaultFamilyName();
         if (userSelectedFamilty) {
           this.changeActiveFamily(userSelectedFamilty);
         }
         this.changeScreen(true);
-        console.log(response.data);
       })
       .catch(function(error) {
         console.log(error.message);
