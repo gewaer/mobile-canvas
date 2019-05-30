@@ -185,10 +185,7 @@ class MyScreen extends Component<State, Props> {
     let toFile = RNFS.DocumentDirectoryPath + "/" + imageName;
 
     RNFS.downloadFile({ fromUrl, toFile }).promise.then(result => {
-      this.setState({ imageLocalRoute: toFile }, () => {
-        console.log(this.state.imageName);
-      });
-      console.log(result);
+      this.setState({ imageLocalRoute: toFile }, () => {});
     });
   }
 
@@ -284,9 +281,7 @@ class MyScreen extends Component<State, Props> {
                     RNFS.downloadFile({
                       fromUrl: "https://ccrma.stanford.edu/~jos/mp3/pno-cs.mp3",
                       toFile: RNFS.DocumentDirectoryPath + "/piano.mp3"
-                    }).promise.then(result => {
-                      console.log(result);
-                    });
+                    }).promise.then(result => {});
                   }}
                   style={[
                     Stylesheet.submitBtn,
