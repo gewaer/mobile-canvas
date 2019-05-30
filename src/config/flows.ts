@@ -57,26 +57,26 @@ export function pushDashboard() {
                     {
                       component: {
                         id: screens.DASHBOARD,
-                        name: screens.DASHBOARD,
-                        options: {
-                          bottomTab: {
-                            iconColor: colors.white,
-                            selectedIconColor: colors.brandGreenDeep,
-                            icon: icons.apps.uri,
-                            iconInsets: {
-                              top: 6,
-                              left: 0,
-                              bottom: -6,
-                              right: 0
-                            }
-                          },
-                          topBar: {
-                            visible: false
-                          }
-                        }
+                        name: screens.DASHBOARD
                       }
                     }
-                  ]
+                  ],
+                  options: {
+                    bottomTab: {
+                      iconColor: colors.white,
+                      selectedIconColor: colors.brandGreenDeep,
+                      icon: icons.apps.uri,
+                      iconInsets: {
+                        top: 6,
+                        left: 0,
+                        bottom: -6,
+                        right: 0
+                      }
+                    },
+                    topBar: {
+                      visible: false
+                    }
+                  }
                 }
               },
               {
@@ -85,26 +85,26 @@ export function pushDashboard() {
                     {
                       component: {
                         id: screens.BROWSE_COMPANIES,
-                        name: screens.BROWSE_COMPANIES,
-                        options: {
-                          bottomTab: {
-                            iconColor: colors.white,
-                            selectedIconColor: colors.brandGreenDeep,
-                            icon: icons.family.uri,
-                            iconInsets: {
-                              top: 6,
-                              left: 0,
-                              bottom: -6,
-                              right: 0
-                            }
-                          },
-                          topBar: {
-                            visible: false
-                          }
-                        }
+                        name: screens.BROWSE_COMPANIES
                       }
                     }
-                  ]
+                  ],
+                  options: {
+                    bottomTab: {
+                      iconColor: colors.white,
+                      selectedIconColor: colors.brandGreenDeep,
+                      icon: icons.family.uri,
+                      iconInsets: {
+                        top: 6,
+                        left: 0,
+                        bottom: -6,
+                        right: 0
+                      }
+                    },
+                    topBar: {
+                      visible: false
+                    }
+                  }
                 }
               },
               {
