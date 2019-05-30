@@ -151,7 +151,8 @@ export function pushDashboard() {
                   }
                 }
               }
-            ]
+            ],
+            options: {}
           }
         }
       }

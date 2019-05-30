@@ -141,9 +141,12 @@ class Login extends Component {
     axios
       .post(`/auth`, formData)
       .then(response => {
-        this.saveSessionData('sessionData', JSON.stringify(response.data));
-        this.props.changeSessionToken({ token: response.data.token });
-        this.getUserInfo(response.data.id);
+        AsyncStorage.setItem('sessionData', JSON.stringify(response.data))
+        .then(() => {
+          // this.saveSessionData('sessionData', JSON.stringify(response.data));
+          this.props.changeSessionToken({ token: response.data.token });
+          this.getUserInfo(response.data.id);
+        })
       })
       .catch(error => {
         this.setState({ isLoginIn: false });
@@ -188,7 +191,6 @@ class Login extends Component {
           if (loginState.isCancelled) {
           } else {
               const infoRequest = new GraphRequest('/me?fields=name,picture,email', null,(error, user) => {
-                  console.log(user)
                   if (error) {
                       console.log('Error fetching data: ' + error.toString());
                   } else {
@@ -233,7 +235,6 @@ class Login extends Component {
   signInWithGoogleAsync = async () => {
       GoogleSignin.hasPlayServices().then(() => {
         GoogleSignin.signIn().then(result => {
-            console.log(result)
             if (result.accessToken) {
               var data = new FormData();
               data.append('email', result.user.email);
@@ -269,8 +270,6 @@ class Login extends Component {
             }
         });
       }).catch (error => {
-        console.log("ERROR")
-        console.log(JSON.stringify(error))
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
       } else if (error.code === statusCodes.IN_PROGRESS) {
