@@ -172,7 +172,6 @@ class Dashboard extends PureComponent {
         }&q=(is_deleted:0,is_duplicated:0)`
       )
       .then(response => {
-        console.log("Updated");
         if (this.state.itemWasCreated) {
           Toast.show({
             text: "Item successfully created!",
