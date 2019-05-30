@@ -9,3 +9,9 @@ initial steps to step up new projects with Canvas. To get more information go to
 # Tips
 
 Get faster coding we recommened this [gist](https://gist.github.com/sperezm97/693457f8f264f3bebbca6af3a7547a0a)
+
+# Recommendation Docs
+
+[Redux Guide](https://www.valentinog.com/blog/redux/)
+[Redux Persist Guide](https://blog.reactnativecoach.com/the-definitive-guide-to-redux-persist-84738167975)
+[Redux Offline Guide](https://www.ctolib.com/topics-112916.html)
