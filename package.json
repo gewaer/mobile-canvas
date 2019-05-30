@@ -8,8 +8,10 @@
     "test": "jest",
     "ios": "react-native run-ios --simulator \"iPhone 7\"",
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
+    "android:release": "react-native run-android --variant=release",
     "generateApk": "cd ./android && ./gradlew clean && ./gradlew assembleRelease",
-    "build:ios": "react-native bundle --entry-file='index.ts' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
+    "build:ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ./ios/Canvas/main.jsbundle",
+    "build:android": "react-native bundle --entry-file index.js --platform android --dev false --bundle-output ./android/app/src/main/assets/index.android.bundle --assets-dest ./android/app/src/main/res/"
   },
   "dependencies": {
     "axios": "^0.18.0",
