@@ -39,6 +39,6 @@ export const colors = {
   brandGold: "#f1ac2f",
   brandGoldDisable: "#f1ac2f",
   normalWhite: "#ffffff",
-  facebook: "#3b5998",
-  gmail: "#CD5644"
+  facebook: "#6D7EC5",
+  gmail: "#EF3636"
 };
