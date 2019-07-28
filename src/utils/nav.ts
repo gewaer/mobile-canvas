@@ -1,22 +1,16 @@
 import { Navigation } from "react-native-navigation";
 
-/**
- * Push a new screen into this screen's navigation stack.
- * @param componentId Scree name
- * @param screenName Screen name
- * @param passProps push new object
- */
 export function push(
   componentId: string,
   screenName: string,
-  passProps: object
+  options?: object
 ) {
   Navigation.push(componentId, {
     component: {
       id: screenName,
       name: screenName,
-      passProps,
       options: {
+        ...options,
         topBar: {
           visible: false
         },
@@ -28,49 +22,23 @@ export function push(
   });
 }
 
-/**
- * go back to preview screen
- * @param componentId - actual screen id
- */
-export function pop(componentId: string, mergeOptions: object) {
-  Navigation.pop(componentId, mergeOptions);
+export function pop(componentId: string) {
+  Navigation.pop(componentId);
 }
 
-/**
- * Pop the stack to a given component.
- * @param componentId Screen name
- * @param mergeOptions Styling options
- */
-export function popTo(componentId: string, mergeOptions: object) {
-  Navigation.popTo(componentId, mergeOptions);
+export function popTo(componentId: string) {
+  Navigation.popTo(componentId);
 }
 
-/**
- * Pop all the screens until the root from this screen's navigation stack.
- * @param componentId Screen name
- * @param mergeOptions Stylign options
- */
-export function popToRoot(componentId: string, mergeOptions: object) {
-  Navigation.popToRoot(componentId, mergeOptions);
+export function popToRoot(componentId: string) {
+  Navigation.popToRoot(componentId);
 }
-
-/**
- * Reset the current navigation stack to a new screen component
- * @param componentId Screen name
- * @param screenName Screen Name
- * @param passProps Push new properties
- */
-export function setNewStack(
-  componentId: string,
-  screenName: string,
-  passProps: any
-) {
+export function setNewStack(componentId: string, screenName: string) {
   Navigation.setStackRoot(componentId, [
     {
       component: {
         id: screenName,
         name: screenName,
-        passProps,
         options: {
           animations: {
             setStackRoot: {
@@ -83,12 +51,7 @@ export function setNewStack(
   ]);
 }
 
-/**
- * Show a screen as a modal.
- * @param screenName Screen Name
- * @param passProps push objects to screen
- */
-export function showModal(screenName: string, passProps: any) {
+export function showModal(componentId: string, screenName: string) {
   Navigation.showModal({
     stack: {
       children: [
@@ -96,42 +59,42 @@ export function showModal(screenName: string, passProps: any) {
           component: {
             id: screenName,
             name: screenName,
-            passProps,
-            options: {
-              topBar: {
-                visible: false
-              },
-              bottomTabs: {
-                visible: false
-              }
-            }
+            passProps: {},
+            options: {}
           }
         }
       ]
     }
   });
 }
-
-/**
- * Dismiss the current modal.
- * @param componentId Screen Name
- */
-export function dismissModal(componentId: string, mergeOptions?: object = {}) {
-  Navigation.dismissModal(componentId, mergeOptions);
+export function dismissModal(componentId: string) {
+  Navigation.dismissModal(componentId);
 }
 
-/**
- * Dismiss all the current modals at the same time.
- */
-export function dismissAllModals(mergeOptions?: object = {}) {
-  Navigation.dismissAllModals(mergeOptions);
+export function dismissAllModals() {
+  Navigation.dismissAllModals();
 }
 
-/**
- * Set options dynamically for component.
- * @param componentId Screen Name
- * @param mergeOptions options to style
- */
-export function mergeOptions(componentId: string, mergeOptions?: object = {}) {
-  Navigation.mergeOptions(componentId, mergeOptions);
+export function mergeOptions(componentId: string, options: object) {
+  Navigation.mergeOptions(componentId, {
+    options
+    // topBar: {
+    //   visible: true,
+    //   title: {
+    //     text: 'Title'
+    //   }
+    // },
+    // bottomTabs: {
+
+    // },
+    // bottomTab: {
+
+    // },
+    // sideMenu: {
+
+    // },
+    // overlay: {
+
+    // }
+  });
 }
