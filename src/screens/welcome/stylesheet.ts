@@ -1,36 +1,50 @@
-import { StyleSheet } from 'react-native';
-
-import {
-  colors,
-  paddingHelpers
-} from '../../config/styles';
-
+import { StyleSheet } from "react-native";
+import { colors } from "@styles/colors";
+import { paddingHelpers } from "@styles/marginLayout";
+import { globalStyles } from "@styles/globalStyles";
+import { titles } from "@styles/types";
+import { iosTypes } from "@styles/types";
+import { pmHelpers } from "@styles/marginLayout";
 
 export default StyleSheet.create({
-  wrapper: {
+  centered: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    backgroundColor: colors.brandWhite
+    ...globalStyles.centered
   },
-  container: {
-    flexShrink: 1,
-    backgroundColor: colors.brandSecondary,
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'center',
+  title: {
+    fontSize: iosTypes.subHeader,
+    fontWeight: "bold",
+    color: colors.brandPrimary
   },
-  footerButtomsContainer: {
-    flexGrow: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: paddingHelpers.N,
-    paddingTop: paddingHelpers.N,
-    backgroundColor: colors.brandWhite
+  logoContainer: {},
+  logoBig: {
+    width: 280,
+    height: 300,
+    borderWidth: 1,
+    overflow: "visible"
+  },
+  buttonContainer: {
+    paddingVertical: pmHelpers.S,
+    marginHorizontal: pmHelpers.S
+  },
+  btnSignIn: {
+    marginVertical: 4,
+    backgroundColor: colors.brandPrimary
   },
   btnTextStyle: {
-    fontSize: 16,
-    color: '#fff'
+    ...titles.button,
+    color: colors.white
+  },
+  btnLogIn: {
+    marginVertical: 4,
+    borderColor: colors.brandSecondary,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    borderTopWidth: 2
+  },
+  btnTextLogIn: {
+    ...titles.button,
+    color: colors.brandPrimary
   }
 });
