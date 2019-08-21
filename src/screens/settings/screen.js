@@ -35,6 +35,7 @@ import TitleBar from '../../components/title-bar'
 import StyleSheet from './stylesheet';
 
 import { Navigation } from 'react-native-navigation';
+import { SIDEMENU } from '..';
 
 class Settings extends Component {
   constructor(props) {
@@ -61,7 +62,7 @@ class Settings extends Component {
   }
 
   showDrawer = () => {
-    Navigation.mergeOptions('navigation.drawer.left', {
+    Navigation.mergeOptions(SIDEMENU, {
       sideMenu: {
         left: {
           visible: true

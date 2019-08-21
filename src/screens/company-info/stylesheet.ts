@@ -1,15 +1,12 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
-import {
-  colors
-} from '../../config/styles';
-
+import { colors } from "../../config/styles";
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center"
   },
   companyLogo: {
     width: 120,
@@ -17,8 +14,8 @@ export default StyleSheet.create({
   },
   titleBarContent: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center"
   },
   button: {
     paddingVertical: 10,

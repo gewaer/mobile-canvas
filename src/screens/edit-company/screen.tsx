@@ -1,16 +1,14 @@
 // Importing package modules.
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-const axios = require('../../../src/config/axios');
-
+import React, { Component } from "react";
+import { connect } from "react-redux";
+const axios = require("../../../src/config/axios");
 import {
   View,
   Platform,
   TouchableOpacity,
   BackHandler,
   Keyboard
-} from 'react-native';
-
+} from "react-native";
 import {
   Button,
   Item,
@@ -24,83 +22,42 @@ import {
   Root,
   Toast,
   Thumbnail
-} from 'native-base';
-
-// Importing local assets and components.
-import { colors } from '../../config/styles';
-import { API_KEY } from 'react-native-dotenv';
-import TitleBar from '../../components/title-bar';
-
-// Importing Redux's actions
-import { changeActiveCompany } from '../../modules/Session';
-
-// Gets the operating system's name where the app is running (Android or iOS).
+} from "native-base";
+import { colors } from "../../config/styles";
+import TitleBar from "../../components/title-bar";
+import { changeActiveCompany } from "../../modules/Session";
 const platform = Platform.OS;
-
-import StyleSheet from './stylesheet';
-
-import { Navigation } from 'react-native-navigation';
+import StyleSheet from "./stylesheet";
+import { pop, popToRoot } from "@utils/nav";
 
 /*
 	Screen Name: Edit Company.
 	Description: This screen is used to edit a company's information.
 */
 class EditCompany extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      companyName: '',
-      companyWebsite: '',
-      isLoading: false,
-      company: {}
-    };
-  }
-
-  componentWillMount() {
-    this.setState({
-      companyName: this.props.company.name,
-      companyWebsite: this.props.company.website
-        ? this.props.company.website
-        : '',
-      company: this.props.company
-    });
-  }
+  state = {
+    companyName: "",
+    companyWebsite: "",
+    isLoading: true,
+    company: {}
+  };
 
   componentDidMount() {
+    this.setState({
+      companyName: this.props.company.name,
+      companyWebsite: this.props.company.website || "",
+      company: this.props.company,
+      isLoading: false
+    });
     // Creates an event listener for Android's back button.
-    BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
-  }
-
-  // Handles Android's back button's action.
-  backAndroid() {
-    this.changeScreen();
-    return true;
+    BackHandler.addEventListener("hardwareBackPress", () =>
+      pop(this.props.componentId)
+    );
   }
 
   // Verifies if all required fields are filled.
   canEdit() {
     return this.state.companyName.length && this.state.companyWebsite.length;
-  }
-
-  // Changes screnn to company profile.
-  // <param> companyUpdated: A flag that tells if the company was updated.
-  // <param> newCompanyInfo: The company's new updated info.
-  changeScreen(companyUpdated, newCompanyInfo) {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'canvas.CompanyInfo',
-        passProps: {
-          companyUpdated: companyUpdated,
-          family: newCompanyInfo ? newCompanyInfo : this.state.company
-        },
-        options: {
-          topBar: {
-            visible: false
-          }
-        }
-      }
-    });
   }
 
   // Prepares data to be sent to the API.
@@ -110,9 +67,9 @@ class EditCompany extends Component {
     for (let property in data) {
       let encodedKey = encodeURIComponent(property);
       let encodedValue = encodeURIComponent(data[property]);
-      formData.push(encodedKey + '=' + encodedValue);
+      formData.push(encodedKey + "=" + encodedValue);
     }
-    formData = formData.join('&');
+    formData = formData.join("&");
     return formData;
   }
 
@@ -121,10 +78,10 @@ class EditCompany extends Component {
     Keyboard.dismiss();
     if (!this.canEdit()) {
       Toast.show({
-        text: 'Please fill the empty fields!',
-        buttonText: 'Ok',
+        text: "Please fill the empty fields!",
+        buttonText: "Ok",
         duration: 3000,
-        type: 'danger'
+        type: "danger"
       });
       return;
     }
@@ -137,25 +94,22 @@ class EditCompany extends Component {
     };
 
     axios
-      .put(
-        `/companies/${this.state.company.id}`,
-        this.formatFormData(data)
-      )
+      .put(`/companies/${this.state.company.id}`, this.formatFormData(data))
       .then(response => {
         if (this.props.selectedCompany.id == response.data.id) {
           this.props.changeActiveCompany({ company: response.data });
         }
-        this.changeScreen(true, response.data);
+        popToRoot(this.props.componentId);
       })
       .catch(error => {
         this.setState({ isLoading: false });
         Toast.show({
           text: error.response.data.errors.message
             ? error.response.data.errors.message
-            : 'Error',
-          buttonText: 'Ok',
+            : "Error",
+          buttonText: "Ok",
           duration: 3000,
-          type: 'danger'
+          type: "danger"
         });
       });
   }
@@ -167,9 +121,9 @@ class EditCompany extends Component {
         <View style={StyleSheet.titleBarContent}>
           <Text
             style={{
-              color: '#fff',
-              paddingLeft: platform === 'ios' ? 0 : 10,
-              fontSize: platform === 'ios' ? 18 : 19.64
+              color: "#fff",
+              paddingLeft: platform === "ios" ? 0 : 10,
+              fontSize: platform === "ios" ? 18 : 19.64
             }}
           >
             {this.state.company.name}
@@ -184,11 +138,11 @@ class EditCompany extends Component {
     return {
       content: (
         <View style={StyleSheet.titleBarContent}>
-          <Button transparent onPress={() => this.changeScreen()}>
+          <Button transparent onPress={() => pop(this.props.componentId)}>
             <Icon
-              type={'MaterialIcons'}
-              name={'chevron-left'}
-              style={{ color: '#fff', fontSize: platform === 'ios' ? 22 : 24 }}
+              type={"MaterialIcons"}
+              name={"chevron-left"}
+              style={{ color: "#fff", fontSize: platform === "ios" ? 22 : 24 }}
             />
           </Button>
         </View>
@@ -208,10 +162,10 @@ class EditCompany extends Component {
           >
             <Text
               style={{
-                color: '#fff',
+                color: "#fff",
                 paddingLeft: 0,
                 fontSize: 16,
-                textAlign: 'right'
+                textAlign: "right"
               }}
             >
               Save
@@ -224,9 +178,10 @@ class EditCompany extends Component {
 
   // Gets the company's image cover.
   getImageCover() {
-    return this.state.company.profile_image
-      ? this.state.company.profile_image
-      : 'https://d3bza9ldbeb18h.cloudfront.net/assets/placeholder-company-b9d0a167b1f7460768517d115285de2337c6e2a84f4285617722efa587c693fc.png';
+    return (
+      this.state.company.profile_image ||
+      "https://d3bza9ldbeb18h.cloudfront.net/assets/placeholder-company-b9d0a167b1f7460768517d115285de2337c6e2a84f4285617722efa587c693fc.png"
+    );
   }
 
   render() {
@@ -236,7 +191,7 @@ class EditCompany extends Component {
           <Root>
             <TitleBar left={this.titleBarLeft()} body={this.titleBarbody()} />
             <Content>
-              <View style={{ margin: 'auto' }}>
+              <View style={{ margin: "auto" }}>
                 <Spinner />
               </View>
             </Content>
@@ -298,7 +253,9 @@ class EditCompany extends Component {
                     onChangeText={website =>
                       this.setState({ companyWebsite: website })
                     }
-                    ref={(input) => {this.website = input}}
+                    ref={input => {
+                      this.website = input;
+                    }}
                   />
                 </Item>
               </View>
@@ -319,10 +276,12 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = {
+  changeActiveCompany
+};
+
 // Connects redux actions to this class' props.
 export default connect(
   mapStateToProps,
-  {
-    changeActiveCompany
-  }
+  mapDispatchToProps
 )(EditCompany);

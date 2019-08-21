@@ -34,6 +34,7 @@ const platform = Platform.OS;
 import { Navigation } from 'react-native-navigation';
 
 import StyleSheet from './stylesheet';
+import { DASHBOARD, SIDEMENU, EDIT_PROFILE } from '..';
 
 class Profile extends Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class Profile extends Component {
   }
 
   backAndroid() {
-    this.props.changeActiveScreen({ activeScreen: 'dashboard' });
+    this.props.changeActiveScreen({ activeScreen: DASHBOARD});
     return true;
   }
 
@@ -61,7 +62,7 @@ class Profile extends Component {
   }
 
   showDrawer = () => {
-    Navigation.mergeOptions('navigation.drawer.left', {
+    Navigation.mergeOptions(SIDEMENU, {
       sideMenu: {
         left: {
           visible: true
@@ -73,7 +74,7 @@ class Profile extends Component {
   goToEditProfileScreen() {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'canvas.EditProfile',
+        name: EDIT_PROFILE,
         passProps: {
           userInfo: this.state.userInfo,
           userFamilies: this.state.families
@@ -124,7 +125,6 @@ class Profile extends Component {
     axios
       .get(`/users/${this.props.user.id}`)
       .then(response => {
-        console.log(response.data);
         this.setState({ userInfo: response.data });
         this.getFamilies();
       })
@@ -178,7 +178,7 @@ class Profile extends Component {
 
   openAddCardModal() {
     this.props.navigator.push({
-      screen: 'dac.EditProfile',
+      screen: EDIT_PROFILE,
       passProps: {
         cardCreationAction: this.getUserCards
       },

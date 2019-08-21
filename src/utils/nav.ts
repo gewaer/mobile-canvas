@@ -1,30 +1,76 @@
 import { Navigation } from "react-native-navigation";
 
-export function push(componentId: string, screenName: string) {
+/**
+ * Push a new screen into this screen's navigation stack.
+ * @param componentId Scree name
+ * @param screenName Screen name
+ * @param passProps push new object
+ */
+export function push(
+  componentId: string,
+  screenName: string,
+  passProps: object
+) {
   Navigation.push(componentId, {
     component: {
+      id: screenName,
       name: screenName,
-      options: {}
+      passProps,
+      options: {
+        topBar: {
+          visible: false
+        },
+        bottomTabs: {
+          visible: false
+        }
+      }
     }
   });
 }
 
-export function pop(componentId: string) {
-  Navigation.pop(componentId);
+/**
+ * go back to preview screen
+ * @param componentId - actual screen id
+ */
+export function pop(componentId: string, mergeOptions: object) {
+  Navigation.pop(componentId, mergeOptions);
 }
 
-export function popTo(componentId: string) {
-  Navigation.popTo(componentId);
+/**
+ * Pop the stack to a given component.
+ * @param componentId Screen name
+ * @param mergeOptions Styling options
+ */
+export function popTo(componentId: string, mergeOptions: object) {
+  Navigation.popTo(componentId, mergeOptions);
 }
 
-export function popToRoot(componentId: string) {
-  Navigation.popToRoot(componentId);
+/**
+ * Pop all the screens until the root from this screen's navigation stack.
+ * @param componentId Screen name
+ * @param mergeOptions Stylign options
+ */
+export function popToRoot(componentId: string, mergeOptions: object) {
+  Navigation.popToRoot(componentId, mergeOptions);
 }
-export function setNewStack(componentId: string, screenName: string) {
+
+/**
+ * Reset the current navigation stack to a new screen component
+ * @param componentId Screen name
+ * @param screenName Screen Name
+ * @param passProps Push new properties
+ */
+export function setNewStack(
+  componentId: string,
+  screenName: string,
+  passProps: any
+) {
   Navigation.setStackRoot(componentId, [
     {
       component: {
+        id: screenName,
         name: screenName,
+        passProps,
         options: {
           animations: {
             setStackRoot: {
@@ -37,49 +83,55 @@ export function setNewStack(componentId: string, screenName: string) {
   ]);
 }
 
-export function showModal(componentId: string, screenName: string) {
+/**
+ * Show a screen as a modal.
+ * @param screenName Screen Name
+ * @param passProps push objects to screen
+ */
+export function showModal(screenName: string, passProps: any) {
   Navigation.showModal({
     stack: {
       children: [
         {
           component: {
+            id: screenName,
             name: screenName,
-            passProps: {},
-            options: {}
+            passProps,
+            options: {
+              topBar: {
+                visible: false
+              },
+              bottomTabs: {
+                visible: false
+              }
+            }
           }
         }
       ]
     }
   });
 }
-export function dismissModal(componentId: string) {
-  Navigation.dismissModal(componentId);
+
+/**
+ * Dismiss the current modal.
+ * @param componentId Screen Name
+ */
+export function dismissModal(componentId: string, mergeOptions?: object = {}) {
+  Navigation.dismissModal(componentId, mergeOptions);
 }
 
-export function dismissAllModals() {
-  Navigation.dismissAllModals();
+/**
+ * Dismiss all the current modals at the same time.
+ */
+export function dismissAllModals(mergeOptions?: object = {}) {
+  Navigation.dismissAllModals(mergeOptions);
 }
 
-export function mergeOptions(componentId: string, options: object) {
-  Navigation.mergeOptions(componentId, {
-    options
-    // topBar: {
-    //   visible: true,
-    //   title: {
-    //     text: 'Title'
-    //   }
-    // },
-    // bottomTabs: {
-
-    // },
-    // bottomTab: {
-
-    // },
-    // sideMenu: {
-
-    // },
-    // overlay: {
-
-    // }
-  });
+/**
+ * Set options dynamically for component.
+ * @param componentId Screen Name
+ * @param mergeOptions options to style
+ */
+export function mergeOptions(componentId: string, mergeOptions?: object = {}) {
+  Navigation.mergeOptions(componentId, mergeOptions);
 }

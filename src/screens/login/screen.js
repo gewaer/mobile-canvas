@@ -1,67 +1,23 @@
 // Importing package modules.
 import React, { Component } from 'react';
-
-import {
-  View,
-  ImageBackground,
-  Linking,
-  AsyncStorage,
-  Platform,
-  TouchableOpacity,
-  BackHandler,
-  Keyboard
-} from 'react-native';
-
-import {
-  Button,
-  Title,
-  Text,
-  Content,
-  Container,
-  Form,
-  Item,
-  Input,
-  Label,
-  Spinner,
-  Icon,
-  Root,
-  Toast
-} from 'native-base';
-
+import { View, ImageBackground, Linking, AsyncStorage, Platform, TouchableOpacity, BackHandler, Keyboard } from 'react-native';
+import { Button, Title, Text, Content, Container, Form, Item, Input, Label, Spinner, Icon, Root, Toast } from 'native-base';
 import { Navigation } from 'react-native-navigation';
-
 import { connect } from 'react-redux';
-
-// Importing local assets and components.
 import { appImages } from '../../config/imagesRoutes';
 import TitleBar from '../../components/title-bar';
 import { FORGOT_PASSWORD_URL, GOOGLE_CLIENT_ID } from 'react-native-dotenv';
-
-import {
-  globalStyle,
-  colors
-} from '../../config/styles';
-
+import { globalStyle, colors } from '../../config/styles';
 import { pushDashboard } from '../../config/flows'
-
 import StyleSheet from './stylesheet'
-
 import { LoginManager, GraphRequest,GraphRequestManager } from 'react-native-fbsdk';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
-
-// Importing Redux's actions
-import {
-  changeActiveScreen,
-  changeSessionToken,
-  changeUser,
-  changeActiveCompany
-} from '../../modules/Session';
-
+import { changeActiveScreen, changeSessionToken, changeUser, changeActiveCompany } from '../../modules/Session';
+import { WELCOME, DASHBOARD, LOGIN } from '..';
+import { pop } from '../../utils/nav';
 const axios = require('../../../src/config/axios');
-
 // Gets the operating system's name where the app is running (Android or iOS).
 const platform = Platform.OS;
-
 /*
 	Screen Name: Login.
 	Description: This screen is used to let the user log in with his/her email or with social options.
@@ -90,59 +46,24 @@ class Login extends Component {
 
   // Handles Android's back button's action
   backAndroid() {
-    this.pushScreen('canvas.Welcome');
+    Navigation.pop(WELCOME);
     return true;
   }
 
   // Changes the active screen using redux.
   changeScreen(activeScreen) {
     this.props.changeActiveScreen({ activeScreen });
-    pushDashboard({ activeScreen: 'canvas.Dashboard' });
-  }
-
-  // Pushes to another screen in the navigator stack.
-  pushScreen(activeScreen) {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: activeScreen,
-        options: {
-          topBar: {
-            visible: false
-          }
-        }
-      }
-    });
-  }
-
-  popScreen(activeScreen) {
-    Navigation.pop(this.props.componentId, {
-      component: {
-        name: activeScreen,
-        options: {
-          topBar: {
-            visible: false
-          }
-        }
-      }
-    });
+    // TODO: Change Logic To hanlde Naigation
+    pushDashboard();
   }
 
   // Defines title bar's left content
   titleBarLeft() {
     return {
       content: (
-        <View>
-          <TouchableOpacity
-            transparent
-            onPress={() => this.popScreen('canvas.Welcome')}
-          >
-            <Icon
-              type={'Ionicons'}
-              name={'md-arrow-back'}
-              style={{ color: colors.brandPrimary, fontSize: 30, marginLeft: 5 }}
-            />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity  transparent  onPress={() => Navigation.popTo(WELCOME)}>
+          <Icon type={'Ionicons'} name={'md-arrow-back'} style={{ color: colors.brandPrimary, fontSize: 30, marginLeft: 5 }} />
+        </TouchableOpacity>
       )
     };
   }
@@ -151,10 +72,18 @@ class Login extends Component {
   titleBarBody() {
     return {
       content: (
-        <View>
-        </View>
+        <View />
       )
     };
+  }
+
+  setNotification(message : string, type : string = 'danger') {
+    Toast.show({
+      text: message,
+      buttonText: 'Ok',
+      duration: 3000,
+      type: 'danger'
+    });
   }
 
   // Process LogIn
@@ -168,10 +97,10 @@ class Login extends Component {
 
       axios
         .post(`/auth`, formData)
-        .then(response => {
-          this.saveSessionData('sessionData', JSON.stringify(response.data));
-          this.props.changeSessionToken({ token: response.data.token });
-          this.getUserInfo(response.data.id, response.data.token);
+        .then(({ data }) => {
+          this.saveSessionData('sessionData', JSON.stringify(data));
+          this.props.changeSessionToken({ token: data.token });
+          this.getUserInfo(data.id);
         })
         .catch(error => {
           this.setState({ isLoginIn: false });
@@ -185,12 +114,7 @@ class Login extends Component {
           });
         });
     } else {
-      Toast.show({
-        text: 'Email and password are required!',
-        buttonText: 'Ok',
-        duration: 3000,
-        type: 'danger'
-      });
+      this.setNotification('Email and password are required!')
     }
   }
 
@@ -217,43 +141,33 @@ class Login extends Component {
     axios
       .post(`/auth`, formData)
       .then(response => {
-        this.saveSessionData('sessionData', JSON.stringify(response.data));
-        this.props.changeSessionToken({ token: response.data.token });
-        this.getUserInfo(response.data.id, response.data.token);
+        AsyncStorage.setItem('sessionData', JSON.stringify(response.data))
+        .then(() => {
+          // this.saveSessionData('sessionData', JSON.stringify(response.data));
+          this.props.changeSessionToken({ token: response.data.token });
+          this.getUserInfo(response.data.id);
+        })
       })
       .catch(error => {
-        console.log(error);
         this.setState({ isLoginIn: false });
-        Toast.show({
-          text: error.response.data.errors.message
-            ? error.response.data.errors.message
-            : 'Error',
-          buttonText: 'Ok',
-          duration: 3000,
-          type: 'danger'
-        });
+        console.clear()
+        console.log('login', error)
+        this.setNotification(error.response.data.errors.message)
       });
   }
 
   // Tries to get the user's information using the stored token.
   // If the response is an error then the token is expired and removes the session data.
   getUserInfo(userId) {
-    axios
-      .get(`/users/${userId}`)
+    axios.get(`/users/${userId}`)
       .then(response => {
         this.props.changeUser({ user: response.data });
         this.getUserDefaultCompany(response.data.default_company);
       })
       .catch(error => {
         this.setState({ isLoginIn: false });
-        Toast.show({
-          text: error.response.data.errors.message
-            ? error.response.data.errors.message
-            : 'Error',
-          buttonText: 'Ok',
-          duration: 3000,
-          type: 'danger'
-        });
+        console.log('get info', error)
+        this.setNotification(error.response.data.errors.message)
       });
   }
 
@@ -267,14 +181,8 @@ class Login extends Component {
       })
       .catch(error => {
         this.setState({ isLoginIn: false });
-        Toast.show({
-          text: error.response.data.errors.message
-            ? error.response.data.errors.message
-            : 'Error',
-          buttonText: 'Ok',
-          duration: 3000,
-          type: 'danger'
-        });
+        console.log('get info', error)
+        this.setNotification(error.response.data.errors.message)
       });
   }
 
@@ -283,7 +191,6 @@ class Login extends Component {
           if (loginState.isCancelled) {
           } else {
               const infoRequest = new GraphRequest('/me?fields=name,picture,email', null,(error, user) => {
-                  console.log(user)
                   if (error) {
                       console.log('Error fetching data: ' + error.toString());
                   } else {
@@ -328,7 +235,6 @@ class Login extends Component {
   signInWithGoogleAsync = async () => {
       GoogleSignin.hasPlayServices().then(() => {
         GoogleSignin.signIn().then(result => {
-            console.log(result)
             if (result.accessToken) {
               var data = new FormData();
               data.append('email', result.user.email);
@@ -364,8 +270,6 @@ class Login extends Component {
             }
         });
       }).catch (error => {
-        console.log("ERROR")
-        console.log(JSON.stringify(error))
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
       } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -400,12 +304,7 @@ class Login extends Component {
     return (
       <Root>
         <Container>
-          <TitleBar
-            noShadow
-            left={this.titleBarLeft()}
-            body={this.titleBarBody()}
-            backgroundColor="white"
-          />
+          <TitleBar noShadow left={this.titleBarLeft()} body={this.titleBarBody()} backgroundColor="white" />
           <Content style={{ backgroundColor: 'white' }}>
             {this.state.isLoading ? (
               <Spinner color={colors.brandPrimary} />
@@ -413,18 +312,12 @@ class Login extends Component {
               <View>
                 <View style={StyleSheet.containerView}>
                   <View style={StyleSheet.topContainerView}>
-                    <Text
-                      style={ StyleSheet.title }
-                    >
+                    <Text style={StyleSheet.title}>
                       Login
                     </Text>
                     <Form style={{ marginHorizontal: 24 }}>
                       <Text style={globalStyle.formLabel}>Email</Text>
-                      <Item
-                        floatingLabel
-                        last
-                        style={ StyleSheet.formItem }
-                      >
+                      <Item floatingLabel last style={ StyleSheet.formItem } >
                         <Input
                           onChangeText={userName =>
                             this.setState({ username: userName })
@@ -542,14 +435,18 @@ class Login extends Component {
 // Maps redux's state variables to this class' props
 const mapStateToProps = state => {
   return {
-
+    token: state.session.token
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    changeActiveScreen,
+    changeSessionToken,
+    changeUser,
+    changeActiveCompany
+  }
+}
+
 // Connects redux actions to this class' props
-export default connect(mapStateToProps, {
-  changeActiveScreen,
-  changeSessionToken,
-  changeUser,
-  changeActiveCompany
-})(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

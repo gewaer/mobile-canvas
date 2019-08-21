@@ -18,8 +18,10 @@ export const colors = {
   blueTrans: "rgba(0, 170, 255, 0.5);",
   whiteDisable: "rgba(255, 255, 255, 0.3)",
   // Brand Colors
-  brandPrimary: "#e48c25",
-  brandSecondary: "#3d3e44",
+  brandPrimary: "#61C2CC",
+  brandPrimaryAlter: "#1F9AA7",
+  brandPrimaryAlterTrans: "rgba(31, 154, 168, 0.6)",
+  brandSecondary: "#AAE6E2",
   bradSecondaryAlter: "#7f7f7f",
   background: "#F5F2F9",
   headerText: "#444444",

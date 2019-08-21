@@ -45,6 +45,7 @@ import StyleSheet from './stylesheet'
 import { Navigation } from 'react-native-navigation';
 
 import ImagePicker from 'react-native-image-crop-picker';
+import { PROFILE_INFO } from '..';
 
 class EditProfile extends Component {
   constructor(props) {
@@ -110,7 +111,6 @@ class EditProfile extends Component {
   }
 
   changeActiveFamily(family) {
-    console.log('Company Id: ', family.id);
     //this.setState({ isLoading: true })
     this.props.changeActiveCompany({ company: family });
   }
@@ -124,9 +124,7 @@ class EditProfile extends Component {
         image.mime,
         Platform.OS == 'ios' ? image.filename : image.path.split('/').pop()
       );
-      console.log(normalizeFile);
       this.setState({ profilePhotoSelection: normalizedFile }, () => {
-        console.log(this.state.profilePhotoSelection)
         //this.uploadPhoto();
       });
     });
@@ -138,7 +136,6 @@ class EditProfile extends Component {
     }).then(image => {
       const normalizedFile = normalizeFile(image.path, image.mime, image.path.split('/').pop());
       this.setState({ profilePhotoSelection: normalizedFile }, () => {
-        console.log(this.state.profilePhotoSelection)
         this.uploadPhoto();
       });
     });
@@ -155,7 +152,7 @@ class EditProfile extends Component {
   changeScreen(infoChanged) {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'canvas.Profile',
+        name: PROFILE_INFO,
         passProps: {
           profileInfoChanged: infoChanged
         },
@@ -227,7 +224,7 @@ class EditProfile extends Component {
   returnToProfileScreen() {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'canvas.Profile',
+        name: PROFILE_INFO,
         options: {
           topBar: {
             visible: false
@@ -273,13 +270,12 @@ class EditProfile extends Component {
     axios
       .put(`/users/${this.props.userInfo.id}`, data, headers)
       .then(response => {
-        console.log(response.data);
+        (response.data);
         let userSelectedFamilty = this.getDefaultFamilyName();
         if (userSelectedFamilty) {
           this.changeActiveFamily(userSelectedFamilty);
         }
         this.changeScreen(true);
-        console.log(response.data);
       })
       .catch(function(error) {
         console.log(error.message);

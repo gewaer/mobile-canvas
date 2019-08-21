@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_KEY } from "react-native-dotenv";
 import getStore from "../modules/store";
+import { AsyncStorage } from "react-native";
 
 const store = getStore();
 
@@ -8,9 +9,10 @@ let instance = axios.create({
     baseURL: API_KEY
 })
 
-instance.interceptors.request.use(function (config) {
+instance.interceptors.request.use(async function (config) {
     if(!config.url.includes('auth')){
-      const token = store.getState().session.token;
+      const parser = JSON.parse(await AsyncStorage.getItem('sessionData'));
+      const token = store.getState().session.token || parser.token
       config.headers.Authorization = token;
     }
     return config;

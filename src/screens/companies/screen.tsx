@@ -1,137 +1,77 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-import React, { Component } from 'react';
-import {
-  View,
-  Platform,
-  TouchableOpacity,
-  FlatList
-} from 'react-native';
-
+import React, { Component } from "react";
+import { View, Platform, TouchableOpacity, FlatList } from "react-native";
 import {
   Button,
-  Text,
   Icon,
   ListItem,
   Body,
   Left,
   Content,
   Container,
-  Spinner
-} from 'native-base';
-
-import { colors, paddingHelpers } from '../../config/styles';
+  Spinner,
+  Text
+} from "native-base";
+import { colors, paddingHelpers } from "../../config/styles";
 import {
   changeActiveScreen,
   changeActiveFamily,
   changeActiveCompany
-} from '../../modules/Session';
-import { connect } from 'react-redux';
-const axios = require('../../../src/config/axios');
+} from "../../modules/Session";
+import { connect } from "react-redux";
+const axios = require("../../../src/config/axios");
 const platform = Platform.OS;
-import TitleBar from '../../components/title-bar';
-import getStore from '../../modules/store';
-import StyleSheet from './stylesheet';
+import TitleBar from "../../components/title-bar";
+import getStore from "../../modules/store";
+import StyleSheet from "./stylesheet";
+import { Navigation } from "react-native-navigation";
+import { ADD_COMPANY, SIDEMENU, COMPANY_INFO } from "..";
+import { push, showModal } from "@utils/nav";
 
-import { Navigation } from 'react-native-navigation';
-import { pushSingleScreenApp } from '../../config/flows';
+class Company extends Component {
+  state = {
+    isLoading: true,
+    companies: []
+  };
 
-class Family extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: true,
-      companies: []
-    };
-
-    this.store = getStore();
-
-    this.store.subscribe(this.onStoreUpdate.bind(this));
-  }
-
-  componentWillMount() {
+  componentDidMount() {
     this.getCompanies();
   }
 
-  onStoreUpdate() {
-    const company = this.store.getState().session.company;
-    //debugger;
-    if (this.currentCompany != company && company.id) {
-      this.currentCompany = company;
-      this.getCompanies();
-    }
+  changeScreen(company) {
+    push(this.props.componentId, COMPANY_INFO, { company });
   }
 
-  changeScreen(family) {
-    pushSingleScreenApp('canvas.CompanyInfo', { family: family });
-  }
-
-  changeActiveFamily(family) {
-    this.props.changeActiveCompany({ company: family });
+  changeActiveFamily(company) {
+    this.props.changeActiveCompany({ company });
     this.setState({ isLoading: true }, () => this.getCompanies());
     Navigation.mergeOptions(this.props.componentId, {
       bottomTabs: {
-        currentTabIndex: 0
+        currentTabIndex: 0,
+        animate: true
       }
     });
   }
 
   getCompanies = () => {
-    this.setState({ isLoading: true });
-
     axios
       .get(`/companies`)
       .then(response => {
         this.setState({ companies: response.data, isLoading: false });
       })
-      .catch(function(error) {
-        console.log(error.response);
+      .catch(err => {
+        this.setState({ isLoading: false });
+        console.log(err);
       });
   };
 
   openAddCompanyModal() {
-    Navigation.showModal({
-      stack: {
-        children: [
-          {
-            component: {
-              name: 'canvas.AddCompany',
-              passProps: {
-                companyCreatedAction: this.getCompanies
-              },
-              options: {
-                topBar: {
-                  visible: false
-                }
-              }
-            }
-          }
-        ]
-      }
+    showModal(this.props.componentId, ADD_COMPANY, {
+      companyCreatedAction: this.getCompanies
     });
-    // this.props.navigator.showLightBox({
-    //   screen: 'dac.AddCompany',
-    //   passProps: {
-    //     companyCreatedAction: this.getCompanies
-    //   },
-    //   style: {
-    //     backgroundBlur: 'none',
-    //     backgroundColor: 'rgba(34, 34, 34, 0.8)',
-    //     width: 320,
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    //     tapBackgroundToDismiss: true
-    //   }
-    // });
   }
 
   showDrawer = () => {
-    Navigation.mergeOptions('navigation.drawer.left.tab', {
+    Navigation.mergeOptions(SIDEMENU, {
       sideMenu: {
         left: {
           visible: true
@@ -146,9 +86,9 @@ class Family extends Component {
         <View style={StyleSheet.titleBarContent}>
           <Button transparent onPress={() => this.showDrawer()}>
             <Icon
-              type={'MaterialIcons'}
-              name={'menu'}
-              style={{ color: '#fff', fontSize: platform === 'ios' ? 22 : 24 }}
+              type={"MaterialIcons"}
+              name={"menu"}
+              style={{ color: "#fff", fontSize: platform === "ios" ? 22 : 24 }}
             />
           </Button>
         </View>
@@ -161,7 +101,7 @@ class Family extends Component {
       content: (
         <View style={[StyleSheet.titleBarContent]}>
           <TouchableOpacity onPress={() => this.openAddCompanyModal()}>
-            <Text style={{ color: '#fff', paddingLeft: 0, fontSize: 16 }}>
+            <Text style={{ color: "#fff", paddingLeft: 0, fontSize: 16 }}>
               Add
             </Text>
           </TouchableOpacity>
@@ -190,14 +130,14 @@ class Family extends Component {
           >
             {company && company.id == this.props.company.id ? (
               <Icon
-                type={'FontAwesome'}
-                name={'check-circle'}
+                type={"FontAwesome"}
+                name={"check-circle"}
                 style={{ color: colors.brandGreen, fontSize: 22 }}
               />
             ) : (
               <Icon
-                type={'FontAwesome'}
-                name={'circle-o'}
+                type={"FontAwesome"}
+                name={"circle-o"}
                 style={{ color: colors.brandGrey, fontSize: 22 }}
               />
             )}
@@ -218,7 +158,7 @@ class Family extends Component {
         <Container>
           <TitleBar left={this.titleBarLeft()} body={titleBarbody} />
           <Content>
-            <View style={{ margin: 'auto' }}>
+            <View style={{ margin: "auto" }}>
               <Spinner />
             </View>
           </Content>
@@ -248,7 +188,7 @@ class Family extends Component {
               />
               {!this.state.companies.length && (
                 <View style={{ marginTop: paddingHelpers.N }}>
-                  <Text style={{ marginTop: 10, textAlign: 'center' }}>
+                  <Text style={{ marginTop: 10, textAlign: "center" }}>
                     This user has not registered companies
                   </Text>
                   <View style={StyleSheet.btnContainer}>
@@ -275,9 +215,9 @@ const titleBarbody = {
     <View style={StyleSheet.titleBarContent}>
       <Text
         style={{
-          color: '#fff',
-          paddingLeft: platform === 'ios' ? 0 : 10,
-          fontSize: platform === 'ios' ? 18 : 19.64
+          color: "#fff",
+          paddingLeft: platform === "ios" ? 0 : 10,
+          fontSize: platform === "ios" ? 18 : 19.64
         }}
       >
         Companies
@@ -295,11 +235,13 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = {
+  changeActiveScreen,
+  changeActiveFamily,
+  changeActiveCompany
+};
+
 export default connect(
   mapStateToProps,
-  {
-    changeActiveScreen,
-    changeActiveFamily,
-    changeActiveCompany
-  }
-)(Family);
+  mapDispatchToProps
+)(Company);

@@ -3,7 +3,7 @@ import Welcome from "./welcome";
 import Register from "./register";
 import Login from "./login";
 import Dashboard from "./dashboard";
-import SideMenu from "../components/side-menu";
+import SideMenu from "./side-menu";
 import Companies from "./companies";
 import ItemInfo from "./item-info";
 import EditItem from "./edit-item";
@@ -17,55 +17,54 @@ import EditProfile from "./edit-profile";
 import WrapperProvider from "../config/WrapperProvider";
 import AddPost from "./add-post";
 import MyScreen from "./my-screen";
+import * as screens from "./index";
 
 export default function registerScreens(): void {
-  Navigation.registerComponent("canvas.Welcome", () =>
-    WrapperProvider(Welcome)
-  );
-  Navigation.registerComponent("canvas.Register", () =>
+  Navigation.registerComponent(screens.WELCOME, () => WrapperProvider(Welcome));
+  Navigation.registerComponent(screens.REGISTER, () =>
     WrapperProvider(Register)
   );
-  Navigation.registerComponent("canvas.Login", () => WrapperProvider(Login));
-  Navigation.registerComponent("canvas.Dashboard", () =>
+  Navigation.registerComponent(screens.LOGIN, () => WrapperProvider(Login));
+  Navigation.registerComponent(screens.DASHBOARD, () =>
     WrapperProvider(Dashboard)
   );
-  Navigation.registerComponent("canvas.Companies", () =>
+  Navigation.registerComponent(screens.BROWSE_COMPANIES, () =>
     WrapperProvider(Companies)
   );
-  Navigation.registerComponent("canvas.ItemInfo", () =>
+  Navigation.registerComponent(screens.LEADS_INFO, () =>
     WrapperProvider(ItemInfo)
   );
-  Navigation.registerComponent("canvas.EditItem", () =>
+  Navigation.registerComponent(screens.EDIT_LEADS, () =>
     WrapperProvider(EditItem)
   );
-  Navigation.registerComponent("canvas.AddItem", () =>
+  Navigation.registerComponent(screens.ADD_LEADS, () =>
     WrapperProvider(AddItem)
   );
-  Navigation.registerComponent("canvas.EditCompany", () =>
+  Navigation.registerComponent(screens.EDIT_COMPANY, () =>
     WrapperProvider(EditCompany)
   );
-  Navigation.registerComponent("canvas.CompanyInfo", () =>
+  Navigation.registerComponent(screens.COMPANY_INFO, () =>
     WrapperProvider(CompanyInfo)
   );
-  Navigation.registerComponent("canvas.Profile", () =>
+  Navigation.registerComponent(screens.PROFILE_INFO, () =>
     WrapperProvider(Profile)
   );
-  Navigation.registerComponent("canvas.EditProfile", () =>
+  Navigation.registerComponent(screens.EDIT_PROFILE, () =>
     WrapperProvider(EditProfile)
   );
-  Navigation.registerComponent("canvas.Settings", () =>
+  Navigation.registerComponent(screens.SETTINGS, () =>
     WrapperProvider(Settings)
   );
-  Navigation.registerComponent("canvas.SideMenu", () =>
+  Navigation.registerComponent(screens.SIDEMENU, () =>
     WrapperProvider(SideMenu)
   );
-  Navigation.registerComponent("canvas.AddCompany", () =>
+  Navigation.registerComponent(screens.ADD_COMPANY, () =>
     WrapperProvider(AddCompany)
   );
-  Navigation.registerComponent("canvas.AddPost", () =>
+  Navigation.registerComponent(screens.ADD_POST, () =>
     WrapperProvider(AddPost)
   );
-  Navigation.registerComponent("canvas.MyScreen", () =>
+  Navigation.registerComponent(screens.MY_SCREEN, () =>
     WrapperProvider(MyScreen)
   );
 }
