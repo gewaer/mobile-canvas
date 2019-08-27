@@ -38,7 +38,7 @@ import { DASHBOARD, LOGIN, REGISTER } from "..";
 	It usually contains the company logo and navigation buttons to the Register or Log In screen.
 */
 class Welcome extends Component {
-  .state = {
+  state = {
     isLoading: true
   };
 
