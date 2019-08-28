@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Image, FlatList } from "react-native";
 import { Form, Container, Content, View, Item } from "native-base";
-import { changeActiveScreen } from "@redux/Session";
+import { changeActiveScreen } from "@modules/Session";
 import { icons } from "@styles/imagesUris";
 import { connect } from "react-redux";
 import StyleSheet from "./stylesheet";

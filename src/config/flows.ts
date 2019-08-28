@@ -5,7 +5,7 @@ import { colors } from "@styles/colors";
 import { deviceWidth } from "@styles/globalStyles";
 import { deviceHeight } from "@styles/marginLayout";
 
-export function SingleScreenAppWithSideMenu(nextScreen: string) {
+export function pushSingleScreenAppWithSideMenu(screenName: string, screenProps: string, passProps: string) {
   Navigation.setRoot({
     root: {
       sideMenu: {
@@ -13,7 +13,7 @@ export function SingleScreenAppWithSideMenu(nextScreen: string) {
           component: {
             id: screens.SIDEMENU,
             name: screens.SIDEMENU,
-            passProps: {}
+            passProps
           }
         },
         center: {
@@ -21,13 +21,14 @@ export function SingleScreenAppWithSideMenu(nextScreen: string) {
             children: [
               {
                 component: {
-                  name: nextScreen,
+                  name: screenName,
                   options: {
                     topBar: {
-                      visible: false
+                      visible: false,
+                      height: 0
                     }
                   },
-                  passProps: {}
+                  passProps: screenProps
                 }
               }
             ]
@@ -38,7 +39,7 @@ export function SingleScreenAppWithSideMenu(nextScreen: string) {
   });
 }
 
-export function pushDashboard(sideMenuProps, initialTabIndex = 0) {
+export function pushDashboard(sideMenuProps: object, initialTabIndex: number = 0) {
   Navigation.setRoot({
     root: {
       sideMenu: {
@@ -166,28 +167,6 @@ export function pushDashboard(sideMenuProps, initialTabIndex = 0) {
                     },
                   ],
                 },
-              },
-              {
-                component: {
-                  id: screens.MY_SCREEN,
-                  name: screens.MY_SCREEN,
-                  options: {
-                    bottomTab: {
-                      iconColor: colors.white,
-                      selectedIconColor: colors.brandGreenDeep,
-                      icon: icons.apps.uri,
-                      iconInsets: {
-                        top: 6,
-                        left: 0,
-                        bottom: -6,
-                        right: 0,
-                      },
-                    },
-                    topBar: {
-                      visible: false,
-                    },
-                  },
-                },
               }
             ],
           },
@@ -284,6 +263,16 @@ export function defaultProps() {
     overlay: {
       interceptTouchOutside: true,
       handleKeyboardEvents: true
+    }
+  });
+}
+
+export function openDrawer() {
+  Navigation.mergeOptions(screens.SIDEMENU, {
+    sideMenu: {
+      left: {
+        visible: true
+      }
     }
   });
 }

@@ -6,10 +6,11 @@ import { Navigation } from "react-native-navigation";
  * @param screenName Screen name
  * @param passProps push new object
  */
-export function push(
+export function pushScreen(
   componentId: string,
   screenName: string,
-  passProps: object
+  passProps: object,
+  options: object
 ) {
   Navigation.push(componentId, {
     component: {
@@ -17,12 +18,39 @@ export function push(
       name: screenName,
       passProps,
       options: {
+        ...options,
         topBar: {
-          visible: false
+          visible: false,
+          height: 0
         },
         bottomTabs: {
-          visible: false
+          visible: false,
+          drawBehind: true
         }
+      }
+    }
+  });
+}
+
+export function forcePush(screenName: string, passProps: object) {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [
+          {
+            component: {
+              id: screenName,
+              name: screenName,
+              options: {
+                topBar: {
+                  visible: false,
+                  height: 0
+                }
+              },
+              passProps
+            }
+          }
+        ]
       }
     }
   });
@@ -32,7 +60,7 @@ export function push(
  * go back to preview screen
  * @param componentId - actual screen id
  */
-export function pop(componentId: string, mergeOptions: object) {
+export function popScreen(componentId: string, mergeOptions: object) {
   Navigation.pop(componentId, mergeOptions);
 }
 
@@ -41,7 +69,7 @@ export function pop(componentId: string, mergeOptions: object) {
  * @param componentId Screen name
  * @param mergeOptions Styling options
  */
-export function popTo(componentId: string, mergeOptions: object) {
+export function popToScreen(componentId: string, mergeOptions: object) {
   Navigation.popTo(componentId, mergeOptions);
 }
 
@@ -99,10 +127,12 @@ export function showModal(screenName: string, passProps: any) {
             passProps,
             options: {
               topBar: {
-                visible: false
+                visible: false,
+                height: 0
               },
               bottomTabs: {
-                visible: false
+                visible: false,
+                drawBehind: true
               }
             }
           }

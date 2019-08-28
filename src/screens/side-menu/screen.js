@@ -1,12 +1,12 @@
 // Importing package modules.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, View, TouchableOpacity, AsyncStorage } from 'react-native';
-import { Body, Icon, Text, ListItem, List, Right } from 'native-base';
-import { paddingHelpers, colors } from '../../config/styles';
-import { changeActiveScreen } from '../../modules/Session';
+import { ScrollView, View, TouchableOpacity } from 'react-native';
+import AsyncStorage from "@react-native-community/async-storage";
+import { Body, Icon, Text, ListItem, List } from 'native-base';
+import { paddingHelpers, colors } from '@config/styles';
 import { Navigation } from 'react-native-navigation';
-import { pushDashboard, auth, SingleScreenAppWithSideMenu } from '../../config/flows';
+import { pushDashboard, auth, pushSingleScreenAppWithSideMenu } from '@config/flows';
 import StyleSheet from './stylesheet';
 import { DASHBOARD, PROFILE_INFO, SETTINGS, SIDEMENU, WELCOME } from '..';
 
@@ -51,7 +51,7 @@ class SideMenu extends Component {
       pushDashboard();
     } else {
       // Use Push Navigation to the app
-      SingleScreenAppWithSideMenu(activeScreen);
+      pushSingleScreenAppWithSideMenu(activeScreen);
     }
   }
 
@@ -75,8 +75,7 @@ class SideMenu extends Component {
   async logOut() {
     try {
       AsyncStorage.removeItem('sessionData', () => {
-        this.props.changeActiveScreen({ activeScreen: 'welcome' });
-        auth()
+        auth();
       });
     } catch (error) {
       console.error(error);
@@ -103,7 +102,7 @@ class SideMenu extends Component {
               {
                 this.state.menuObjects.map((element) => {
                   return(
-                    <ListItem key={ element.id }  style={StyleSheet.listItemDarkBorder} onPress={() => this.changeScreen(element.navigateTo)}>
+                    <ListItem key={ element.text }  style={StyleSheet.listItemDarkBorder} onPress={() => this.changeScreen(element.navigateTo)}>
                       <View style={{ width: 30, alignItems: 'center' }}>
                         <Icon type={element.iconType}  name={element.iconName} style={{ fontSize: 18, color: colors.brandPrimaryAlter }}/>
                       </View>
@@ -149,7 +148,5 @@ const mapStateToProps = state => {
 // Connects redux actions to this class' props
 export default connect(
   mapStateToProps,
-  {
-    changeActiveScreen
-  }
+  {}
 )(SideMenu);

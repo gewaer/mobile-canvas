@@ -25,7 +25,7 @@ import getStore from "../../modules/store";
 import StyleSheet from "./stylesheet";
 import { Navigation } from "react-native-navigation";
 import { ADD_COMPANY, SIDEMENU, COMPANY_INFO } from "..";
-import { push, showModal } from "@utils/nav";
+import { pushScreen, showModal } from "@utils/nav";
 
 class Company extends Component {
   state = {
@@ -38,7 +38,7 @@ class Company extends Component {
   }
 
   changeScreen(company) {
-    push(this.props.componentId, COMPANY_INFO, { company });
+    pushScreen(this.props.componentId, COMPANY_INFO, { company });
   }
 
   changeActiveFamily(company) {
