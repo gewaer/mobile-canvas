@@ -21,12 +21,12 @@ import TitleBar from "../../components/title-bar";
 import StyleSheet from "./stylesheet";
 const platform = Platform.OS;
 import { EDIT_COMPANY } from "..";
-import { popTo, push, pop } from "@utils/nav";
+import { popToScreen, pushScreen, popScreen } from "@utils/nav";
 
 class CompanyInfo extends Component {
   componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", () =>
-      popTo(this.props.componentId)
+      popToScreen(this.props.componentId)
     );
   }
 
@@ -52,7 +52,7 @@ class CompanyInfo extends Component {
     return {
       content: (
         <View style={StyleSheet.titleBarContent}>
-          <Button transparent onPress={() => pop(this.props.componentId)}>
+          <Button transparent onPress={() => popScreen(this.props.componentId)}>
             <Icon
               type={"MaterialIcons"}
               name={"chevron-left"}
@@ -70,7 +70,7 @@ class CompanyInfo extends Component {
         <View style={StyleSheet.titleBarContent}>
           <TouchableOpacity
             onPress={() =>
-              push(this.props.componentId, EDIT_COMPANY, {
+              pushScreen(this.props.componentId, EDIT_COMPANY, {
                 company: this.props.company
               })
             }

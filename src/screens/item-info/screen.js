@@ -36,11 +36,10 @@ const platform = Platform.OS;
 
 import { Navigation } from 'react-native-navigation';
 
-import { pushDashboard } from '../../config/flows';
+import { popScreen } from "@utils/nav";
 
 import StyleSheet from './stylesheet';
 import { DASHBOARD, EDIT_LEADS } from '..';
-import { popTo } from '@utils/nav';
 
 class ItemInfo extends Component {
   constructor(props) {
@@ -98,12 +97,8 @@ class ItemInfo extends Component {
   }
 
   backAndroid() {
-    this.changeScreen();
+    popScreen(this.props.componentId);
     return true;
-  }
-
-  changeScreen() {
-   Navigation.pop(this.props.componentId)
   }
 
   changeToEditScreen() {
@@ -163,7 +158,7 @@ class ItemInfo extends Component {
     return {
       content: (
         <View style={StyleSheet.titleBarContent}>
-          <Button transparent onPress={() => this.changeScreen()}>
+          <Button transparent onPress={() => popScreen(this.props.componentId)}>
             <Icon
               type={'MaterialIcons'}
               name={'chevron-left'}

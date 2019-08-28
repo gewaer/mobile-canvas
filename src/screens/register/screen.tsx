@@ -1,20 +1,18 @@
 // Importing package modules.
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-const axios = require('../../../src/config/axios');
-import { Navigation } from 'react-native-navigation';
-import { View, AsyncStorage, Platform, TouchableOpacity, BackHandler, Keyboard} from 'react-native';
-import { Button, Title, Text, Content, Container, Form, Item, Input, Label, Spinner, Icon, Root, Toast } from 'native-base';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import axios from "@config/axios";
+import { View, TouchableOpacity, BackHandler, Keyboard} from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
+import { Button, Text, Content, Container, Form, Item, Input, Spinner, Icon, Root, Toast } from "native-base";
 // Importing local assets and components.
-import { globalStyle, colors } from '../../config/styles';
-import { pushDashboard } from '../../config/flows';
-import TitleBar from '../../components/title-bar';
-import { API_KEY } from 'react-native-dotenv'
-import { changeActiveScreen, changeSessionToken, changeUser, changeActiveCompany } from '../../modules/Session';
-const platform = Platform.OS;
-import StyleSheet from './stylesheet'
-import { pop } from '../../utils/nav';
-import { DASHBOARD } from '..';
+import { globalStyle, colors } from "@config/styles";
+import TitleBar from "@components/title-bar";
+import { changeSessionToken, changeUser, changeActiveCompany } from "@modules/Session";
+import StyleSheet from "./stylesheet"
+import { popScreen, popToScreen } from "@utils/nav";
+import { DASHBOARD } from "..";
+
 /*
 	Screen Name: Register.
 	Description: This screen is used to let the user create an account.
@@ -41,48 +39,14 @@ class Register extends Component {
 
   // Handles Android's back button's action
   backAndroid() {
-    this.pushScreen('canvas.Welcome');
+    popScreen(this.props.componentId);
     return true;
-  }
-
-  // Changes the active screen using redux.
-  changeScreen(activeScreen) {
-    this.props.changeActiveScreen({ activeScreen });
-  }
-
-  // Pushes to another screen in the navigator stack.
-  pushScreen(activeScreen) {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: activeScreen,
-        options: {
-          topBar: {
-            visible: false
-          }
-        }
-      }
-    });
-  }
-
-  popScreen(activeScreen) {
-    Navigation.pop(this.props.componentId, {
-      component: {
-        name: activeScreen,
-        options: {
-          topBar: {
-            visible: false
-          }
-        }
-      }
-    });
   }
 
   // Defines title bar's left content
   titleBarLeft() {
     if (this.state.isLoading) {
-      return {
-        content: <View />
-      };
+      return;
     }
 
     return {
@@ -90,7 +54,7 @@ class Register extends Component {
         <View>
           <TouchableOpacity
             transparent
-            onPress={() => this.popScreen('canvas.Welcome')}
+            onPress={() => popScreen(this.props.componentId)}
           >
             <Icon
               type={'Ionicons'}
@@ -105,12 +69,7 @@ class Register extends Component {
 
   // Defines title bar's body content
   titleBarBody() {
-    return {
-      content: (
-        <View>
-        </View>
-      )
-    };
+    return;
   }
 
   // Checks if all required fields are filled
@@ -129,7 +88,7 @@ class Register extends Component {
   createUser() {
     Keyboard.dismiss();
     // Displays an error notification if the password and confirm password fields are not equal
-    if (this.state.password != this.state.confirmPassword) {
+    if (this.state.password !== this.state.confirmPassword) {
       Toast.show({
         text: 'Passwords don\'t match!',
         buttonText: 'Ok',
@@ -211,7 +170,7 @@ class Register extends Component {
         this.props.changeActiveCompany({ company: response.data[0] });
         // TODO: Use Function to return to Process
         // pushDashboard({ activeScreen: 'canvas.Dashboard' });
-        pop(DASHBOARD)
+        popToScreen(DASHBOARD);
       })
       .catch(function(error) {
         // handle error
@@ -404,7 +363,6 @@ const mapStateToProps = state => {
 
 // Connects redux actions to this class' props
 export default connect(mapStateToProps, {
-  changeActiveScreen,
   changeSessionToken,
   changeUser,
   changeActiveCompany

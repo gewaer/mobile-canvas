@@ -1,43 +1,37 @@
 // Importing package modules.
 import React, { Component } from "react";
 import { connect } from "react-redux";
-const axios = require("../../../src/config/axios");
-import { Navigation } from "react-native-navigation";
-
-import { pushDashboard } from "../../config/flows";
-
+import axios from "@config/axios";
+import { pushDashboard } from "@config/flows";
 import {
   View,
   StatusBar,
   ImageBackground,
-  AsyncStorage,
   Alert
 } from "react-native";
-
+import AsyncStorage from "@react-native-community/async-storage";
 import { Text, Button, Container, Spinner } from "native-base";
-
 // Importing local assets.
-import { globalStyle, colors, paddingHelpers } from "../../config/styles";
-import { appImages } from "../../config/imagesRoutes";
-import { API_KEY } from "react-native-dotenv";
-
+import { globalStyle, colors, paddingHelpers } from "@config/styles";
+import { appImages } from "@config/imagesRoutes";
 // Importing Redux's actions
 import {
-  changeActiveScreen,
   changeSessionToken,
   changeUser,
   changeActiveCompany
-} from "../../modules/Session";
-
+} from "@modules/Session";
 import StyleSheet from "./stylesheet";
 import { DASHBOARD, LOGIN, REGISTER } from "..";
+import { pushScreen } from "@utils/nav"
+import { IState, IProps } from "./types";
+import { AxiosResponse, AxiosError } from "axios";
 
 /*
 	Screen Name: Welcome.
 	Description: This is the first screen that the user will see if there's not session data in the storage.
 	It usually contains the company logo and navigation buttons to the Register or Log In screen.
 */
-class Welcome extends Component {
+class Welcome extends Component<IProps, IState> {
   state = {
     isLoading: true
   };
@@ -49,7 +43,7 @@ class Welcome extends Component {
   // Verifies if there's any session data on the local storage.
   // This is used to auto-login the user if the token is not expired.
   async handleSessionData() {
-    let data = JSON.parse(await AsyncStorage.getItem("sessionData"));
+    const data = JSON.parse(await AsyncStorage.getItem("sessionData"));
     if (data && data.token && data.id) {
       // Sets session's token in redux state.
       this.props.changeSessionToken({ token: data.token });
@@ -70,15 +64,15 @@ class Welcome extends Component {
 
   // Tries to get the user's information using the stored token.
   // If the response is an error then the token is expired and removes the session data.
-  getUserInfo(userId, token) {
+  getUserInfo(userId: string, token: string) {
     axios
       .get(`/users/${userId}`)
-      .then(response => {
+      .then((response: AxiosResponse) => {
         // Sets user's data in redux state.
         this.props.changeUser({ user: response.data });
         this.getUserDefaultCompany(response.data.default_company, token);
       })
-      .catch(error => {
+      .catch((error: AxiosError) => {
         console.log(error.response);
         Alert.alert("Sesión expirada");
         this.removeSessionData();
@@ -87,38 +81,18 @@ class Welcome extends Component {
   }
 
   // Get the user's default company.
-  getUserDefaultCompany(companyId, token) {
+  getUserDefaultCompany(companyId: string) {
     axios
       .get(`/companies?q=(id:${companyId})`)
-      .then(response => {
+      .then((response: AxiosResponse) => {
         // Sets user's active company in redux state.
         this.props.changeActiveCompany({ company: response.data[0] });
         // Since all user and session data are in the redux's state, change to Dashboard screen.
-        this.changeScreen(DASHBOARD);
+        pushDashboard({ activeScreen: DASHBOARD });
       })
-      .catch(function(error) {
+      .catch((error: AxiosError) => {
         console.log(error);
       });
-  }
-
-  // Changes the active screen using redux.
-  changeScreen(activeScreen) {
-    this.props.changeActiveScreen({ activeScreen });
-    pushDashboard({ activeScreen: DASHBOARD });
-  }
-
-  // Pushes to another screen in the navigator stack.
-  pushScreen(activeScreen) {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: activeScreen,
-        options: {
-          topBar: {
-            visible: false
-          }
-        }
-      }
-    });
   }
 
   render() {
@@ -141,57 +115,54 @@ class Welcome extends Component {
         </Container>
       );
     }
-      return (
-        <Container style={StyleSheet.wrapper}>
-          <StatusBar
-            backgroundColor={colors.brandGreen}
-            barStyle="light-content"
-          />
-          <View>
-            <View style={StyleSheet.container}>
-              <View>
-                <ImageBackground
-                  source={appImages.LogoBig.uri}
-                  style={globalStyle.logoBig}
-                  resizeMode="contain"
-                />
-              </View>
-            </View>
-            <View style={StyleSheet.footerButtomsContainer}>
-              <Text
-                style={{ marginBottom: paddingHelpers.S, fontWeight: "200" }}
-              >
-                Inicia Sesión con tus Cuentas de Social Media
-              </Text>
-              <Button
-                block
-                style={{
-                  marginVertical: paddingHelpers.S,
-                  backgroundColor: colors.bradSecondaryAlter
-                }}
-                onPress={() => this.pushScreen(LOGIN)}
-              >
-                <Text style={StyleSheet.btnTextStyle}>Ingresar</Text>
-              </Button>
-              <Button
-                block
-                style={{
-                  marginVertical: paddingHelpers.S,
-                  backgroundColor: colors.brandPrimary
-                }}
-                onPress={() => this.pushScreen(REGISTER)}
-              >
-                <Text style={StyleSheet.btnTextStyle}>Crear Cuenta</Text>
-              </Button>
+    return (
+      <Container style={StyleSheet.wrapper}>
+        <StatusBar
+          backgroundColor={colors.brandGreen}
+          barStyle="light-content"
+        />
+        <View>
+          <View style={StyleSheet.container}>
+            <View>
+              <ImageBackground
+                source={appImages.LogoBig.uri}
+                style={globalStyle.logoBig}
+                resizeMode="contain"
+              />
             </View>
           </View>
-        </Container>
-      );
+          <View style={StyleSheet.footerButtomsContainer}>
+            <Text style={{ marginBottom: paddingHelpers.S, fontWeight: "200" }}>
+              Inicia Sesión con tus Cuentas de Social Media
+            </Text>
+            <Button
+              block
+              style={{
+                marginVertical: paddingHelpers.S,
+                backgroundColor: colors.bradSecondaryAlter
+              }}
+              onPress={() => pushScreen(this.props.componentId, LOGIN)}
+            >
+              <Text style={StyleSheet.btnTextStyle}>Ingresar</Text>
+            </Button>
+            <Button
+              block
+              style={{
+                marginVertical: paddingHelpers.S,
+                backgroundColor: colors.brandPrimary
+              }}
+              onPress={() => pushScreen(this.props.componentId, REGISTER)}
+            >
+              <Text style={StyleSheet.btnTextStyle}>Crear Cuenta</Text>
+            </Button>
+          </View>
+        </View>
+      </Container>
+    );
   }
 }
 
 const mapDispatchToProps = {
-  changeActiveScreen,
   changeSessionToken,
   changeUser,
   changeActiveCompany

@@ -28,7 +28,7 @@ import TitleBar from "../../components/title-bar";
 import { changeActiveCompany } from "../../modules/Session";
 const platform = Platform.OS;
 import StyleSheet from "./stylesheet";
-import { pop, popToRoot } from "@utils/nav";
+import { popScreen, popToRoot } from "@utils/nav";
 
 /*
 	Screen Name: Edit Company.
@@ -51,7 +51,7 @@ class EditCompany extends Component {
     });
     // Creates an event listener for Android's back button.
     BackHandler.addEventListener("hardwareBackPress", () =>
-      pop(this.props.componentId)
+      popScreen(this.props.componentId)
     );
   }
 
@@ -138,7 +138,7 @@ class EditCompany extends Component {
     return {
       content: (
         <View style={StyleSheet.titleBarContent}>
-          <Button transparent onPress={() => pop(this.props.componentId)}>
+          <Button transparent onPress={() => popScreen(this.props.componentId)}>
             <Icon
               type={"MaterialIcons"}
               name={"chevron-left"}
