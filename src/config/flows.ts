@@ -38,18 +38,44 @@ export function SingleScreenAppWithSideMenu(nextScreen: string) {
   });
 }
 
-export function pushDashboard() {
+export function pushDashboard(sideMenuProps, initialTabIndex = 0) {
   Navigation.setRoot({
     root: {
       sideMenu: {
         left: {
-          component: {
-            id: screens.SIDEMENU,
-            name: screens.SIDEMENU
-          }
+          stack: {
+            children: [
+              {
+                component: {
+                  id: screens.SIDEMENU,
+                  name: screens.SIDEMENU,
+                  passProps: sideMenuProps,
+                  options: {
+                    topBar: {
+                      visible: false,
+                      drawBehind: false,
+                    },
+                  },
+                },
+              },
+            ],
+          },
         },
         center: {
           bottomTabs: {
+            options: {
+              bottomTabs: {
+                backgroundColor: colors.brandSecondary,
+                currentTabIndex: initialTabIndex,
+                animate: false,
+                titleDisplayMode: 'alwaysHide',
+                visible: true,
+                drawBehind: false,
+                barStyle: 'default',
+                translucent: false,
+                hideShadow: false,
+              },
+            },
             children: [
               {
                 stack: {
@@ -57,27 +83,29 @@ export function pushDashboard() {
                     {
                       component: {
                         id: screens.DASHBOARD,
-                        name: screens.DASHBOARD
-                      }
-                    }
-                  ],
-                  options: {
-                    bottomTab: {
-                      iconColor: colors.white,
-                      selectedIconColor: colors.brandGreenDeep,
-                      icon: icons.apps.uri,
-                      iconInsets: {
-                        top: 6,
-                        left: 0,
-                        bottom: -6,
-                        right: 0
-                      }
+                        name: screens.DASHBOARD,
+                        options: {
+                          bottomTab: {
+                            iconColor: colors.white,
+                            selectedIconColor: colors.brandGreenDeep,
+                            icon: icons.apps.uri,
+                            // add this to change icon position (optional, iOS only).
+                            iconInsets: {
+                              top: 6, // optional, default is 0.
+                              left: 0, // optional, default is 0.
+                              bottom: -6, // optional, default is 0.
+                              right: 0, // optional, default is 0.
+                            },
+                          },
+                          topBar: {
+                            visible: false,
+                            height: 0,
+                          },
+                        },
+                      },
                     },
-                    topBar: {
-                      visible: false
-                    }
-                  }
-                }
+                  ],
+                },
               },
               {
                 stack: {
@@ -85,49 +113,59 @@ export function pushDashboard() {
                     {
                       component: {
                         id: screens.BROWSE_COMPANIES,
-                        name: screens.BROWSE_COMPANIES
-                      }
-                    }
-                  ],
-                  options: {
-                    bottomTab: {
-                      iconColor: colors.white,
-                      selectedIconColor: colors.brandGreenDeep,
-                      icon: icons.family.uri,
-                      iconInsets: {
-                        top: 6,
-                        left: 0,
-                        bottom: -6,
-                        right: 0
-                      }
+                        name: screens.BROWSE_COMPANIES,
+                        options: {
+                          bottomTab: {
+                            iconColor: colors.white,
+                            selectedIconColor: colors.brandGreenDeep,
+                            icon: icons.family.uri,
+                            // add this to change icon position (optional, iOS only).
+                            iconInsets: {
+                              top: 6, // optional, default is 0.
+                              left: 0, // optional, default is 0.
+                              bottom: -6, // optional, default is 0.
+                              right: 0, // optional, default is 0.
+                            },
+                          },
+                          topBar: {
+                            visible: false,
+                            height: 0,
+                          },
+                        },
+                      },
                     },
-                    topBar: {
-                      visible: false
-                    }
-                  }
-                }
+                  ],
+                },
               },
               {
-                component: {
-                  id: screens.ADD_POST,
-                  name: screens.ADD_POST,
-                  options: {
-                    bottomTab: {
-                      iconColor: colors.white,
-                      selectedIconColor: colors.brandGreenDeep,
-                      icon: icons.family.uri,
-                      iconInsets: {
-                        top: 6,
-                        left: 0,
-                        bottom: -6,
-                        right: 0
-                      }
+                stack: {
+                  children: [
+                    {
+                      component: {
+                        id: screens.ADD_POST,
+                        name: screens.ADD_POST,
+                        options: {
+                          bottomTab: {
+                            iconColor: colors.white,
+                            selectedIconColor: colors.brandGreenDeep,
+                            icon: icons.family.uri,
+                            // add this to change icon position (optional, iOS only).
+                            iconInsets: {
+                              top: 6, // optional, default is 0.
+                              left: 0, // optional, default is 0.
+                              bottom: -6, // optional, default is 0.
+                              right: 0, // optional, default is 0.
+                            },
+                          },
+                          topBar: {
+                            visible: false,
+                            height: 0,
+                          },
+                        },
+                      },
                     },
-                    topBar: {
-                      visible: false
-                    }
-                  }
-                }
+                  ],
+                },
               },
               {
                 component: {
@@ -142,21 +180,27 @@ export function pushDashboard() {
                         top: 6,
                         left: 0,
                         bottom: -6,
-                        right: 0
-                      }
+                        right: 0,
+                      },
                     },
                     topBar: {
-                      visible: false
-                    }
-                  }
-                }
+                      visible: false,
+                    },
+                  },
+                },
               }
             ],
-            options: {}
-          }
-        }
-      }
-    }
+          },
+        },
+        options: {
+          sideMenu: {
+            left: {
+              width: 230,
+            },
+          },
+        },
+      },
+    },
   });
 }
 
@@ -167,26 +211,14 @@ export function auth() {
         children: [
           {
             component: {
-              id: screens.LOGIN,
-              name: screens.LOGIN
-            }
-          },
-          {
-            component: {
-              id: screens.REGISTER,
-              name: screens.REGISTER
-            }
-          },
-          {
-            component: {
               id: screens.WELCOME,
-              name: screens.WELCOME
-            }
+              name: screens.WELCOME,
+            },
           }
         ],
-        options: {}
-      }
-    }
+        options: {},
+      },
+    },
   });
 }
 
@@ -223,16 +255,16 @@ export function defaultProps() {
       // searchBarPlaceholder: "null",
       largeTitle: {}
     },
-    bottomTabs: {
-      visible: true,
-      animate: true, // Controls whether BottomTabs visibility changes should be animated
-      currentTabIndex: 0,
-      drawBehind: false,
-      backgroundColor: colors.brandSecondary,
-      barStyle: "default", // 'black',
-      translucent: false,
-      hideShadow: false
-    },
+    // bottomTabs: {
+    //   visible: true,
+    //   animate: true, // Controls whether BottomTabs visibility changes should be animated
+    //   currentTabIndex: 0,
+    //   drawBehind: false,
+    //   backgroundColor: colors.brandSecondary,
+    //   barStyle: "default", // 'black',
+    //   translucent: false,
+    //   hideShadow: false
+    // },
     sideMenu: {
       left: {
         shouldStretchDrawer: false, // defaults to true, when false sideMenu contents not stretched when opened past the width
