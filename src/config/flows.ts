@@ -167,28 +167,6 @@ export function pushDashboard(sideMenuProps: object, initialTabIndex: number = 0
                     },
                   ],
                 },
-              },
-              {
-                component: {
-                  id: screens.MY_SCREEN,
-                  name: screens.MY_SCREEN,
-                  options: {
-                    bottomTab: {
-                      iconColor: colors.white,
-                      selectedIconColor: colors.brandGreenDeep,
-                      icon: icons.apps.uri,
-                      iconInsets: {
-                        top: 6,
-                        left: 0,
-                        bottom: -6,
-                        right: 0,
-                      },
-                    },
-                    topBar: {
-                      visible: false,
-                    },
-                  },
-                },
               }
             ],
           },

@@ -79,11 +79,8 @@ class ItemInfo extends Component {
     };
   }
 
-  componentWillMount() {
-    this.setState({ item: this.props.item });
-  }
-
   componentDidMount() {
+    this.setState({ item: this.props.item });
     BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
 
     if (this.props.itemUpdated) {

@@ -40,7 +40,7 @@ class Dashboard extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getItems();
   }
 
