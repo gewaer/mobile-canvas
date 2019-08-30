@@ -4,6 +4,7 @@ import { icons } from "@styles/imagesUris";
 import { colors } from "@styles/colors";
 import { deviceWidth } from "@styles/globalStyles";
 import { deviceHeight } from "@styles/marginLayout";
+import { tabChildren } from "./navigationComponents";
 
 export function pushSingleScreenAppWithSideMenu(screenName: string, screenProps: string, passProps: string) {
   Navigation.setRoot({
@@ -48,8 +49,8 @@ export function pushDashboard(sideMenuProps: object, initialTabIndex: number = 0
             children: [
               {
                 component: {
-                  id: screens.SIDEMENU,
-                  name: screens.SIDEMENU,
+                  id: screens.GWSIDEMENU,
+                  name: screens.GWSIDEMENU,
                   passProps: sideMenuProps,
                   options: {
                     topBar: {
@@ -77,98 +78,7 @@ export function pushDashboard(sideMenuProps: object, initialTabIndex: number = 0
                 hideShadow: false,
               },
             },
-            children: [
-              {
-                stack: {
-                  children: [
-                    {
-                      component: {
-                        id: screens.DASHBOARD,
-                        name: screens.DASHBOARD,
-                        options: {
-                          bottomTab: {
-                            iconColor: colors.white,
-                            selectedIconColor: colors.brandGreenDeep,
-                            icon: icons.apps.uri,
-                            // add this to change icon position (optional, iOS only).
-                            iconInsets: {
-                              top: 6, // optional, default is 0.
-                              left: 0, // optional, default is 0.
-                              bottom: -6, // optional, default is 0.
-                              right: 0, // optional, default is 0.
-                            },
-                          },
-                          topBar: {
-                            visible: false,
-                            height: 0,
-                          },
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-              {
-                stack: {
-                  children: [
-                    {
-                      component: {
-                        id: screens.BROWSE_COMPANIES,
-                        name: screens.BROWSE_COMPANIES,
-                        options: {
-                          bottomTab: {
-                            iconColor: colors.white,
-                            selectedIconColor: colors.brandGreenDeep,
-                            icon: icons.family.uri,
-                            // add this to change icon position (optional, iOS only).
-                            iconInsets: {
-                              top: 6, // optional, default is 0.
-                              left: 0, // optional, default is 0.
-                              bottom: -6, // optional, default is 0.
-                              right: 0, // optional, default is 0.
-                            },
-                          },
-                          topBar: {
-                            visible: false,
-                            height: 0,
-                          },
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-              {
-                stack: {
-                  children: [
-                    {
-                      component: {
-                        id: screens.ADD_POST,
-                        name: screens.ADD_POST,
-                        options: {
-                          bottomTab: {
-                            iconColor: colors.white,
-                            selectedIconColor: colors.brandGreenDeep,
-                            icon: icons.family.uri,
-                            // add this to change icon position (optional, iOS only).
-                            iconInsets: {
-                              top: 6, // optional, default is 0.
-                              left: 0, // optional, default is 0.
-                              bottom: -6, // optional, default is 0.
-                              right: 0, // optional, default is 0.
-                            },
-                          },
-                          topBar: {
-                            visible: false,
-                            height: 0,
-                          },
-                        },
-                      },
-                    },
-                  ],
-                },
-              }
-            ],
+            children: tabChildren
           },
         },
         options: {

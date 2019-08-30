@@ -17,6 +17,7 @@ import EditProfile from "./edit-profile";
 import WrapperProvider from "../config/WrapperProvider";
 import AddPost from "./add-post";
 import MyScreen from "./my-screen";
+import GwMobileSidebar from "@components/gw-mobile-sidebar"
 import * as screens from "./index";
 
 export default function registerScreens(): void {
@@ -56,7 +57,7 @@ export default function registerScreens(): void {
     WrapperProvider(Settings)
   );
   Navigation.registerComponent(screens.SIDEMENU, () =>
-    WrapperProvider(SideMenu)
+    WrapperProvider(GwMobileSidebar)
   );
   Navigation.registerComponent(screens.ADD_COMPANY, () =>
     WrapperProvider(AddCompany)
@@ -66,5 +67,8 @@ export default function registerScreens(): void {
   );
   Navigation.registerComponent(screens.MY_SCREEN, () =>
     WrapperProvider(MyScreen)
+  );
+  Navigation.registerComponent(screens.GWSIDEMENU, () =>
+    WrapperProvider(GwMobileSidebar)
   );
 }

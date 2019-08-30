@@ -15,3 +15,4 @@ export const SETTINGS = "canvas.Settings";
 export const WELCOME = "canvas.Welcome";
 export const MY_SCREEN = "canvas.MyScreen";
 export const SIDEMENU = "canvas.SideMenu";
+export const GWSIDEMENU = "canvas.GWSideMenu"

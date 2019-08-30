@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ScrollView, View, TouchableOpacity } from 'react-native';
 import AsyncStorage from "@react-native-community/async-storage";
 import { Body, Icon, Text, ListItem, List } from 'native-base';
-import { paddingHelpers, colors } from '@config/styles';
+import { colors } from '@config/styles';
 import { Navigation } from 'react-native-navigation';
 import { pushDashboard, auth, pushSingleScreenAppWithSideMenu } from '@config/flows';
 import StyleSheet from './stylesheet';

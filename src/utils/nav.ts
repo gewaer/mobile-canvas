@@ -165,3 +165,19 @@ export function dismissAllModals(mergeOptions?: object = {}) {
 export function mergeOptions(componentId: string, mergeOptions?: object = {}) {
   Navigation.mergeOptions(componentId, mergeOptions);
 }
+
+export function changeTab(tabId: string, tabIndex: number) {
+  Navigation.mergeOptions(tabId, {
+    bottomTabs: {
+      currentTabIndex: tabIndex
+    }
+  });
+
+  Navigation.mergeOptions(tabId, {
+    sideMenu: {
+      left: {
+        visible: false
+      }
+    }
+  });
+}
