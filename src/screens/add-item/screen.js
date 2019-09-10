@@ -109,7 +109,7 @@ class AddItem extends Component {
       });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.createFieldStates()
   }
 

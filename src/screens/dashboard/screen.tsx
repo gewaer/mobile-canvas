@@ -13,17 +13,20 @@ import {
   Toast,
   Root
 } from "native-base";
-import { colors } from "../../config/styles";
-import { changeActiveScreen } from "../../modules/Session";
+import { colors } from "@config/styles";
 import { connect } from "react-redux";
 const platform = Platform.OS;
-import TitleBar from "../../components/title-bar";
-import { Navigation } from "react-native-navigation";
+import TitleBar from "@components/title-bar";
 import StyleSheet from "./stylesheet";
-import { SIDEMENU, ADD_LEADS, LEADS_INFO, DASHBOARD } from "..";
-import { push, showModal, setNewStack } from "../../utils/nav";
+import {
+  ADD_LEADS,
+  LEADS_INFO,
+  DASHBOARD
+} from "..";
+import { openDrawer } from "@config/flows";
+import { pushScreen, showModal } from "@utils/nav";
 
-const axios = require("../../config/axios");
+const axios = require("@config/axios");
 
 class Dashboard extends PureComponent {
   constructor(props) {
@@ -37,28 +40,8 @@ class Dashboard extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getItems();
-  }
-
-  changeScreen(card) {
-    Navigation.push(DASHBOARD, {
-      component: {
-        id: LEADS_INFO,
-        name: LEADS_INFO,
-        passProps: {
-          item: card
-        },
-        options: {
-          topBar: {
-            visible: false
-          },
-          bottomTabs: {
-            visible: false
-          }
-        }
-      }
-    });
   }
 
   onItemCreated = () => {
@@ -68,53 +51,20 @@ class Dashboard extends PureComponent {
     );
   };
 
-  openAddItemModal() {
-    Navigation.showModal({
-      stack: {
-        children: [
-          {
-            component: {
-              id: ADD_LEADS,
-              name: ADD_LEADS,
-              passProps: {
-                itemCreatedAction: this.onItemCreated
-              },
-              options: {
-                topBar: {
-                  visible: false
-                }
-              }
-            }
-          }
-        ]
-      }
-    });
-  }
-
-  formatPhoneNumber(phoneNumberString) {
-    var cleaned = ("" + phoneNumberString).replace(/\D/g, "");
-    var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+  formatPhoneNumber(phoneNumberString: string) {
+    const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
     if (match) {
       return "(" + match[1] + ") " + match[2] + "-" + match[3];
     }
     return null;
   }
 
-  showDrawer = () => {
-    Navigation.mergeOptions(SIDEMENU, {
-      sideMenu: {
-        left: {
-          visible: true
-        }
-      }
-    });
-  };
-
   titleBarLeft() {
     return {
       content: (
         <View style={StyleSheet.titleBarContent}>
-          <Button transparent onPress={() => this.showDrawer()}>
+          <Button transparent onPress={openDrawer}>
             <Icon
               type={"MaterialIcons"}
               name={"menu"}
@@ -130,7 +80,7 @@ class Dashboard extends PureComponent {
     return {
       content: (
         <View style={StyleSheet.titleBarContent}>
-          <Button transparent onPress={() => this.openAddItemModal()}>
+          <Button transparent onPress={() => showModal(ADD_LEADS, { itemCreatedAction: this.onItemCreated })}>
             <Icon
               type={"MaterialIcons"}
               name={"add"}
@@ -207,7 +157,7 @@ class Dashboard extends PureComponent {
     return (
       <ListItem
         style={StyleSheet.listItem}
-        onPress={() => this.changeScreen(lead)}
+        onPress={() => pushScreen(DASHBOARD, LEADS_INFO, { item: lead })}
       >
         <View>
           <Thumbnail source={{ uri: this.getImageCover() }} />
@@ -282,18 +232,11 @@ class Dashboard extends PureComponent {
 
 const mapStateToProps = state => {
   return {
-    token: state.session.token,
     company: state.session.company
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    changeActiveScreen
   };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {}
 )(Dashboard);

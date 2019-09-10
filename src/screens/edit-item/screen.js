@@ -76,13 +76,11 @@ class EditInfo extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({ item: this.props.item }, () => {
       this.createFieldStates();
     });
-  }
 
-  componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid());
 
     if (this.props.companyUpdated) {

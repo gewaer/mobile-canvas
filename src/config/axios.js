@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_KEY } from "react-native-dotenv";
 import getStore from "../modules/store";
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const store = getStore();
 
