@@ -1,25 +1,31 @@
 import { colors } from "@styles/colors";
 import { icons } from "@styles/imagesUris";
 import * as screens from "@screens";
+import _ from "lodash";
 
 const resources = [
   {
     id: "0",
     name: "Dashboard",
     slug: "dashboard",
-    tabType: "browse"
+    mobile_component_type: "browse",
+    mobile_navigation_type: "tab",
+    mobile_tab_index: "0"
   },
   {
-    id: "0",
-    name: "Dashboard",
-    slug: "dashboard",
-    tabType: "browse"
+    id: "1",
+    name: "Companies",
+    slug: "companies",
+    mobile_component_type: "browse",
+    mobile_navigation_type: "screen"
   },
   {
-    id: "0",
-    name: "Dashboard",
-    slug: "dashboard",
-    tabType: "browse"
+    id: "2",
+    name: "Users",
+    slug: "users",
+    mobile_component_type: "browse",
+    mobile_navigation_type: "tab",
+    mobile_tab_index: "1"
   }
 ];
 
@@ -69,4 +75,8 @@ const getTab = (tabType: string) => {
   }
 }
 
-export const tabChildren = resources.map(resource => getTab(resource.tabType));
+let sortedResources = _.orderBy(resources, ["mobile_tab_index"], ["asc"]);
+
+sortedResources = sortedResources.filter(resource => resource.mobile_navigation_type === "tab");
+
+export const tabChildren = sortedResources.map(resource => getTab(resource.mobile_component_type));

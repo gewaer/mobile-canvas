@@ -1,12 +1,14 @@
 import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { Icon } from "native-base";
+import { string } from "prop-types";
 
 
 interface Props {
-  readonly userName?: string;
-  readonly companyName?: string;
-  readonly customHeader?: any;
+  readonly userName: string;
+  readonly companyName: string;
+  readonly backgroundColor: string;
+  readonly textColor: string;
 }
 
 const styles = StyleSheet.create({
@@ -30,8 +32,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
-    fontSize: 16,
-    color: "white"
+    fontSize: 16
   },
   subTitle: {
     color: "#1F9AA7",
@@ -41,11 +42,8 @@ const styles = StyleSheet.create({
 });
 
 const Header = (props: Props) => {
-  if (props.customHeader) {
-    return props.customHeader;
-  }
   return (
-    <View style={styles.itemContainer}>
+    <View style={[styles.itemContainer, { backgroundColor: props.backgroundColor }]}>
       <TouchableOpacity>
         <Icon
           type={"Ionicons"}
@@ -54,7 +52,7 @@ const Header = (props: Props) => {
         />
       </TouchableOpacity>
       <View style={styles.userDataContainer}>
-        <Text style={styles.title}>{props.userName}</Text>
+        <Text style={[styles.title, { color: props.textColor }]}>{props.userName}</Text>
         <Text style={styles.subTitle}>{props.companyName}</Text>
       </View>
     </View>

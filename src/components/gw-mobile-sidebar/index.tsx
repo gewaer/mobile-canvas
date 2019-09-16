@@ -14,17 +14,25 @@ export default class GwMobileSidebar extends Component<IProps> {
       {
         id: "0",
         name: "Dashboard",
-        slug: "dashboard"
+        slug: "dashboard",
+        mobile_component_type: "browse",
+        mobile_navigation_type: "tab",
+        mobile_tab_index: "0"
       },
       {
         id: "1",
         name: "Companies",
-        slug: "companies"
+        slug: "companies",
+        mobile_component_type: "https://ginnyapp.com/terms",
+        mobile_navigation_type: "screen"
       },
       {
         id: "2",
         name: "Users",
-        slug: "users"
+        slug: "users",
+        mobile_component_type: "browse",
+        mobile_navigation_type: "tab",
+        mobile_tab_index: "1"
       }
     ],
     headerUserName: "Joanne Doe",
@@ -33,16 +41,35 @@ export default class GwMobileSidebar extends Component<IProps> {
     customHeader: null,
     customSectionItem: null,
     sidebarBackgroundColor: "#51007a",
-    sectionItemTextColor: "white"
+    sectionItemTextColor: "white",
+    headerBackgroundColor: "#51007a",
+    headerTextColor: "white",
+    activeComponentId: screens.SIDEMENU
+  }
+
+  renderHeader() {
+    if (this.props.customHeader) {
+      return this.props.customHeader;
+    }
+    return (
+      <Header
+        userName={this.props.headerUserName}
+        companyName={this.props.headerCompanyName}
+        backgroundColor={this.props.headerBackgroundColor}
+        textColor={this.props.headerTextColor}
+      />
+    );
   }
 
   renderItem = ({ item } : IResource) => {
+    if (this.props.customSectionItem) {
+      return this.props.customSectionItem(item);
+    }
     return (
       <SectionItem
         item={item}
-        onPressAction={() => changeTab(screens.DASHBOARD, Number(item.id))}
+        componentId={this.props.activeComponentId}
         sectionItemTextStyle={[this.props.sectionItemTextStyle, { color: this.props.sectionItemTextColor }]}
-        customSectionItem={this.props.customSectionItem}
       />
     );
   }
@@ -57,11 +84,7 @@ export default class GwMobileSidebar extends Component<IProps> {
           { backgroundColor: this.props.sidebarBackgroundColor }
         ]}
       >
-        <Header
-          userName={this.props.headerUserName}
-          companyName={this.props.headerCompanyName}
-          customHeader={this.props.customHeader}
-        />
+        {this.renderHeader()}
         <View style={StyleSheet.listContainer}>
           <FlatList
             data={this.props.resources}

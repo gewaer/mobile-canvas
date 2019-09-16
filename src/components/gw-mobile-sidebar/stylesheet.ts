@@ -13,6 +13,6 @@ export default StyleSheet.create({
     fontSize: 14
   },
   listContainer: {
-    paddingTop: 10
+    paddingTop: 0
   },
 });

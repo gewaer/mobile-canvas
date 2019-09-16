@@ -1,13 +1,15 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Linking } from "react-native";
 import { Body, Text, ListItem} from "native-base";
 import { IResource } from "../types";
+import { changeTab, forcePush } from "../utils/nav";
+import * as screens from "@screens";
 
 interface Props {
   readonly item: IResource;
-  readonly customSectionItem: any;
   readonly sectionItemTextStyle: object;
-  readonly onPressAction: () => void;
+  readonly onPressAction?: () => void;
+  readonly componentId: string;
 }
 
 const styles = StyleSheet.create({
@@ -36,14 +38,28 @@ const firstLetter = (value: string) => {
   return value.charAt(0).toUpperCase();
 };
 
-const SectionItem = (props: Props) => {
-  if (props.customSectionItem) {
-    return props.customSectionItem;
+const handlePress = (resource: IResource, componentId: string) => {
+  switch (resource.mobile_navigation_type) {
+    case "tab":
+      changeTab(screens.DASHBOARD, Number(resource.mobile_tab_index));
+      break;
+    case "screen":
+      forcePush(screens.DASHBOARD, componentId);
+      break;
+    case "link":
+      Linking.openURL(resource.mobile_component_type);
+      break;
+    case "app":
+      // code block
+      break;
   }
+};
+
+const SectionItem = (props: Props) => {
   return (
     <ListItem
       style={styles.listItemDarkBorder}
-      onPress={props.onPressAction}
+      onPress={() => handlePress(props.item, props.componentId)}
     >
       <View style={styles.itemIconContainer}>
         {props.item.icon ? (

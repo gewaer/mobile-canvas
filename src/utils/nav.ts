@@ -9,8 +9,8 @@ import { Navigation } from "react-native-navigation";
 export function pushScreen(
   componentId: string,
   screenName: string,
-  passProps: object,
-  options: object
+  passProps?: object,
+  options?: object
 ) {
   Navigation.push(componentId, {
     component: {
