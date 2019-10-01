@@ -9,8 +9,8 @@ export const appImages = {
   Logo: {
     uri: require('../assets/images/companyBranding/secondary-logo.10e49eac.png')
   },
-  GinnyLogo: {
-    uri: require('../assets/images/ginny/logo.png')
+  CanvasLogo: {
+    uri: require('../assets/images/canvas/logo.png')
   },
 };
 
