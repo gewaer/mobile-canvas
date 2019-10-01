@@ -6,5 +6,7 @@ export interface IProps {
 }
 
 export interface IState {
-  isLoading: boolean
+  isLoading: boolean,
+  sliderActiveSlide: number,
+  entries: object[]
 }
