@@ -14,7 +14,7 @@ import { pushScreen } from "@utils/nav"
 import { IState, IProps } from "./types";
 import { AxiosResponse, AxiosError } from "axios";
 import MyCarousel from "@components/carousel";
-import { Title, ButtonText, BaseButton, BottomContainer, MainContainer, SpinnerContainer } from './styled-components';
+import { Title, ButtonText, BaseButton, BottomContainer, MainContainer, SpinnerContainer } from '@components/styled-components';
 
 /*
 	Screen Name: Welcome.
