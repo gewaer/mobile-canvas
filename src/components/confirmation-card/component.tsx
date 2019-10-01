@@ -35,7 +35,7 @@ class ConfirmationCard extends Component<Props, State> {
       <View style={ Stylesheet.container }>
         <View style={ Stylesheet.topContainer }>
           <Image
-            source={ appImages.CanvasLogo.uri }
+            source={ appImages.canvasLogo.uri }
             style={Stylesheet.logo}
           />
           <Text style={ Stylesheet.title }>{ title }</Text>
