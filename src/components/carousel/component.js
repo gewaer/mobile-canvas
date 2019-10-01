@@ -6,7 +6,7 @@ import {
   Dimensions
 } from "react-native";
 import Stylesheet from "./stylesheet";
-import { colors } from "../../config/styles";
+import { colors } from '@styles/colors';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { getPercentage } from '../../utils/helpers';
 
@@ -24,7 +24,7 @@ class MyCarousel extends Component {
     return (
       <View>
         <Image
-          source={ { uri: item.uri } }
+          source={ item.uri }
           style={ {
             height: imageHeight,
             width: "100%",
@@ -57,11 +57,12 @@ class MyCarousel extends Component {
           dotsLength={ entries.length }
           activeDotIndex={ activeSlide }
           containerStyle={Stylesheet.paginationContainer}
-          dotColor={'rgba(255, 255, 255, 0.92)'}
+          dotContainerStyle={Stylesheet.dotContainer}
+          dotColor={colors.brandPrimary}
           dotStyle={Stylesheet.paginationDot}
-          inactiveDotColor={colors.black}
+          inactiveDotColor={colors.brandSecondary}
           inactiveDotOpacity={0.4}
-          inactiveDotScale={0.6}
+          inactiveDotScale={1}
           carouselRef={this._carousel}
           tappableDots={!!this._carousel}
         />
