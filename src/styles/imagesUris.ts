@@ -17,7 +17,7 @@ export const icons = {
   }
 };
 
-export const brands = {
+export const appImages = {
   mctekk: {
     uri: require("../assets/images/companyBranding/mctekk-logo.png")
   },
@@ -25,7 +25,10 @@ export const brands = {
     whiteUri: require("../assets/images/companyBranding/primary-logo.1a128f8c.png"),
     blackUri: require("../assets/images/companyBranding/secondary-logo.10e49eac.png")
   },
-  GinnyLogo: {
-    uri: require("../assets/images/ginny/logo.png")
+  canvasLogo: {
+    uri: require("../assets/images/canvas/logo.png")
+  },
+  carouselPlaceholder: {
+    uri: require("../assets/images/canvas/carousel-placeholder.png")
   }
 };

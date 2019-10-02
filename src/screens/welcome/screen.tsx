@@ -3,28 +3,18 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "@config/axios";
 import { pushDashboard } from "@config/flows";
-import {
-  View,
-  StatusBar,
-  ImageBackground,
-  Alert
-} from "react-native";
+import { View, Alert } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
-import { Text, Button, Container, Spinner } from "native-base";
-// Importing local assets.
-import { globalStyle, colors, paddingHelpers } from "@config/styles";
-import { appImages } from "@config/imagesRoutes";
-// Importing Redux's actions
-import {
-  changeSessionToken,
-  changeUser,
-  changeActiveCompany
-} from "@modules/Session";
-import StyleSheet from "./stylesheet";
+import { Container, Spinner, Content, Root } from "native-base";
+import { colors } from "@config/styles";
+import { appImages } from "@styles/imagesUris";
+import { changeSessionToken, changeUser, changeActiveCompany } from "@modules/Session";
 import { DASHBOARD, LOGIN, REGISTER } from "..";
 import { pushScreen } from "@utils/nav"
 import { IState, IProps } from "./types";
 import { AxiosResponse, AxiosError } from "axios";
+import MyCarousel from "@components/carousel";
+import { Title, ButtonText, BaseButton, BottomContainer, MainContainer, SpinnerContainer } from '@components/styled-components';
 
 /*
 	Screen Name: Welcome.
@@ -33,7 +23,19 @@ import { AxiosResponse, AxiosError } from "axios";
 */
 class Welcome extends Component<IProps, IState> {
   state = {
-    isLoading: true
+    isLoading: true,
+    entries: [
+      {
+        uri: appImages.carouselPlaceholder.uri
+      },
+      {
+        uri: appImages.carouselPlaceholder.uri
+      },
+      {
+        uri: appImages.carouselPlaceholder.uri
+      }
+    ],
+    sliderActiveSlide: 0
   };
 
   componentDidMount() {
@@ -96,68 +98,42 @@ class Welcome extends Component<IProps, IState> {
   }
 
   render() {
-    // Displays a loading spinner if the app is loading.
     if (this.state.isLoading) {
       return (
-        <Container
-          style={[
-            StyleSheet.wrapper,
-            { justifyContent: "center", alignItems: "center" }
-          ]}
-        >
-          <StatusBar
-            backgroundColor={colors.brandGreen}
-            barStyle="light-content"
-          />
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Spinner color={colors.brandPrimary} />
-          </View>
-        </Container>
+        <SpinnerContainer>
+          <Spinner color={colors.brandPrimary} />
+        </SpinnerContainer>
       );
     }
     return (
-      <Container style={StyleSheet.wrapper}>
-        <StatusBar
-          backgroundColor={colors.brandGreen}
-          barStyle="light-content"
-        />
-        <View>
-          <View style={StyleSheet.container}>
-            <View>
-              <ImageBackground
-                source={appImages.LogoBig.uri}
-                style={globalStyle.logoBig}
-                resizeMode="contain"
+      <Root>
+        <Container>
+          <Content>
+            <MainContainer>
+              <Title>canvas</Title>
+              <MyCarousel
+                entries={ this.state.entries }
+                activeSlide={ this.state.sliderActiveSlide }
+                onSnapToItem={ (index: number) => this.setState({ sliderActiveSlide: index }) }
               />
-            </View>
-          </View>
-          <View style={StyleSheet.footerButtomsContainer}>
-            <Text style={{ marginBottom: paddingHelpers.S, fontWeight: "200" }}>
-              Inicia Sesión con tus Cuentas de Social Media
-            </Text>
-            <Button
-              block
-              style={{
-                marginVertical: paddingHelpers.S,
-                backgroundColor: colors.bradSecondaryAlter
-              }}
-              onPress={() => pushScreen(this.props.componentId, LOGIN)}
-            >
-              <Text style={StyleSheet.btnTextStyle}>Ingresar</Text>
-            </Button>
-            <Button
-              block
-              style={{
-                marginVertical: paddingHelpers.S,
-                backgroundColor: colors.brandPrimary
-              }}
-              onPress={() => pushScreen(this.props.componentId, REGISTER)}
-            >
-              <Text style={StyleSheet.btnTextStyle}>Crear Cuenta</Text>
-            </Button>
-          </View>
-        </View>
-      </Container>
+              <BottomContainer>
+                <View>
+                  <BaseButton block onPress={() => pushScreen(this.props.componentId, REGISTER)}>
+                    <ButtonText uppercase>
+                      SIGN UP!
+                    </ButtonText>
+                  </BaseButton>
+                  <BaseButton block bordered onPress={() => pushScreen(this.props.componentId, LOGIN)}>
+                    <ButtonText uppercase color={colors.brandPrimary}>
+                      LOG IN
+                    </ButtonText>
+                  </BaseButton>
+                </View>
+              </BottomContainer>
+            </MainContainer>
+          </Content>
+        </Container>
+      </Root>
     );
   }
 }
