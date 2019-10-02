@@ -8,9 +8,8 @@
     "lint": "tslint --project tsconfig.json",
     "lint:css": "stylelint './'",
     "ios": "react-native run-ios --simulator \"iPhone 8\"",
-    "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
+    "android": "react-native run-android",
     "android:release": "react-native run-android --variant=release",
-    "generateApk": "cd ./android && ./gradlew clean && ./gradlew assembleRelease",
     "build:ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ./ios/Canvas/main.jsbundle",
     "build:android": "react-native bundle --entry-file index.js --platform android --dev false --bundle-output ./android/app/src/main/assets/index.android.bundle --assets-dest ./android/app/src/main/res/"
   },
@@ -56,7 +55,9 @@
     "@types/react-test-renderer": "^16.8.1",
     "@types/redux-logger": "^3.0.7",
     "babel-jest": "24.9.0",
+    "husky": "^3.0.8",
     "jest": "24.9.0",
+    "lint-staged": "^9.4.1",
     "metro-react-native-babel-preset": "0.54.1",
     "prettier": "^1.18.2",
     "react-native-dotenv": "^0.2.0",
@@ -96,5 +97,21 @@
     "setupFiles": [
       "./__tests__/setup.js"
     ]
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "npm run --silent lint",
+      "git add"
+    ],
+    "src/**/*.{ts, tsx}": [
+      "npm run --silent lint:css",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
+    }
   }
 }
