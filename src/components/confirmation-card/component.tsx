@@ -5,7 +5,7 @@ import { Button } from "native-base";
 import Stylesheet from "./stylesheet";
 import { colors } from "../../config/styles";
 import { getPercentage } from "../../utils/helpers";
-import { appImages } from '../../config/imagesRoutes';
+import { appImages } from '@styles/imagesUris';
 
 const deviceWidth = Dimensions.get("window").width;
 const itemWidth = getPercentage(deviceWidth, 80);
@@ -35,7 +35,7 @@ class ConfirmationCard extends Component<Props, State> {
       <View style={ Stylesheet.container }>
         <View style={ Stylesheet.topContainer }>
           <Image
-            source={ appImages.GinnyLogo.uri }
+            source={ appImages.canvasLogo.uri }
             style={Stylesheet.logo}
           />
           <Text style={ Stylesheet.title }>{ title }</Text>
